@@ -1,0 +1,43 @@
+version: '2'
+services:
+  # ontology-manager:
+  #   build: ./ontology-manager
+  #   environment:
+  #    - PERCEPTRON_DB_URI=mongodb://localhost/percp_scope_1
+  #    - NEO4J_USERNAME=neo4j
+  #    - NEO4J_PASSWORD=password
+  #    - NEO4J_HOST=graphdb
+  #    - NEO4J_DB_PORT=7474
+  #    - NEO4J_BOLT_PORT=7687
+  #    - NEO4J_PROTOCOL=bolt
+  #   links:
+  #     - graphdb
+  #     - mongodb
+
+  graphdb:
+    image: neo4j:latest
+    environment:
+     - NEO4J_AUTH=neo4j/password
+    volumes:
+     - ./db/dbms:/data/dbms
+    ports:
+     - "7474:7474"
+     - "7687:7687"
+    restart: always
+
+  mongodb:
+    image: mongo:latest
+    hostname: mongodb
+    entrypoint: ["/usr/bin/mongod", "--replSet", "rs"]
+    ports:
+     - "27017:27017"
+     - "28017:28017"
+    restart: always
+    
+  mongosetup:
+    image: mongo:latest
+    volumes:
+     - ./scripts:/scripts
+     - ./dump:/dump
+    entrypoint: ["scripts/mongosetup.sh"]
+    
