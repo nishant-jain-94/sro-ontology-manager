@@ -3,7 +3,7 @@ const async = require('async');
 const highland = require('highland');
 
 const log = require('../../util/logger');
-const replaceWhiteSpaceByUnderscore = require('../../util/normalize');
+const normalize = require('../../util/normalize');
 
 const createNodesAndRelationsFromTriples = highland.wrapCallback(require('../../query_processors/createNodesAndRelationsFromTriples'));
 
