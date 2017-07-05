@@ -17,7 +17,6 @@ describe('Count of all Nodes', (done) => {
 
     it('Should get count of all the nodes', (done) => {
         getCountOfAllNodes((err, result) => {
-            log.debug(result);
             should.not.exist(err);
             should.exist(result);
             result.records[0]._fieldLookup["count(n)"].should.be.exactly(0);

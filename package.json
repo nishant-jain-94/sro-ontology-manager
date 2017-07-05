@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "amqplib": "^0.5.1",
     "async": "^2.5.0",
     "bunyan": "^1.8.10",
     "bunyan-format": "^0.2.1",

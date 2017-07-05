@@ -10,7 +10,7 @@ const createNode = (properties, callback) => {
 	const query = `CREATE (n:${label} ${propertiesOfNode}) return n`;
 
 	async.series([
-			// createUniqueConstraintOnNode.bind(null, label),
+			createUniqueConstraintOnNode.bind(null, label),
 			queryExecutor.bind(null, query)
 		],
 		(error, results) => {

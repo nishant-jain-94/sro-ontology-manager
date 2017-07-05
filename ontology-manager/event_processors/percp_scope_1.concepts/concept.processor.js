@@ -7,7 +7,9 @@ const normalize = require('../../util/normalize');
 
 const createNodesAndRelationsFromTriples = highland.wrapCallback(require('../../query_processors/createNodesAndRelationsFromTriples'));
 
-const toTriplesOfConcepts = (oplog) =>  {
+const toTriplesOfConcepts = (message) =>  {
+    const header = message;
+    const oplog = JSON.parse(message.content.toString());
     const percpConcept = oplog.o; 
     const subject = {
         propertiesOfSubject: {
@@ -38,17 +40,20 @@ const toTriplesOfConcepts = (oplog) =>  {
         return triple;
     });
 
+    let triples;
     if(triplesOfConcepts.length > 0) {
-        return triplesOfConcepts
+         triples = triplesOfConcepts
     } else {
-        return [subject]
-    }
+        triples = [subject]
+    };
+
+    return {header, triples};
 };
 
 const processor = highland.pipeline(
     highland.map(toTriplesOfConcepts),
     highland.flatMap(createNodesAndRelationsFromTriples),
     highland.collect()
-)
+);
 
 module.exports = processor;

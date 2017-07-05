@@ -8,8 +8,7 @@ describe('Query Executor', () => {
 		async.series([
 			dropAllConstraints, 
 			queryExecutor.bind(null, 'MATCH (n) DETACH DELETE n')
-			], 
-			done);
+			], done);
 	});
 
     it('Should exectue queries', (done) => {
@@ -25,7 +24,6 @@ describe('Query Executor', () => {
 		async.series([
 			dropAllConstraints, 
 			queryExecutor.bind(null, 'MATCH (n) DETACH DELETE n')
-			], 
-			done);
+			], done);
 	});
 });

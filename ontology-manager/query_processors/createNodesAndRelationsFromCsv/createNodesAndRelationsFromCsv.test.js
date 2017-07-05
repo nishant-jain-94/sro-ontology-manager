@@ -10,8 +10,7 @@ describe('Create Nodes and Relations from CSV', () => {
 		async.series([
 			dropAllConstraints, 
 			queryExecutor.bind(null, 'MATCH (n) DETACH DELETE n')
-			], 
-			done);
+		], done);
 	});
 
 	it('Should create nodes from the supplied csv file', (done) => {
@@ -26,7 +25,6 @@ describe('Create Nodes and Relations from CSV', () => {
 		async.series([
 			dropAllConstraints, 
 			queryExecutor.bind(null, 'MATCH (n) DETACH DELETE n')
-			], 
-			done);
+		], done);
 	});
 });

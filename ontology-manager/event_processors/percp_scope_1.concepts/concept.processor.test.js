@@ -2,7 +2,7 @@ const _ = require('lodash');
 const should = require('should');
 const async = require('async');
 const highland = require('highland');
-const concepts = require('./concepts');
+const concepts = require('./concept.processor');
 const deleteAllNodes = require('../../query_processors/deleteAllNodes');
 const dropAllConstraints = require('../../query_processors/dropAllConstraints');
 const log  = require('../../util/logger');
@@ -144,8 +144,15 @@ describe('Create conceptNodes from Stream', (done) => {
                 }
             }
         ];
-        highland(conceptOplogs).pipe(concepts).toArray((s) => {
-            _.flattenDeep(s).length.should.be.exactly(14);
+        
+        const messageWrapper = (oplog) => {
+            const message = {};
+            message["content"] = new Buffer(JSON.stringify(oplog));
+            return message;
+        };
+
+        highland(conceptOplogs).map(messageWrapper).pipe(concepts).toArray((s) => {
+            _.flattenDeep(s).length.should.be.exactly(4);
             done();
         });
     });

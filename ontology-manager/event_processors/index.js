@@ -9,7 +9,7 @@ const processors = [
 
 exports.event_processor = (s) => {
     const streams = processors.map((processor) => {
-        const byProcessor = event => event.name == process.name; 
+        const byProcessor = event => event.ns == processor.name; 
         return s.fork()
                 .filter(byProcessor)
                 .through(processor.processor);
