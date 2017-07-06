@@ -1,0 +1,20 @@
+{
+  "name": "percp_scope_1.concepts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Nishant Jain",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node_modules/.bin/nyc node_modules/.bin/mocha $(find . -path ./node_modules -prune -o -name '*.test.js' -print)"
+  },
+  "dependencies": {
+    "async": "^2.5.0",
+    "highland": "^2.11.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.4.2",
+    "nyc": "^11.0.3",
+    "should": "^11.2.1"
+  }
+}
