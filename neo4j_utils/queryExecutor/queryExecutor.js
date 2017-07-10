@@ -7,7 +7,7 @@ const queryExecutor = (query, callback) => {
 	return session
 			.run(query)
 			.then((result) => {return callback(null, result)})
-			.catch((error) => {return callback(error, null);});
+			.catch((error) => {console.log(error); return callback(error, null);});
 }
 
 module.exports = queryExecutor;

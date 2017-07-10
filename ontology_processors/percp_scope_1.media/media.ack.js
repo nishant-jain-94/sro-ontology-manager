@@ -4,7 +4,7 @@ const log = require('./sro_utils/logger');
 
 const ack = (message, channel, cb) => {
     channel.ack(message);
-    log.debug("Message Acknowledged");
+    log.debug('Acknowledged Message');
     cb();
 };
 

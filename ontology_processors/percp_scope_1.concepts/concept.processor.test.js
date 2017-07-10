@@ -150,7 +150,7 @@ describe('Create conceptNodes from Stream', (done) => {
             return message;
         };
 
-        highland(conceptOplogs).map(messageWrapper).pipe(concepts).toArray((s) => {
+        highland(conceptOplogs).map(messageWrapper).pipe(concepts).collect().toArray((s) => {
             _.flattenDeep(s).length.should.be.exactly(4);
             done();
         });

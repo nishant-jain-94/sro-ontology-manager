@@ -4,7 +4,7 @@ const highland = require('highland');
 const log = require('./sro_utils/logger');
 const {getAMQPChannel} = require('./amqp_utils');
 
-const queue = 'percp_scope_1.concepts';
+const queue = 'percp_scope_1.media';
 
 const consumeQueue = (push, channel) => {
     log.debug('Consumer Listening');

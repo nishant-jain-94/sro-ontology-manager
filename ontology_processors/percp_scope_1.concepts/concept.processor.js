@@ -52,8 +52,7 @@ const toTriplesOfConcepts = (message) =>  {
 
 const processor = highland.pipeline(
     highland.map(toTriplesOfConcepts),
-    highland.flatMap(createNodesAndRelationsFromTriples),
-    highland.collect()
+    highland.flatMap(createNodesAndRelationsFromTriples)
 );
 
 module.exports = processor;
