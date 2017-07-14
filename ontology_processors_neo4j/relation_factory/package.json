@@ -1,0 +1,19 @@
+{
+  "name": "relation_factory",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node_modules/.bin/nyc node_modules/.bin/mocha $(find . -path ./node_modules -prune -o -name '*.test.js' -print)"
+  },
+  "dependencies": {
+    "async": "^2.5.0",
+    "highland": "^2.11.1"
+  },
+  "devDependencies": {
+    "mocha": "^3.4.2",
+    "nyc": "^11.0.3",
+    "should": "^11.2.1"
+  }
+}
