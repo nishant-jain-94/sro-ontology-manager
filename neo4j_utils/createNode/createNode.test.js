@@ -14,8 +14,7 @@ describe('Create Nodes', () => {
 		async.series([
 			dropAllConstraints, 
 			queryExecutor.bind(null, 'MATCH (n) DETACH DELETE n')
-			], 
-			done);
+		], done);
 	});
 
 	it('should create nodes', (done) => {

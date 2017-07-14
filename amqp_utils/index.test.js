@@ -16,4 +16,9 @@ describe('AMQP UTILS', (done) => {
         should.exist(index.getAMQPConnection);
         done();
     });
+
+    it('Should have sendToQueue', (done) => {
+        should.exist(index.sendToQueue);
+        done();
+    });
 });

@@ -6,7 +6,8 @@
   "author": "Nishant Jain",
   "license": "MIT",
   "scripts": {
-    "test": "node_modules/.bin/nyc node_modules/.bin/mocha $(find . -path ./node_modules -prune -o -name '*.test.js' -print)"
+    "test": "node_modules/.bin/nyc node_modules/.bin/mocha $(find . -path ./node_modules -prune -o -name '*.test.js' -print)",
+    "test-debug": "node_modules/.bin/nyc node_modules/.bin/mocha --debug-brk --inspect $(find . -path ./node_modules -prune -o -name '*.test.js' -print)"
   },
   "dependencies": {
     "async": "^2.5.0",

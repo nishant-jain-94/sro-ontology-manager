@@ -9,8 +9,7 @@ const createNodesAndRelationsFromTriples = highland.wrapCallback(require('./neo4
 
 const toTriplesOfMedia = (message) =>  {
     const header = message;
-    const oplog = JSON.parse(message.content.toString());
-    const percpMedia = oplog.o; 
+    const percpMedia = JSON.parse(message.content.toString());
     const subject = {
         propertiesOfSubject: {
             label: 'content',            

@@ -57,6 +57,16 @@ describe('NEO4J UTILS', (done) => {
         done();
     });
 
+    it('Should have mergeOrCreateNode', (done) => {
+        should.exist(index.mergeOrCreateNode);
+        done();
+    });
+
+    it('Should have mergeOrCreateRelation', (done) => {
+        should.exist(index.mergeOrCreateRelation);
+        done();
+    });
+
     it('Should have queryExecutor', (done) => {
         should.exist(index.queryExecutor);
         done();

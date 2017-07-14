@@ -1,2 +1,0 @@
-nameOfSourceNode,labelOfSourceNode,relation,nameOfTargetNode,labelOfTargetNode,isNecessary,importance
-AngularJS,concept,subConceptOf,MEANStack,concept,true,high

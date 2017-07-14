@@ -10,6 +10,8 @@ const queryProcessors = {
     findOrCreateNode: require('./findOrCreateNode'),
     getConstraints: require('./getConstraints'),
     getCountOfAllNodes: require('./getCountOfAllNodes'),
+    mergeOrCreateNode: require('./mergeOrCreateNode'),
+    mergeOrCreateRelation: require('./mergeOrCreateRelation'),
     queryExecutor: require('./queryExecutor'),
     config: require('./config')
 };
