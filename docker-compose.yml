@@ -14,6 +14,28 @@ services:
   #     - graphdb
   #     - mongodb
 
+  node_factory:
+    build: 
+      dockerfile: ontology_processors_neo4j/node_factory/Dockerfile
+      context: .
+    links:
+      - graphdb
+      - mongodb
+      - rabbitmq
+    env_file:
+      - ontology_manager.env
+
+  relation_factory:
+    build: 
+      dockerfile: ontology_processors_neo4j/node_factory/Dockerfile
+      context: .
+    links: 
+      - graphdb
+      - mongodb
+      - rabbitmq
+    env_file:
+      - ontology_manager.env
+
   graphdb:
     image: neo4j:latest
     environment:
@@ -36,6 +58,8 @@ services:
     
   mongosetup:
     image: mongo:latest
+    depends_on:
+     - mongodb
     volumes:
      - ./scripts:/scripts
      - ./dump:/dump
