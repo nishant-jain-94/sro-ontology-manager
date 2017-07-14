@@ -61,5 +61,5 @@ typings/
 /dump/
 /db
 
-
-
+# Code Editor Configuration file
+.vscode
