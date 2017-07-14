@@ -1,0 +1,10 @@
+{
+  "name": "percp_scope_1.media_content",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.5.0",
+    "highland": "^2.11.0"
+  }
+}
