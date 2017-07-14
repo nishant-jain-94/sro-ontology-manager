@@ -5,54 +5,59 @@ const highland = require('highland');
 const log = require('./sro_utils/logger');
 const normalize = require('./sro_utils/normalize');
 
-const createNodesAndRelationsFromTriples = highland.wrapCallback(require('./neo4j_utils/createNodesAndRelationsFromTriples'));
-
 const toTriplesOfConcepts = (message) =>  {
     const header = message;
-    const oplog = JSON.parse(message.content.toString());
-    const percpConcept = oplog.o; 
-    const subject = {
-        propertiesOfSubject: {
+    const percpConcept = JSON.parse(message.content.toString());
+    const source = {
+        properties: {
             label: 'concept',            
             name: percpConcept.title.normalize(),
             identifier: percpConcept.identifier            
+        },
+        options: {
+            uniqueConstraintsOn: [
+                'name'
+            ]
         }
     };
     
     const triplesOfConcepts = percpConcept.associations.map((association) => {
-        const object = {
-            propertiesOfObject: {
+        const target = {
+            properties: {
                 label: 'concept',                
                 name: association.conceptTitle.normalize(),
                 identifier: association.conceptId            
+            },
+            options: {
+                uniqueConstraintsOn: [
+                    'name'
+                    ]
             }
         };
 
-        const predicate = {
-            propertiesOfPredicate: {
+        const relation = {
+            properties: {
                 relation: association.tag.normalize()
             }
         };
 
         const triple = {};
     
-        _.assign(triple, subject, predicate, object);
-        return triple;
+        return {source, target, relation};
     });
 
     let triples;
     if(triplesOfConcepts.length > 0) {
          triples = triplesOfConcepts
     } else {
-        triples = [subject]
+        triples = [source]
     };
 
     return {header, triples};
 };
 
 const processor = highland.pipeline(
-    highland.map(toTriplesOfConcepts),
-    highland.flatMap(createNodesAndRelationsFromTriples)
+    highland.map(toTriplesOfConcepts)
 );
 
 module.exports = processor;

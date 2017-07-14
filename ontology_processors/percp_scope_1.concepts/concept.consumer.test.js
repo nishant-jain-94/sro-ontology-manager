@@ -6,7 +6,7 @@ const log = require('./sro_utils/logger');
 
 const consumer = require('./concept.consumer');
 
-const queue = 'percp_scope_1.concepts';
+const queue = 'concept';
 
 const deleteQueue = (channel, callback) => {
     channel.deleteQueue(queue);        
@@ -38,7 +38,8 @@ describe('Concept Consumer', (done) => {
         const readFromConsumer = (callback) => {
             consumer.each((data) => {
                 if(data) {
-                    log.debug("Consuming Data.");                
+                    log.debug("Consuming Data.");
+                    log.debug(data.content.toString());               
                     if(data.content.toString() === testMessageForConsumer) {
                         log.debug("Consumed data exactly equal to sent data");
                         callback();

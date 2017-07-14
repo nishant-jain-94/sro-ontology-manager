@@ -146,12 +146,18 @@ describe('Create conceptNodes from Stream', (done) => {
         
         const messageWrapper = (oplog) => {
             const message = {};
-            message["content"] = new Buffer(JSON.stringify(oplog));
+            message["content"] = new Buffer(JSON.stringify(oplog.o));
             return message;
         };
 
-        highland(conceptOplogs).map(messageWrapper).pipe(concepts).collect().toArray((s) => {
-            _.flattenDeep(s).length.should.be.exactly(4);
+        highland(conceptOplogs).map(messageWrapper).map(concepts).collect().toArray((s) => {
+            should.exist(s);
+            const results = s[0]
+            results.length.should.be.exactly(4);
+            results[0].triples.length.should.be.exactly(1);
+            results[1].triples.length.should.be.exactly(1);
+            results[2].triples.length.should.be.exactly(3);
+            results[3].triples.length.should.be.exactly(1);
             done();
         });
     });

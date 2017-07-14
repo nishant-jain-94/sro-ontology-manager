@@ -4,10 +4,10 @@ const highland = require('highland');
 const log = require('./sro_utils/logger');
 const {getAMQPChannel} = require('./amqp_utils');
 
-const queue = 'percp_scope_1.concepts';
+const queue = 'concept';
 
 const consumeQueue = (push, channel) => {
-    log.debug('Consumer Listening');
+    log.debug(`Consuming from ${queue} queue`);
     channel.assertQueue(queue, {});
     channel.consume(queue, function(message) {
         log.debug(`Received Message in ${queue}`);
@@ -24,4 +24,3 @@ const messageStream = highland((push, next) => {
 
     
 module.exports = messageStream;
-
