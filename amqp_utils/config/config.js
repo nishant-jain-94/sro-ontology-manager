@@ -1,3 +1,3 @@
 module.exports = {
-    AMQP_URL: 'amqp://localhost' || process.env.AMQP_URL
+    AMQP_URL: process.env.AMQP_URL || 'amqp://localhost'
 };
