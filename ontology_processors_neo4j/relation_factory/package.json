@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
+    "start": "node_modules/forever/bin/forever -o out.log -e err.log index.js",
     "test": "node_modules/.bin/nyc node_modules/.bin/mocha $(find . -path ./node_modules -prune -o -name '*.test.js' -print)"
   },
   "dependencies": {
@@ -12,6 +12,7 @@
     "highland": "^2.11.1"
   },
   "devDependencies": {
+    "forever": "^0.15.3",
     "mocha": "^3.4.2",
     "nyc": "^11.0.3",
     "should": "^11.2.1"

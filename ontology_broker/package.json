@@ -14,9 +14,10 @@
     "rmdir": "^1.2.0"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node_modules/forever/bin/forever --spinSleepTime 10000 -o logs/out.log -e logs/err.log index.js"
   },
   "devDependencies": {
+    "forever": "^0.15.3",
     "mocha": "^3.4.2",
     "should": "^11.2.1"
   }
