@@ -10,16 +10,29 @@ const streamOplog = (db, cb) => {
     const oplogStream = db.collection('oplog.rs').find({}, {
         tailable: true,
         awaitdata: true,
-        numberOfRetries: 10
+        numberOfRetries: -1
     }).stream();
 
     cb(null, oplogStream);
-}
+};
 
-const streamOplogToOplogHandler = (oplogStream) => highland('data', oplogStream)
-                                                               .through(oplogHandler)
-                                                               .flatMap(sendToQueue)
-                                                               .done();
+const printForDebug = (data) => {
+    log.debug(data);
+    return data;
+};
+
+const streamOplogToOplogHandler = (oplogStream) => {
+    oplogStream.on('error', (err) => {
+        process.exit(1);
+    });
+
+    highland('data', oplogStream)
+            .map(printForDebug)
+            .through(oplogHandler)
+            .flatMap(sendToQueue)
+            .done();
+
+}
 
 async.waterfall([
     getMongoDBConnection.bind(null, 'local'),
