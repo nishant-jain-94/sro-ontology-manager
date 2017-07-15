@@ -1,41 +1,69 @@
 version: '2'
 services:
-  # ontology-manager:
-  #   build: ./ontology-manager
-  #   environment:
-  #    - PERCEPTRON_DB_URI=mongodb://localhost/percp_scope_1
-  #    - NEO4J_USERNAME=neo4j
-  #    - NEO4J_PASSWORD=password
-  #    - NEO4J_HOST=graphdb
-  #    - NEO4J_DB_PORT=7474
-  #    - NEO4J_BOLT_PORT=7687
-  #    - NEO4J_PROTOCOL=bolt
-  #   links:
-  #     - graphdb
-  #     - mongodb
-
-  node_factory:
+  ontology_broker:
     build: 
-      dockerfile: ontology_processors_neo4j/node_factory/Dockerfile
-      context: .
+      context: ./ontology_broker
+    env_file:
+      - ontology_manager.env
+    volumes:
+      - ./amqp_utils:/usr/src/app/amqp_utils
+      - ./neo4j_utils:/usr/src/app/neo4j_utils
+      - ./sro_utils:/usr/src/app/sro_utils
+      - ./logs/ontology_broker:/usr/src/app/logs
     links:
       - graphdb
       - mongodb
       - rabbitmq
+      - mongosetup
+  
+  concept_processor:
+    build: ./ontology_processors/percp_scope_1.concepts
     env_file:
       - ontology_manager.env
+    volumes: 
+      - ./amqp_utils:/usr/src/app/amqp_utils
+      - ./neo4j_utils:/usr/src/app/neo4j_utils
+      - ./sro_utils:/usr/src/app/sro_utils
+      - ./logs/concept_processor:/usr/src/app/logs      
+    depends_on:
+      - ontology_broker
+    links:
+      - graphdb
+      - mongodb
+      - rabbitmq
+
+  node_factory:
+    build: ./ontology_processors_neo4j/node_factory
+    env_file:
+      - ontology_manager.env
+    volumes: 
+      - ./amqp_utils:/usr/src/app/amqp_utils
+      - ./neo4j_utils:/usr/src/app/neo4j_utils
+      - ./sro_utils:/usr/src/app/sro_utils
+      - ./logs/node_factory:/usr/src/app/logs      
+    depends_on:
+      - concept_processor
+    links:
+      - graphdb
+      - mongodb
+      - rabbitmq
 
   relation_factory:
-    build: 
-      dockerfile: ontology_processors_neo4j/node_factory/Dockerfile
-      context: .
+    build: ./ontology_processors_neo4j/node_factory
+    env_file:
+      - ontology_manager.env
+    volumes: 
+      - ./amqp_utils:/usr/src/app/amqp_utils
+      - ./neo4j_utils:/usr/src/app/neo4j_utils
+      - ./sro_utils:/usr/src/app/sro_utils
+      - ./logs/relation_factory:/usr/src/app/logs      
+    depends_on:
+      - concept_processor
     links: 
       - graphdb
       - mongodb
       - rabbitmq
-    env_file:
-      - ontology_manager.env
-
+  
   graphdb:
     image: neo4j:latest
     environment:
@@ -70,4 +98,3 @@ services:
     ports:
      - "5672:5672"
      - "15672:15672"
-    
