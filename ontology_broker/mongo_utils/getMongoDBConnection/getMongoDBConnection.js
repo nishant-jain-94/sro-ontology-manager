@@ -8,8 +8,14 @@ const getConnection = (db, cb) => {
         cb(null, dbs[mongodb_connection_url]);
     } else {
         MongoClient.connect(mongodb_connection_url, (err, db) => {
-            if(!err) dbs[mongodb_connection_url] = db;
-            cb(err, dbs[mongodb_connection_url]);
+            if(!err) {
+                dbs[mongodb_connection_url] = db;
+                cb(null, dbs[mongodb_connection_url]);
+                return;
+            } else {
+                cb(err, null);                
+                return;
+            }
         });
     }
 };
