@@ -54,17 +54,32 @@ describe("Merge or Create Relations", (done) => {
                properties: {
                 label: 'conceptTest',
                 name: 'Javascript'
+            },
+            options: {
+                uniqueConstraintsOn: [
+                    'name'
+                ]
             }
            },
            target: {
                properties: {
-                label: 'conceptTest',
-                name: 'AngularJS'
-            }
+                   label: 'conceptTest',
+                   name: 'AngularJS'
+                },
+                options: {
+                    uniqueConstraintsOn: [
+                        'name'
+                    ]
+                }
            },
            relation: {
                properties: {
                    relation: 'subConceptOf'
+                },
+                options: {
+                    uniqueConstraintsOn: [
+                        'name'
+                    ]
                 }
            }
        };
@@ -91,18 +106,33 @@ describe("Merge or Create Relations", (done) => {
                properties: {
                 label: 'conceptTest',
                 name: 'Javascript'
+            },
+            options: {
+                uniqueConstraintsOn: [
+                    'name'
+                ]
             }
            },
            target: {
                properties: {
-                label: 'conceptTest',
-                name: 'AngularJS'
-            }
+                   label: 'conceptTest',
+                   name: 'AngularJS'
+                },
+                options: {
+                    uniqueConstraintsOn: [
+                        'name'
+                    ]
+                }
            },
            relation: {
                properties: {
                    relation: 'subConceptOf',
                    importance: 'high'
+                },
+                options: {
+                    uniqueConstraintsOn: [
+                        'name'
+                    ]
                 }
            }
        };

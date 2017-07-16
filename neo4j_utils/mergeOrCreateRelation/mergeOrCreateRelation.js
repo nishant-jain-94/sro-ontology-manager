@@ -17,7 +17,7 @@ const mergeOrCreateRelation = (properties, cb) => {
     const labelOfSource = source.properties.label;
     const labelOfTarget = target.properties.label;
     const propertiesOfSource = _.pick(source.properties, ...source.options.uniqueConstraintsOn);
-    const propertiesOfTarget = _.pick(source.properties, ...target.options.uniqueConstraintsOn);
+    const propertiesOfTarget = _.pick(target.properties, ...target.options.uniqueConstraintsOn);
     const propertiesOfRelationship = _.omit(relation.properties, 'relation');
     const relationship = relation.properties.relation;
     const exclusionList = ['label'];
