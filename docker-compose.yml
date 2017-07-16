@@ -32,6 +32,22 @@ services:
       - mongodb
       - rabbitmq
 
+  content_processor:
+    build: ./ontology_processors/percp_scope_1.media_content
+    env_file:
+      - ontology_manager.env
+    volumes: 
+      - ./amqp_utils:/usr/src/app/amqp_utils
+      - ./neo4j_utils:/usr/src/app/neo4j_utils
+      - ./sro_utils:/usr/src/app/sro_utils
+      - ./logs/concept_processor:/usr/src/app/logs
+    depends_on:
+      - ontology_broker
+    links:
+      - graphdb
+      - mongodb
+      - rabbitmq    
+
   node_factory:
     build: ./ontology_processors_neo4j/node_factory
     env_file:
@@ -49,7 +65,7 @@ services:
       - rabbitmq
 
   relation_factory:
-    build: ./ontology_processors_neo4j/node_factory
+    build: ./ontology_processors_neo4j/relation_factory
     env_file:
       - ontology_manager.env
     volumes: 
