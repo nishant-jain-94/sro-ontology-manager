@@ -41,8 +41,6 @@ const toTriplesOfConcepts = (message) =>  {
             }
         };
 
-        const triple = {};
-    
         return {source, target, relation};
     });
 
