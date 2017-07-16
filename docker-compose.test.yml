@@ -1,4 +1,4 @@
-version: 2
+version: '2'
 services:
   graphdb:
     image: neo4j:latest
