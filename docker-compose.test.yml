@@ -1,0 +1,36 @@
+version: 2
+services:
+  graphdb:
+    image: neo4j:latest
+    environment:
+      - NEO4J_AUTH=neo4j/password
+    volumes:
+      - ./db/dbms:/data/dbms
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    restart: always
+
+  mongodb:
+    image: mongo:latest
+    hostname: mongodb
+    entrypoint: ["/usr/bin/mongod", "--replSet", "rs"]
+    ports:
+      - "27017:27017"
+      - "28017:28017"
+    restart: always
+      
+  mongosetup:
+    image: mongo:latest
+    depends_on:
+      - mongodb
+    volumes:
+      - ./scripts:/scripts
+      - ./dump:/dump
+    entrypoint: ["scripts/mongosetup.sh"]
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
