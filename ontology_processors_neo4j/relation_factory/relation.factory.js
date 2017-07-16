@@ -1,7 +1,7 @@
 const async = require('async');
 const {sendToQueue} = require('./amqp_utils');
 const highland = require('highland');
-const mergeOrCreateRelation = require('./neo4j_utils/mergeOrCreateRelation')    ;
+const mergeOrCreateRelation = require('./neo4j_utils/mergeOrCreateRelation');
 
 const toObject = (message) => {
     const triple = JSON.parse(message.content.toString());
@@ -15,11 +15,10 @@ const mergeOrCreateRelationWrapper = highland.wrapCallback(({header, triple}, cb
             const messageData = {
                 message: triple,
                 queue: 'relation_factory'
-            }
+            };
             console.log(triple);
             console.log(data);
             sendToQueue(messageData);
-            process.exit(1);
         };
         cb(err, {header, data});
     });
