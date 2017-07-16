@@ -7,51 +7,62 @@ const normalize = require('./sro_utils/normalize');
 
 const createNodesAndRelationsFromTriples = highland.wrapCallback(require('./neo4j_utils/createNodesAndRelationsFromTriples'));
 
-const toTriplesOfMedia = (mediaContent) =>  {
-    const percpMediaContent = mediaContent;
-    
-    const subject = {
-        propertiesOfSubject: {
+const toTriplesOfMedia = (message) =>  {
+    const header = message;
+    const percpMediaContent = JSON.parse(message.content.toString());
+    const source = {
+        properties: {
             label: 'content',            
             name: percpMediaContent.name.normalize(),
             identifier: percpMediaContent.identifier,
             contentType: percpMediaContent.contentType,
             contentSubType: percpMediaContent.contentSubType,
-            url: percpMediaContent.url
+            url: percpMediaContent.media[0].mediaUrl
+        },
+        options: {
+            uniqueConstraintsOn: [
+                'url'
+            ]
         }
     };
 
     const triplesOfMedia = percpMediaContent.concepts.map((concept) => {
-        const object = {
-            propertiesOfObject: {
+        const target = {
+            properties: {
                 label: 'concept',                
                 name: concept.conceptTitle.normalize(),
                 identifier: concept.conceptIdentifier           
+            },
+            options: {
+                uniqueConstraintsOn: [
+                    'url'
+                ]
             }
         };
 
-        const predicate = {
-            propertiesOfPredicate: {
+        const relation = {
+            properties: {
                 relation: 'explains'
             }
         };
 
-        const triple = {};
-    
-        _.assign(triple, subject, predicate, object);
-        return triple;
+        return {source, target, relation};
+
     });
 
+    let triples;
     if(triplesOfMedia.length > 0) {
-        return triplesOfMedia
+        triples = triplesOfMedia
     } else {
-        return [subject]
-    }
+        triples = [source]
+    };
+
+    return {header, triples};
 };
 
 const processor = highland.pipeline(
     highland.map(toTriplesOfMedia),
-    highland.flatMap(createNodesAndRelationsFromTriples),
-)
+    highland.flatMap(createNodesAndRelationsFromTriples)
+);
 
 module.exports = processor;

@@ -4,7 +4,7 @@ const highland = require('highland');
 const log = require('./sro_utils/logger');
 const {getAMQPChannel} = require('./amqp_utils');
 
-const queue = 'user';
+const queue = 'content';
 
 const consumeQueue = (push, channel) => {
     log.debug(`Consuming from ${queue} queue`);

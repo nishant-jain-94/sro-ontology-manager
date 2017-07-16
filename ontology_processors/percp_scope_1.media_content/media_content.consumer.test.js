@@ -4,7 +4,7 @@ const {config, getAMQPChannel} = require('./amqp_utils');
 
 const log = require('./sro_utils/logger');
 
-const consumer = require('./user.consumer');
+const consumer = require('./media_content.consumer');
 
 const queue = 'media_content';
 
