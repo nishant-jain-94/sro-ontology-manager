@@ -10,22 +10,28 @@ const createNodesAndRelationsFromTriples = highland.wrapCallback(require('./neo4
 const toUserNodes = (message) => {
     const header = message;
     const percpUser = JSON.parse(message.content.toString());
-    const subject = {
-        propertiesOfSubject: {
-            label: 'user',
-            name: percpUser.displayName.normalize(),
+    const source = {
+        properties: {
+            label: `user:${percpUser.userType}`,
+            userType: percpUser.userType,
+            displayName: percpUser.displayName.normalize(),
             identifier: percpUser.identifier,
-            uniqueId: percpUser.uniqueId
+            uniqueId: percpUser.uniqueId,
+            mongoId: percpUser._id
+        },
+        options: {
+            uniqueConstraintsOn: [
+                'uniqueId'
+            ]
         }
     };
-    const triples = [subject];
+    const triples = [{source}];
 
     return {header, triples};
 };
 
 const processor = highland.pipeline(
-    highland.map(toUserNodes),
-    highland.flatMap(createNodesAndRelationsFromTriples)
-)
+    highland.map(toUserNodes)
+);
 
 module.exports = processor;

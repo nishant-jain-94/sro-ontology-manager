@@ -79,13 +79,13 @@ describe("Merge or Create Relations", (done) => {
            relation: {
                properties: {
                    relation: 'subConceptOf'
+                },
+                options: {
+                    uniqueConstraintsOn: [
+                        'relation'
+                    ]
                 }
-           },
-            options: {
-                uniqueConstraintsOn: [
-                    'name'
-                ]
-            }
+           }
        };
        
        const messageWrapper = (triple) => {
@@ -140,11 +140,11 @@ describe("Merge or Create Relations", (done) => {
                    relation: 'subConceptOf',
                    importance: 'high'
                 },
-            options: {
-                uniqueConstraintsOn: [
-                    'name'
-                ]
-            }
+                options: {
+                    uniqueConstraintsOn: [
+                        'relation'
+                    ]
+                }
            }
        };
 

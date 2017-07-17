@@ -96,8 +96,15 @@ describe('Create conceptNodes from Stream', (done) => {
         };
 
         highland(users).map(messageWrapper).pipe(userProcessor).collect().toArray((s) => {
-            log.debug(s);
-            _.flattenDeep(s).length.should.be.exactly(1);
+            triples = s[0][0].triples;
+            log.debug(triples[0]);
+            triples[0].source.properties.label.should.be.exactly('user:student');
+            triples[0].source.properties.userType.should.be.exactly('student');
+            triples[0].source.properties.identifier.should.be.exactly('bathriv');
+            triples[0].source.properties.uniqueId.should.be.exactly("bathri.v93@wipro.com");
+            triples[0].source.properties.displayName.should.be.exactly("Bathri_V");
+            triples[0].source.options.uniqueConstraintsOn.length.should.be.exactly(1);
+            triples[0].source.options.uniqueConstraintsOn[0].should.be.exactly('uniqueId');
             done();
         });
     });

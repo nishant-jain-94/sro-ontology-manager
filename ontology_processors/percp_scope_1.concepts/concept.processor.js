@@ -11,8 +11,7 @@ const toTriplesOfConcepts = (message) =>  {
     const source = {
         properties: {
             label: 'concept',            
-            name: percpConcept.title.normalize(),
-            identifier: percpConcept.identifier            
+            name: percpConcept.title.normalize()
         },
         options: {
             uniqueConstraintsOn: [

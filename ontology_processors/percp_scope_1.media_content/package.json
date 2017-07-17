@@ -6,10 +6,19 @@
   "dependencies": {
     "async": "^2.5.0",
     "highland": "^2.11.1",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "nyc": "^11.0.3"
+  },
+  "scripts": {
+    "start": "node_modules/forever/bin/forever --spinSleepTime 10000 -o logs/out.log -e logs/err.log index.js",
+    "test": "node_modules/.bin/nyc node_modules/.bin/mocha $(find . -path ./node_modules -prune -o -name '*.test.js' -print)",
+    "test-debug": "node_modules/.bin/nyc node_modules/.bin/mocha --debug-brk --inspect $(find . -path ./node_modules -prune -o -name '*.test.js' -print)"
   },
   "author": "Nishant Jain",
   "devDependencies": {
+    "mocha": "^3.4.2",
+    "mongodb": "^2.2.30",
+    "nyc": "^11.0.3",
     "should": "^11.2.1"
   }
 }

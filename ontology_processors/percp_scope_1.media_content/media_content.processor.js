@@ -10,59 +10,65 @@ const createNodesAndRelationsFromTriples = highland.wrapCallback(require('./neo4
 const toTriplesOfMedia = (message) =>  {
     const header = message;
     const percpMediaContent = JSON.parse(message.content.toString());
-    const source = {
-        properties: {
-            label: 'content',            
-            name: percpMediaContent.name.normalize(),
-            identifier: percpMediaContent.identifier,
-            contentType: percpMediaContent.contentType,
-            contentSubType: percpMediaContent.contentSubType,
-            url: percpMediaContent.media[0].mediaUrl
-        },
-        options: {
-            uniqueConstraintsOn: [
-                'url'
-            ]
-        }
-    };
 
-    const triplesOfMedia = percpMediaContent.concepts.map((concept) => {
-        const target = {
+    let triplesOfMediaContent = percpMediaContent.media.map((media) => {
+        let source = {
             properties: {
-                label: 'concept',                
-                name: concept.conceptTitle.normalize(),
-                identifier: concept.conceptIdentifier           
+                label: `content`,            
+                name: percpMediaContent.media[0].title.normalize(),
+                mediaContentId: percpMediaContent.identifier,
+                contentType: percpMediaContent.contentType,
+                contentSubType: percpMediaContent.contentSubType?percpMediaContent.contentSubType:'None',
+                url: percpMediaContent.media[0].mediaUrl,
+                mongoId: percpMediaContent._id
             },
             options: {
                 uniqueConstraintsOn: [
-                    'url'
+                    'mediaContentId'
                 ]
             }
         };
+        let triplesOfConceptContent = percpMediaContent.concepts.map((concept) => {
+            let target = {
+                properties: {
+                    label: 'concept',
+                    name: concept.conceptTitle,
+                    conceptIdentifier: concept.conceptIdentifier
+                },
+                options: {
+                    uniqueConstraintsOn: [
+                        'name'
+                    ]
+                }
+            };
 
-        const relation = {
-            properties: {
-                relation: 'explains'
-            }
-        };
+            let relation = {
+                properties: {
+                    relation: 'explains'
+                },
+                options: {
+                    uniqueConstraintsOn: [
+                        'relation'
+                    ]
+                }
+            };
 
-        return {source, target, relation};
+            return {source, target, relation}
+        });
 
+        if(triplesOfConceptContent.length > 0) {
+            return triplesOfConceptContent
+        } else {
+            return [{source}]
+        }
     });
 
-    let triples;
-    if(triplesOfMedia.length > 0) {
-        triples = triplesOfMedia
-    } else {
-        triples = [source]
-    };
-
+    let triples = _.flatten(triplesOfMediaContent);
     return {header, triples};
 };
 
 const processor = highland.pipeline(
-    highland.map(toTriplesOfMedia),
-    highland.flatMap(createNodesAndRelationsFromTriples)
+    highland.map(toTriplesOfMedia)
 );
 
 module.exports = processor;
