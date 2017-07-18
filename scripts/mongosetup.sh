@@ -23,4 +23,4 @@ ls
 
 mongorestore -h ${MONGODB}:27017 /dump --noIndexRestore
 
-
+sleep 20
