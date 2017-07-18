@@ -15,7 +15,10 @@ echo "Started.."
 
 mongo --host ${MONGODB}:27017 <<EOF
     use local
-    rs.initiate();
+    rs.initiate({
+      _id: "rs0",
+      members: [{_id: 0, host: "localhost:27017"}]
+    })
 EOF
 cd /
 ls
