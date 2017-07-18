@@ -16,10 +16,11 @@ echo "Started.."
 mongo --host ${MONGODB}:27017 <<EOF
     use local
     rs.initiate();
+    rs.slaveOk();
 EOF
 cd /
 ls
 
 mongorestore -h ${MONGODB}:27017 /dump --noIndexRestore
 
-sleep 20
+

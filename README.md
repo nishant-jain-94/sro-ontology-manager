@@ -1,6 +1,5 @@
-## Stackroute Online Ontology Manager - Worker Queue
+# Stackroute Online Ontology Manager - Worker Queue  [![Build Status](https://travis-ci.org/nishant-jain-94/sro-ontology-manager.svg?branch=dev-mq)](https://travis-ci.org/nishant-jain-94/sro-ontology-manager)
 
-Status
 
 ### Approach
 ![RepresentingEntitiesUsingWorkerQueue](./thoughts/SRO-RepresentingEntitiesInGraphDBUsingWorkerQueues.png)
