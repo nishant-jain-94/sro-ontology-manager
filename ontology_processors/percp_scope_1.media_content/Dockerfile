@@ -1,4 +1,4 @@
-FROM node:boron
+FROM yarnpkg/node-yarn
 
 # Create app directory
 RUN mkdir -p /usr/src/app
@@ -6,9 +6,11 @@ WORKDIR /usr/src/app
 
 # Install app dependencies
 COPY package.json /usr/src/app
-RUN npm install
+RUN yarn install
 
 # Bundle app source
 COPY . /usr/src/app
 
-CMD ["npm", "start"]
+VOLUME /usr/src/app/neo4j_utils /usr/src/app/amqp_utils /usr/src/app/sro_utils
+
+CMD ["yarn", "start"]

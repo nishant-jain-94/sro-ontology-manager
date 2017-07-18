@@ -1,1 +1,0 @@
-module.exports = require('./learning_object_element');

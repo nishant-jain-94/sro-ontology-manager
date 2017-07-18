@@ -46,7 +46,55 @@ services:
     links:
       - graphdb
       - mongodb
-      - rabbitmq    
+      - rabbitmq
+
+  user_processor:
+    build: ./ontology_processors/percp_scope_1.user
+    env_file:
+      - ontology_manager.env
+    volumes: 
+      - ./amqp_utils:/usr/src/app/amqp_utils
+      - ./neo4j_utils:/usr/src/app/neo4j_utils
+      - ./sro_utils:/usr/src/app/sro_utils
+      - ./logs/concept_processor:/usr/src/app/logs
+    depends_on:
+      - ontology_broker
+    links:
+      - graphdb
+      - mongodb
+      - rabbitmq
+
+  learner_state_processor:
+    build: ./ontology_processors/percp_scope_1.learner_state
+    env_file:
+      - ontology_manager.env
+    volumes: 
+      - ./amqp_utils:/usr/src/app/amqp_utils
+      - ./neo4j_utils:/usr/src/app/neo4j_utils
+      - ./sro_utils:/usr/src/app/sro_utils
+      - ./logs/concept_processor:/usr/src/app/logs
+    depends_on:
+      - ontology_broker
+    links:
+      - graphdb
+      - mongodb
+      - rabbitmq
+
+  learning_resource_processor:
+    build: ./ontology_processors/percp_scope_1.learning_resource
+    env_file:
+      - ontology_manager.env
+    volumes: 
+      - ./amqp_utils:/usr/src/app/amqp_utils
+      - ./neo4j_utils:/usr/src/app/neo4j_utils
+      - ./sro_utils:/usr/src/app/sro_utils
+      - ./logs/concept_processor:/usr/src/app/logs
+    depends_on:
+      - ontology_broker
+    links:
+      - graphdb
+      - mongodb
+      - rabbitmq
 
   node_factory:
     build: ./ontology_processors_neo4j/node_factory
