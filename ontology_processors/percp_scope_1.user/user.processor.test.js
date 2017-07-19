@@ -98,7 +98,7 @@ describe('Create conceptNodes from Stream', (done) => {
         highland(users).map(messageWrapper).pipe(userProcessor).collect().toArray((s) => {
             triples = s[0][0].triples;
             log.debug(triples[0]);
-            triples[0].source.properties.label.should.be.exactly('user:student');
+            triples[0].source.properties.label.should.be.exactly('user');
             triples[0].source.properties.userType.should.be.exactly('student');
             triples[0].source.properties.identifier.should.be.exactly('bathriv');
             triples[0].source.properties.uniqueId.should.be.exactly("bathri.v93@wipro.com");

@@ -16,7 +16,7 @@ const deleteQueue = (channel, callback) => {
 
 const assertQueue = (channel, callback) => channel.assertQueue(queue, {}, callback);
 
-describe('Concept Consumer', (done) => {
+describe('Learner State Consumer', (done) => {
 
     before((done) => {
         async.waterfall([
@@ -37,6 +37,7 @@ describe('Concept Consumer', (done) => {
 
         const readFromConsumer = (callback) => {
             consumer.each((data) => {
+                log.debug(data);
                 if(data) {
                     log.debug("Consuming Data.");
                     log.debug(data.content.toString());               
