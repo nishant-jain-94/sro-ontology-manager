@@ -3,7 +3,7 @@
 echo "Waiting for the standalone Replica Set"
 
 apt-get update
-apt-get install iputils-ping
+apt-get install -y iputils-ping
 
 MONGODB=`ping -c 1 mongodb | head -1  | cut -d "(" -f 2 | cut -d ")" -f 1`
 
