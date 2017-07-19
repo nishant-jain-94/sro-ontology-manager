@@ -8,11 +8,13 @@
   },
   "scripts": {
     "install": "./scripts/installNpmPackagesForAllComponents.sh",
-    "test": "./testAllModules.sh"
+    "test": "./testAllModules.sh",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "author": "Nishant Jain <nishantkumarajain@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "coveralls": "^2.13.1",
     "mocha": "^3.4.2",
     "nyc": "^11.0.3"
   },
