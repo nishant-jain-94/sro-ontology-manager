@@ -1,10 +1,11 @@
 #!/bin/bash
 
 echo "Waiting for the standalone Replica Set"
-MONGODB=`ping -c 1 mongodb | head -1  | cut -d "(" -f 2 | cut -d ")" -f 1`
 
 apt-get update
 apt-get install iputils-ping
+
+MONGODB=`ping -c 1 mongodb | head -1  | cut -d "(" -f 2 | cut -d ")" -f 1`
 
 until curl http://${MONGODB}:28017/serverStatus\?text\=1 2>&1 | grep uptime | head -1; do
   printf '.'
