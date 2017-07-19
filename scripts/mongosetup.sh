@@ -3,6 +3,9 @@
 echo "Waiting for the standalone Replica Set"
 MONGODB=`ping -c 1 mongodb | head -1  | cut -d "(" -f 2 | cut -d ")" -f 1`
 
+apt-get update
+apt-get install iputils-ping
+
 until curl http://${MONGODB}:28017/serverStatus\?text\=1 2>&1 | grep uptime | head -1; do
   printf '.'
   sleep 1
@@ -13,10 +16,7 @@ echo "Started.."
 
 mongo --host ${MONGODB}:27017 <<EOF
     use local
-    rs.initiate({
-      _id: "rs",
-      members: [{_id: 0, host: "${MONGODB}:27017"}]
-    })
+    rs.initiate()
 EOF
 cd /
 ls
