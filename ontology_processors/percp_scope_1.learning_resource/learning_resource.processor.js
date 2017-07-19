@@ -12,11 +12,11 @@ const toTriplesOfLearningResources = (message) => {
         properties: {
             label: 'content',
             resourceId: percpLearningResource.identifier,
-            identifier: percpLearningResource.contentIdentifier
+            mediaContentId: percpLearningResource.contentIdentifier
         },
         options: {
             uniqueConstraintsOn: [
-                'identifier'
+                'mediaContentId'
             ]
         }
     };

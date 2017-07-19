@@ -12,7 +12,7 @@ const toUserNodes = (message) => {
     const percpUser = JSON.parse(message.content.toString());
     const source = {
         properties: {
-            label: `user:${percpUser.userType}`,
+            label: `user`,
             userType: percpUser.userType,
             displayName: percpUser.displayName.normalize(),
             identifier: percpUser.identifier,

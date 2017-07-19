@@ -3,9 +3,9 @@ const {getAMQPChannel} = require('./amqp_utils');
 const log = require('./sro_utils/logger');
 
 const ack = (message, channel, cb) => {
-    // log.debug(message);
+    log.debug(message);
     channel.ack(message);
-    // log.debug("Message Acknowledged");
+    log.debug("Message Acknowledged");
     cb();
 };
 

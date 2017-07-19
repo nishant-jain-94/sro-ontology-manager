@@ -10,7 +10,8 @@ const toObject = (message) => {
 
 const mergeOrCreateNodeWrapper = highland.wrapCallback(({header, triple}, cb) => {
     mergeOrCreateNode(triple, (err, results) => {
-        cb(err, {header, results});
+        if(err) process.exit(0);
+        else cb(null, {header, results});
     });
 });
 

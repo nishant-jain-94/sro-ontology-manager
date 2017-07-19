@@ -16,6 +16,7 @@
   },
   "author": "Nishant Jain",
   "devDependencies": {
+    "forever": "^0.15.3",
     "mocha": "^3.4.2",
     "mongodb": "^2.2.30",
     "nyc": "^11.0.3",

@@ -14,7 +14,7 @@ const toTriplesOfMedia = (message) =>  {
     let triplesOfMediaContent = percpMediaContent.media.map((media) => {
         let source = {
             properties: {
-                label: `content`,            
+                label: 'content',            
                 name: percpMediaContent.media[0].title.normalize(),
                 mediaContentId: percpMediaContent.identifier,
                 contentType: percpMediaContent.contentType,

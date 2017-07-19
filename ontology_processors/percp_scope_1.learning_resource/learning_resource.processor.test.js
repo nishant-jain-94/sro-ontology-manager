@@ -175,9 +175,9 @@ describe('Create conceptNodes from Stream', (done) => {
             const results = _.flatten(s);
             results[0].triples[0].source.properties.label.should.be.exactly('content');
             results[0].triples[0].source.properties.resourceId.should.be.exactly("info:fedora/learning:5194");
-            results[0].triples[0].source.properties.identifier.should.be.exactly("info:fedora/learning:8732");
+            results[0].triples[0].source.properties.mediaContentId.should.be.exactly("info:fedora/learning:8732");
             results[0].triples[0].source.options.uniqueConstraintsOn.length.should.be.exactly(1);
-            results[0].triples[0].source.options.uniqueConstraintsOn[0].should.be.exactly('identifier');
+            results[0].triples[0].source.options.uniqueConstraintsOn[0].should.be.exactly('mediaContentId');
             done();
         });
 

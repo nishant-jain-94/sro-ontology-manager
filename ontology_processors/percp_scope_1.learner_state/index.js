@@ -4,4 +4,4 @@ const learnerStateProcessor = require('./learner_state.processor');
 const learnerStateRouter = require('./learner_state.router');
 const log = require('./sro_utils/logger');
 
-learnerStream.pipe(learnerProcessor).pipe(learnerRouter).each(learnerAck);
+learnerStateStream.pipe(learnerStateProcessor).pipe(learnerStateRouter).each(learnerStateAck);

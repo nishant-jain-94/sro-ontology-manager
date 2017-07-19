@@ -2,6 +2,7 @@ const _  = require('lodash');
 const async = require('async');
 const highland = require('highland');
 const {sendToQueue} = require('./amqp_utils');
+const log = require('./sro_utils/logger');
 const doesPropertyExists = require('./sro_utils/doesPropertyExists');
 
 const routeUserToFactory = (data) => {
@@ -14,6 +15,9 @@ const routeUserToFactory = (data) => {
                 queue: 'node_factory'
             };
             sendToQueue(data);
+            log.debug('Message Sent to Node Factory');
+        } else {
+            log.debug('Packet Dropped');
         }
     };
     

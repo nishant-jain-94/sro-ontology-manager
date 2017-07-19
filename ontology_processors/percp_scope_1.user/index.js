@@ -1,7 +1,7 @@
-const userAck = require('./media_content.ack');
-const userStream = require('./media_content.consumer');
-const userProcessor = require('./media_content.processor');
-const userRouter = require('./media_content.router');
+const userAck = require('./user.ack');
+const userStream = require('./user.consumer');
+const userProcessor = require('./user.processor');
+const userRouter = require('./user.router');
 const log = require('./sro_utils/logger');
 
 userStream.pipe(userProcessor).pipe(userRouter).each(userAck);

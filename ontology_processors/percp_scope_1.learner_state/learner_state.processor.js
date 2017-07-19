@@ -11,11 +11,11 @@ const toTriplesOfLearnerState = (message) =>  {
     const source = {
         properties: {
             label: 'user',            
-            uniqueId: percpLearnerState.student_id
+            identifier: percpLearnerState.student_id
         },
         options: {
             uniqueConstraintsOn: [
-                'uniqueId'
+                'identifier'
             ]
         }
     };
