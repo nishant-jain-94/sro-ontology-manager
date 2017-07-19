@@ -1,4 +1,5 @@
-# Stackroute Online Ontology Manager - Worker Queue  [![Build Status](https://travis-ci.org/nishant-jain-94/sro-ontology-manager.svg?branch=dev-mq)](https://travis-ci.org/nishant-jain-94/sro-ontology-manager)
+# Stackroute Online Ontology Manager - Worker Queue  
+[![Build Status](https://travis-ci.org/nishant-jain-94/sro-ontology-manager.svg?branch=dev-mq)](https://travis-ci.org/nishant-jain-94/sro-ontology-manager) [![Coverage Status](https://coveralls.io/repos/github/nishant-jain-94/sro-ontology-manager/badge.svg?branch=dev-mq)](https://coveralls.io/github/nishant-jain-94/sro-ontology-manager?branch=dev-mq)
 
 
 ### Approach
