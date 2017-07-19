@@ -13,3 +13,5 @@ install:
   - yarn run install
 script:
   - yarn test
+after_script:
+  - docker-compose logs mongosetup
