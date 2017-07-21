@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Learner State Router</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="../docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="learner-state-router">Learner State Router</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h2 id="learner_state-router-js">learner_state.router.js</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Imports the required dependencies.
+<code>doesPropertyExists</code> method determines if a property exists in an Object. Returns true if the property exists else returns false.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lodash'</span>);
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">async</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async'</span>);
+<span class="hljs-keyword">const</span> highland = <span class="hljs-built_in">require</span>(<span class="hljs-string">'highland'</span>);
+<span class="hljs-keyword">const</span> {sendToQueue} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./amqp_utils'</span>);
+<span class="hljs-keyword">const</span> doesPropertyExists = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./sro_utils/doesPropertyExists'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p><code>routeLearnerStateToFactory</code> routes the incoming concepts to the concept queue.
+It inputs a <code>data</code> which has <code>triples</code> as an array.
+It maps each <code>triple</code> in the <code>triples</code> to <code>createNodesAndRelationshipObjects</code> which tends to create a node and relations for every triple.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p><code>createNodesAndRelationshipObject</code> inputs a <code>triple</code></p>
+<ol>
+<li>Then checks if the <code>source</code> has necessary properties for the node to be created. 
+If so it is send to the node_factory with the source object.</li>
+<li>Then checks if the <code>target</code> has necessary properties for the node to be created.
+If so it is send to the node_factory with the target object.</li>
+<li>Then checks if the <code>relations</code> has necessary properties for the relationship to be created.
+If so it is send to the relation_factory with the object containing <code>source</code>. <code>target</code> and <code>relation</code>.</li>
+</ol>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> routeLearnerStateToFactory = <span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> {triples} = data;  
+
+  <span class="hljs-keyword">const</span> createNodesAndRelationshipObjects = <span class="hljs-function">(<span class="hljs-params">triple</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span>(doesPropertyExists(triple, <span class="hljs-string">'relation.properties.relation'</span>)) {
+        <span class="hljs-keyword">const</span> data = {
+            <span class="hljs-attr">message</span>: triple,
+            <span class="hljs-attr">queue</span>: <span class="hljs-string">'relation_factory'</span>
+        };
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Sending to relation factory"</span>);
+        sendToQueue(data);
+    }
+  };
+
+  triples.map(createNodesAndRelationshipObjects);
+
+  <span class="hljs-keyword">return</span> data;
+
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Exports the routing pipeline. It maps the input stream to <code>routeConceptsToFactory</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = highland.pipeline(
+    highland.map(routeLearnerStateToFactory)
+);</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

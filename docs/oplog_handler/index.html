@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Ontology Broker</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="../docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="ontology-broker">Ontology Broker</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h2 id="ontology_broker-oplog_handler-index-js">ontology_broker/oplog_handler/index.js</h2>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-keyword">const</span> highland = <span class="hljs-built_in">require</span>(<span class="hljs-string">'highland'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p><code>handlers</code> creates a collection of <code>insertHandler</code> and <code>updateHandler</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> handlers = [
+    <span class="hljs-built_in">require</span>(<span class="hljs-string">'./insertHandler'</span>),
+    <span class="hljs-built_in">require</span>(<span class="hljs-string">'./updateHandler'</span>)
+    ];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p><code>oplogHandler</code> forks input stream to <code>inputHandler</code> and <code>updateHandler</code> and then returns a merged stream.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> oplogHandler = <span class="hljs-function">(<span class="hljs-params">s</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> streams = handlers.map(<span class="hljs-function">(<span class="hljs-params">handler</span>) =&gt;</span> s.fork().pipe(handler));
+
+    <span class="hljs-keyword">return</span> highland(streams).merge();
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Exports a merged stream of <code>insertHandler</code> and <code>updateHandler</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = oplogHandler;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
