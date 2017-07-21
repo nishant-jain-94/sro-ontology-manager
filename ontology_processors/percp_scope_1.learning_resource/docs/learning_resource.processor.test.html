@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>learning_resource.processor.test.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="learning_resource.ack.html">
+                  learning_resource.ack.js
+                </a>
+              
+                
+                <a class="source" href="learning_resource.consumer.html">
+                  learning_resource.consumer.js
+                </a>
+              
+                
+                <a class="source" href="learning_resource.consumer.test.html">
+                  learning_resource.consumer.test.js
+                </a>
+              
+                
+                <a class="source" href="learning_resource.processor.html">
+                  learning_resource.processor.js
+                </a>
+              
+                
+                <a class="source" href="learning_resource.processor.test.html">
+                  learning_resource.processor.test.js
+                </a>
+              
+                
+                <a class="source" href="learning_resource.router.html">
+                  learning_resource.router.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>learning_resource.processor.test.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lodash'</span>);
+<span class="hljs-keyword">const</span> should = <span class="hljs-built_in">require</span>(<span class="hljs-string">'should'</span>);
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">async</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async'</span>);
+<span class="hljs-keyword">const</span> highland = <span class="hljs-built_in">require</span>(<span class="hljs-string">'highland'</span>);
+<span class="hljs-keyword">const</span> learningResourceProcessor = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./learning_resource.processor'</span>);
+<span class="hljs-keyword">const</span> mongodb = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mongodb'</span>);
+<span class="hljs-keyword">const</span> {deleteAllNodes, dropAllConstraints} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./neo4j_utils'</span>);
+<span class="hljs-keyword">const</span> log  = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./sro_utils/logger'</span>);
+
+describe(<span class="hljs-string">'Create conceptNodes from Stream'</span>, (done) =&gt; {
+    before(<span class="hljs-function">(<span class="hljs-params">done</span>) =&gt;</span> {
+        <span class="hljs-keyword">async</span>.series([
+            deleteAllNodes,
+            dropAllConstraints
+        ], done);
+    });
+    
+    it(<span class="hljs-string">'Should create concept nodes from the stream'</span>, (done) =&gt; {
+    <span class="hljs-keyword">const</span> learning_resource =    {
+            <span class="hljs-string">"_id"</span> : <span class="hljs-keyword">new</span> mongodb.ObjectId(<span class="hljs-string">"58e62ec370528b2f6c86b706"</span>),
+            <span class="hljs-string">"metadata"</span> : {
+                <span class="hljs-string">"node_type"</span> : <span class="hljs-string">"NODE"</span>,
+                <span class="hljs-string">"object_uri"</span> : <span class="hljs-string">"info:fedora/learning:5194"</span>,
+                <span class="hljs-string">"setType"</span> : <span class="hljs-string">"learningresource"</span>,
+                <span class="hljs-string">"nodeId"</span> : <span class="hljs-string">"5kIXpIWQv6"</span>,
+                <span class="hljs-string">"codeName"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"description"</span> : <span class="hljs-string">"&lt;p&gt;In this video,Learn how to create radio buttons and checkbox elements and what the difference is between the two.&lt;/p&gt;"</span>,
+                <span class="hljs-string">"language"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"keyword"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"offeredBy"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"popularity"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"rating"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"completionResult"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"classificationStream"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"classificationSubject"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"isMandatory"</span> : <span class="hljs-literal">true</span>,
+                <span class="hljs-string">"structure"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"aggregationLevel"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"currentStatus"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"currentVersion"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"versionDate"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"versionNumber"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"versionRole"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"versionPerson"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"versionStatus"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"owner"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"copyRight"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"cost"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"contributors"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"annotationRecord"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"format"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"size"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"location"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"duration"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"purpose"</span> : <span class="hljs-string">"Knowledge"</span>,
+                <span class="hljs-string">"studyLevel"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"learnerLevel"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"intendedEndUserRole"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"difficultyLevel"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"interactivityType"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"context"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"learningTime"</span> : <span class="hljs-number">540</span>,
+                <span class="hljs-string">"semanticDensity"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"elementType"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"knowledgeDimension"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"bloomsTaxonomyLevel"</span> : <span class="hljs-string">"Remember"</span>,
+                <span class="hljs-string">"instructionUsage"</span> : <span class="hljs-string">"lecture"</span>,
+                <span class="hljs-string">"interactivityLevel"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"interactivityLocation"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"intervention"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"interventionRole"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"collaboration"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"evaluationType"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"learningStyle"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"placeInContainer"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"lessonType"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"tutoringMode"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"tutorType"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"tutorLearnerRatio"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"categorizeByLP"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"tutorHoursByProfile"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"tutorLanguage"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"tutorLRTypes"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"programTemplate"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"programAnswer"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"image"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"minProficiency"</span> : <span class="hljs-string">"100"</span>,
+                <span class="hljs-string">"proficiencyWeightage"</span> : <span class="hljs-string">"1"</span>,
+                <span class="hljs-string">"author"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"authorImage"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"authorProfileURL"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"ownerType"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"ownerImage"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"ownerProfileURL"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"offeredByType"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"offeredByImage"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"offeredByProfileURL"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"extendedMaterial"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"outcome"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"contentSource"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"shortDescription"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"synopsis"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"homeDescription"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"weeksDuration"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"hoursPerWeek"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"hoursOfVideo"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"objectives"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"projectDescription"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"projectImage"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"organizationName"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"organizationType"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"organizationURL"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"organizationImage"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"price"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"tutoringHours"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"conceptMapImage"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"startDate"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"endDate"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"timeUnit"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"offset"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"createdBy"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"showOnHomePage"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"packagesequenceid"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"outcomesequenceid"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"posterurl"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"height"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"width"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"packagefolder"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"startfile"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"title"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"mediaurl"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"mediatype"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"mimetype"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"ismain"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"contentid"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"media"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"latype"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"usageid"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"questionpaperid"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"mediaid"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"concepts"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"packageerror"</span> : <span class="hljs-string">""</span>,
+                <span class="hljs-string">"identifier"</span> : <span class="hljs-string">"info:fedora/learning:5194"</span>,
+                <span class="hljs-string">"descriptionVerified"</span> : <span class="hljs-literal">false</span>,
+                <span class="hljs-string">"type"</span> : <span class="hljs-string">""</span>
+            },
+            <span class="hljs-string">"learningTime"</span> : <span class="hljs-number">540</span>,
+            <span class="hljs-string">"minProficiency"</span> : <span class="hljs-number">100</span>,
+            <span class="hljs-string">"isMandatory"</span> : <span class="hljs-literal">true</span>,
+            <span class="hljs-string">"nodeSet"</span> : <span class="hljs-string">"learningresource"</span>,
+            <span class="hljs-string">"name"</span> : <span class="hljs-string">"Creating radio buttons and checkbox elements"</span>,
+            <span class="hljs-string">"courseId"</span> : <span class="hljs-string">"info:fedora/learning:4693"</span>,
+            <span class="hljs-string">"identifier"</span> : <span class="hljs-string">"info:fedora/learning:5194"</span>,
+            <span class="hljs-string">"is_deleted"</span> : <span class="hljs-literal">false</span>,
+            <span class="hljs-string">"supplementary_content"</span> : [ ],
+            <span class="hljs-string">"concepts"</span> : [ ],
+            <span class="hljs-string">"conditions"</span> : [ ],
+            <span class="hljs-string">"completionCriteria"</span> : [ ],
+            <span class="hljs-string">"preConditions"</span> : [ ],
+            <span class="hljs-string">"learningObjectives"</span> : [ ],
+            <span class="hljs-string">"nodeSetId"</span> : <span class="hljs-string">"info:fedora/learning:244"</span>,
+            <span class="hljs-string">"taxonomyId"</span> : <span class="hljs-string">"info:fedora/learning:114"</span>,
+            <span class="hljs-string">"lobId"</span> : <span class="hljs-string">"info:fedora/learning:8385"</span>,
+            <span class="hljs-string">"contentIdentifier"</span> : <span class="hljs-string">"info:fedora/learning:8732"</span>
+        };
+
+        
+        <span class="hljs-keyword">const</span> messageWrapper = <span class="hljs-function">(<span class="hljs-params">learnerState</span>) =&gt;</span> {
+            <span class="hljs-keyword">const</span> message = {};
+            message[<span class="hljs-string">"content"</span>] = <span class="hljs-keyword">new</span> Buffer(<span class="hljs-built_in">JSON</span>.stringify(learning_resource));
+            <span class="hljs-keyword">return</span> message;
+        };
+
+        highland([learning_resource]).map(messageWrapper).pipe(learningResourceProcessor).collect().toArray(<span class="hljs-function">(<span class="hljs-params">s</span>) =&gt;</span> {
+            <span class="hljs-keyword">const</span> results = _.flatten(s);
+            results[<span class="hljs-number">0</span>].triples[<span class="hljs-number">0</span>].source.properties.label.should.be.exactly(<span class="hljs-string">'content'</span>);
+            results[<span class="hljs-number">0</span>].triples[<span class="hljs-number">0</span>].source.properties.resourceId.should.be.exactly(<span class="hljs-string">"info:fedora/learning:5194"</span>);
+            results[<span class="hljs-number">0</span>].triples[<span class="hljs-number">0</span>].source.properties.mediaContentId.should.be.exactly(<span class="hljs-string">"info:fedora/learning:8732"</span>);
+            results[<span class="hljs-number">0</span>].triples[<span class="hljs-number">0</span>].source.options.uniqueConstraintsOn.length.should.be.exactly(<span class="hljs-number">1</span>);
+            results[<span class="hljs-number">0</span>].triples[<span class="hljs-number">0</span>].source.options.uniqueConstraintsOn[<span class="hljs-number">0</span>].should.be.exactly(<span class="hljs-string">'mediaContentId'</span>);
+            done();
+        });
+
+    });
+    
+    after(<span class="hljs-function">(<span class="hljs-params">done</span>) =&gt;</span> {
+        <span class="hljs-keyword">async</span>.series([
+            deleteAllNodes,
+            dropAllConstraints
+        ], done);
+    });
+});</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Concept Processor</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="concept.ack.html">
+                  concept.ack.js
+                </a>
+              
+                
+                <a class="source" href="concept.consumer.html">
+                  concept.consumer.js
+                </a>
+              
+                
+                <a class="source" href="concept.consumer.test.html">
+                  concept.consumer.test.js
+                </a>
+              
+                
+                <a class="source" href="concept.processor.html">
+                  concept.processor.js
+                </a>
+              
+                
+                <a class="source" href="concept.processor.test.html">
+                  concept.processor.test.js
+                </a>
+              
+                
+                <a class="source" href="concept.router.html">
+                  concept.router.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="concept-processor">Concept Processor</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h2 id="concept-processor-js">concept.processor.js</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p> Import required dependencies.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lodash'</span>);
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">async</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async'</span>);
+<span class="hljs-keyword">const</span> highland = <span class="hljs-built_in">require</span>(<span class="hljs-string">'highland'</span>);
+
+<span class="hljs-keyword">const</span> log = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./sro_utils/logger'</span>)(<span class="hljs-string">'Concept_Processor'</span>);
+<span class="hljs-keyword">const</span> normalize = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./sro_utils/normalize'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p><code>toTriplesOfConcepts</code> converts a concept document to a collection of triples.
+A triple is a combination of a source, target and relation. 
+<code>toTriplesOfConcepts</code> inputs a message(document) and then creates a collection of triple following the steps below.</p>
+<ol>
+<li>Stores the <code>message</code> in <code>header</code> which is to be used in later stages to send Acknowledgements.</li>
+<li>Parses the string in the message to the concept.</li>
+<li>Creates a <code>source</code> using the <code>label</code> and the <code>name</code>. With <code>name</code> being the property used to create concept Node.</li>
+<li>Then using the <code>associations</code> of the concept we create <code>target</code> and <code>relation</code>.</li>
+<li>And by this it generates a triple for each <code>association</code>.</li>
+<li>And then returns an object containing <code>header</code> and <code>triples</code></li>
+</ol>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> toTriplesOfConcepts = <span class="hljs-function">(<span class="hljs-params">message</span>) =&gt;</span>  {
+    <span class="hljs-keyword">const</span> header = message;
+    <span class="hljs-keyword">const</span> percpConcept = <span class="hljs-built_in">JSON</span>.parse(message.content.toString());
+    <span class="hljs-keyword">const</span> source = {
+        <span class="hljs-attr">properties</span>: {
+            <span class="hljs-attr">label</span>: <span class="hljs-string">'concept'</span>,            
+            <span class="hljs-attr">name</span>: percpConcept.title.normalize()
+        },
+        <span class="hljs-attr">options</span>: {
+            <span class="hljs-attr">uniqueConstraintsOn</span>: [
+                <span class="hljs-string">'name'</span>
+            ]
+        }
+    };
+    
+    <span class="hljs-keyword">const</span> triplesOfConcepts = percpConcept.associations.map(<span class="hljs-function">(<span class="hljs-params">association</span>) =&gt;</span> {
+        <span class="hljs-keyword">const</span> target = {
+            <span class="hljs-attr">properties</span>: {
+                <span class="hljs-attr">label</span>: <span class="hljs-string">'concept'</span>,                
+                <span class="hljs-attr">name</span>: association.conceptTitle.normalize(),
+                <span class="hljs-attr">identifier</span>: association.conceptId            
+            },
+            <span class="hljs-attr">options</span>: {
+                <span class="hljs-attr">uniqueConstraintsOn</span>: [
+                    <span class="hljs-string">'name'</span>
+                    ]
+            }
+        };
+
+        <span class="hljs-keyword">const</span> relation = {
+            <span class="hljs-attr">properties</span>: {
+                <span class="hljs-attr">relation</span>: association.tag.normalize()
+            }
+        };
+
+        <span class="hljs-keyword">return</span> {source, target, relation};
+    });
+
+    <span class="hljs-keyword">let</span> triples;
+    <span class="hljs-keyword">if</span>(triplesOfConcepts.length &gt; <span class="hljs-number">0</span>) {
+         triples = triplesOfConcepts
+    } <span class="hljs-keyword">else</span> {
+        triples = [source]
+    };
+
+    <span class="hljs-keyword">return</span> {header, triples};
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>The <code>processor</code> input a stream and maps it toTriplesOfConcepts.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> processor = highland.pipeline(
+    highland.map(toTriplesOfConcepts)
+);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Exports the processor.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = processor;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
