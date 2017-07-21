@@ -3,9 +3,13 @@
 
 
 ### Approach
-![RepresentingEntitiesUsingWorkerQueue](./thoughts/SRO-RepresentingEntitiesInGraphDBUsingWorkerQueues.png)
+![RepresentingEntitiesUsingWorkerQueue](./thoughts/SRO-RepresentingEntitiesInGraphDBUsingWorkerQueues-v1.1.png)
 
-TODO: Write more detailed instructions to run the code.
+## Running Ontology Manager
+
+```s
+docker-compose build --build -d
+```
 
 ### Running Node Factory Seperately ###
 

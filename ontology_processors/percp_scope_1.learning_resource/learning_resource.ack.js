@@ -4,8 +4,8 @@
 
 // Imports the required dependencies.
 const async = require('async');
-const {getAMQPChannel} = require('./amqp_utils')('Learner_Resource_Acknowledger');
-const log = require('./sro_utils/logger');
+const {getAMQPChannel} = require('./amqp_utils');
+const log = require('./sro_utils/logger')('Learner_Resource_Acknowledger');
 
 // `ack` Acknowledges the messsage to the Channel using the original `message` object which was dequeued from the queue.
 // `ack` inputs the following parameters
