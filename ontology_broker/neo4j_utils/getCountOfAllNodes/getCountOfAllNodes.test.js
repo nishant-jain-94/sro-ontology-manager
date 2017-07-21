@@ -3,7 +3,7 @@ const async = require('async');
 const queryExecutor = require('../queryExecutor');
 const deleteAllNodes = require('../deleteAllNodes');
 const createNode = require('../createNode');
-const log = require('../sro_utils/logger');
+const log = require('../sro_utils/logger')('NEO4J_UTILS:GET_COUNT_OF_ALL_NODES');
 const getCountOfAllNodes = require('./getCountOfAllNodes');
 
 const node = {label: 'concept', name: 'AngularJS', domain: 'frontend', level: 10, importance: 'high'};

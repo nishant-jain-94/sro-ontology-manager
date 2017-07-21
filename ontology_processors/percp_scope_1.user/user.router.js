@@ -1,10 +1,20 @@
+// # User Router
+
+// ## user.router.js
+
+// Imports the required dependencies.
+// `doesPropertyExists` method determines if a property exists in an Object. Returns true if the property exists else returns false.
 const _  = require('lodash');
 const async = require('async');
 const highland = require('highland');
 const {sendToQueue} = require('./amqp_utils');
-const log = require('./sro_utils/logger');
+const log = require('./sro_utils/logger')('User_Router');
 const doesPropertyExists = require('./sro_utils/doesPropertyExists');
 
+// `routeUserToFactory` routes the incoming user to the node factory.
+// `createNodeObjects` inputs a triple.
+// If the triple object has necessary properties for the node to be created. 
+// Then it sends the node the node_factory.
 const routeUserToFactory = (data) => {
     const {triples} = data;
 
@@ -25,6 +35,7 @@ const routeUserToFactory = (data) => {
     return data;
 };
 
+// Exports the routing pipeline. It maps the input stream to `routeUserToFactory`
 module.exports = highland.pipeline(
     highland.map(routeUserToFactory)
 );

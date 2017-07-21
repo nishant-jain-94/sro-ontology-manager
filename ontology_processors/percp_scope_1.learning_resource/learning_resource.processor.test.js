@@ -5,7 +5,7 @@ const highland = require('highland');
 const learningResourceProcessor = require('./learning_resource.processor');
 const mongodb = require('mongodb');
 const {deleteAllNodes, dropAllConstraints} = require('./neo4j_utils');
-const log  = require('./sro_utils/logger');
+const log  = require('./sro_utils/logger')('Learning_Resource_Processor_Test');
 
 describe('Create conceptNodes from Stream', (done) => {
     before((done) => {
@@ -15,7 +15,7 @@ describe('Create conceptNodes from Stream', (done) => {
         ], done);
     });
     
-    it('Should create concept nodes from the stream', (done) => {
+    it('Should create content nodes from the Learning Resource Stream', (done) => {
     const learning_resource =    {
             "_id" : new mongodb.ObjectId("58e62ec370528b2f6c86b706"),
             "metadata" : {

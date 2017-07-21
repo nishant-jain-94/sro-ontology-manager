@@ -1,7 +1,7 @@
 const async = require('async');
 const should = require('should');
 
-const log = require('../sro_utils/logger');
+const log = require('../sro_utils/logger')('NEO4J_UTILS:MERGE_OR_CREATE_NODE_TEST');
 const queryExecutor = require('../queryExecutor');
 const getConstraint = require('../getConstraints');
 const mergeOrCreateNode = require('./mergeOrCreateNode');

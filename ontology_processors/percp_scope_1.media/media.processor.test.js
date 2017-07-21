@@ -5,7 +5,7 @@ const highland = require('highland');
 
 const mediaProcessor = require('./media.processor');
 const {deleteAllNodes, dropAllConstraints} = require('./neo4j_utils');
-const log  = require('./sro_utils/logger');
+const log  = require('./sro_utils/logger')('MEDIA_PROCESSOR_TEST');
 
 describe('Create mediaNodes from Stream', (done) => {
     before((done) => {

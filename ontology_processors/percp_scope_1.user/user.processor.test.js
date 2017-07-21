@@ -5,9 +5,9 @@ const highland = require('highland');
 
 const userProcessor = require('./user.processor');
 const {deleteAllNodes, dropAllConstraints} = require('./neo4j_utils');
-const log  = require('./sro_utils/logger');
+const log  = require('./sro_utils/logger')('User_Processor_Test');
 
-describe('Create conceptNodes from Stream', (done) => {
+describe('Create User Nodes from Stream', (done) => {
     before((done) => {
         async.series([
             deleteAllNodes,
@@ -97,6 +97,7 @@ describe('Create conceptNodes from Stream', (done) => {
 
         highland(users).map(messageWrapper).pipe(userProcessor).collect().toArray((s) => {
             triples = s[0][0].triples;
+            log.debug("User");
             log.debug(triples[0]);
             triples[0].source.properties.label.should.be.exactly('user');
             triples[0].source.properties.userType.should.be.exactly('student');

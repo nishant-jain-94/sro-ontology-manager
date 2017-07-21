@@ -1,4 +1,4 @@
-const log = require('../sro_utils/logger');
+const log = require('../sro_utils/logger')("AMQP_UTILS:SEND_TO_QUEUE");
 const getAMQPChannel = require('../getAMQPChannel');
 
 const sendToQueue = ({message, queue, options={}}, cb) => {

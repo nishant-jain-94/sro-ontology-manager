@@ -2,8 +2,8 @@ const bunyan = require('bunyan');
 const bformat = require('bunyan-format');
 const formatOut = bformat({outputMode: 'short', levelInString: true});
 
-const logger = bunyan.createLogger({
-    name: 'Ontology-Manager',
+const logger = (moduleName) => bunyan.createLogger({
+    name: moduleName,
     stream: formatOut,
     level: 'debug'
 });

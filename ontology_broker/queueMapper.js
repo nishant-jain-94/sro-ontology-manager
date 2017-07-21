@@ -1,3 +1,8 @@
+// Ontology Broker
+
+// ## ontology_broker/queueMapper.js
+
+// Maps a Message of a certain type to the queue mapped. 
 const queueMapper = {
     'percp_scope_1.concepts': 'concept',
     'percp_scope_1.media_content': 'content',
@@ -6,4 +11,5 @@ const queueMapper = {
     'percp_scope_1.learning_resources': 'learning_resource'
 };
 
+// Exports the queueMapper Object.
 module.exports = queueMapper;

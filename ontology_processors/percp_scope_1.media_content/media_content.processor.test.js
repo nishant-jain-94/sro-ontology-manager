@@ -5,7 +5,7 @@ const highland = require('highland');
 const mongodb = require('mongodb');
 const mediaProcessor = require('./media_content.processor');
 const {deleteAllNodes, dropAllConstraints} = require('./neo4j_utils');
-const log  = require('./sro_utils/logger');
+const log  = require('./sro_utils/logger')('MEDIA_CONTENT_PROCESSOR');
 
 describe('Create mediaNodes from Stream', (done) => {
     before((done) => {
@@ -187,7 +187,6 @@ describe('Create mediaNodes from Stream', (done) => {
         };
 
         highland(media).map(messageWrapper).pipe(mediaProcessor).collect().toArray((s) => {
-            log.debug({s:s});
             s.length.should.be.exactly(1);
             should.exist(s[0][0].triples);
             let {source, target, relation} = s[0][0].triples[0];

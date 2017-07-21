@@ -1,11 +1,20 @@
+// # Relation Factory Consumer
+
+// ## relation.consumer.js
+
+// The Factory Consumer which consumes the message from the queue and creates Relation.
+
+// Imports the required dependencies.
 const async = require('async');
 const highland = require('highland');
 
-const log = require('./sro_utils/logger');
+const log = require('./sro_utils/logger')('Relation_Factory_Consumer');
 const {getAMQPChannel} = require('./amqp_utils');
 
+// `queue` refers to the name of the queue.
 const queue = 'relation_factory';
 
+// `consumeQueue` Consumes Message from `relation_factory` queue using the `channel` and then push into the stream using the `push` function.
 const consumeQueue = (push, channel) => {
     log.debug(`Consuming from ${queue} queue`);
     channel.assertQueue(queue, {});
@@ -15,6 +24,9 @@ const consumeQueue = (push, channel) => {
     }, {noack: false});
 };
 
+// A `messageStream` has the following stages.
+// 1. Get's the channel from where the messages are to be consumed using `getAMQPChannel`
+// 2. Consumes Queue using `consumeQueue`.
 const messageStream = highland((push, next) => {
     async.waterfall([
         getAMQPChannel.bind(null, 'AMQP_URL'),
@@ -22,5 +34,5 @@ const messageStream = highland((push, next) => {
     ]);
 });
 
-    
+// Exports the messageStream    
 module.exports = messageStream;

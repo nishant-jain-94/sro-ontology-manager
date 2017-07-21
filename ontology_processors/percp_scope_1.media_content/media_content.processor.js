@@ -1,12 +1,22 @@
+// # Media Content Processor
+
+// ## mediaContent.processor.js
+
+// Imports the required dependencies.
 const _ = require('lodash');
 const async = require('async');
 const highland = require('highland');
 
-const log = require('./sro_utils/logger');
+const log = require('./sro_utils/logger')('Media_Content_Processor');
 const normalize = require('./sro_utils/normalize');
 
-const createNodesAndRelationsFromTriples = highland.wrapCallback(require('./neo4j_utils/createNodesAndRelationsFromTriples'));
-
+// `toTriplesOfMedia` converts a Media Content Document to a Triple.
+// `toTriplesOfMedia` inputs a message and then creates a source node following the steps below.
+// 1. Stores the `message` in `header` which is to be used in later stages to send Acknowledgements
+// 2. Parses the string in the message to the mediaContent.
+// 3. Creates a source node using the `label`, `name` and other properties.
+// 4. The source node is created with uniqueConstraintsOn `mediaContentId` meaning that when the node is created `mediaContentId` is used as the pattern to create node.
+// 5. Then using the concepts in the mediaContentNode, triples of Concept and Content node is created.
 const toTriplesOfMedia = (message) =>  {
     const header = message;
     const percpMediaContent = JSON.parse(message.content.toString());
@@ -67,8 +77,10 @@ const toTriplesOfMedia = (message) =>  {
     return {header, triples};
 };
 
+// The `processor` input a stream and maps it toTriplesOfMedia.
 const processor = highland.pipeline(
     highland.map(toTriplesOfMedia)
 );
 
+// Exports the processor
 module.exports = processor;

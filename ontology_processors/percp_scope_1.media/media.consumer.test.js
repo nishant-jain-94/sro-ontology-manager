@@ -2,7 +2,7 @@ const async = require('async');
 const should = require('should');
 const {config, getAMQPChannel} = require('./amqp_utils');
 
-const log = require('./sro_utils/logger');
+const log = require('./sro_utils/logger')('MEDIA_CONSUMER_TEST');
 const consumer = require('./media.consumer');
 
 const queue = 'content';

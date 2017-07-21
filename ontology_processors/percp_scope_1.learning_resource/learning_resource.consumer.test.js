@@ -2,7 +2,7 @@ const async = require('async');
 const should = require('should');
 const {config, getAMQPChannel} = require('./amqp_utils');
 
-const log = require('./sro_utils/logger');
+const log = require('./sro_utils/logger')('Learning_Resource_Consumer_Test');
 
 const consumer = require('./learning_resource.consumer');
 
@@ -16,7 +16,7 @@ const deleteQueue = (channel, callback) => {
 
 const assertQueue = (channel, callback) => channel.assertQueue(queue, {}, callback);
 
-describe('Concept Consumer', (done) => {
+describe('Learning Resource Consumer', (done) => {
 
     before((done) => {
         async.waterfall([
@@ -39,7 +39,6 @@ describe('Concept Consumer', (done) => {
             consumer.each((data) => {
                 if(data) {
                     log.debug("Consuming Data.");
-                    log.debug(data.content.toString());               
                     if(data.content.toString() === testMessageForConsumer) {
                         log.debug("Consumed data exactly equal to sent data");
                         callback();

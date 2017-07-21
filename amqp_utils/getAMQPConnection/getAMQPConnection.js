@@ -1,5 +1,5 @@
 const amqp = require('amqplib/callback_api');
-const log = require('../sro_utils/logger');
+const log = require('../sro_utils/logger')('AMQP_UTILS:GET_AMQP_CONNECTION');
 
 let connection = {};
 

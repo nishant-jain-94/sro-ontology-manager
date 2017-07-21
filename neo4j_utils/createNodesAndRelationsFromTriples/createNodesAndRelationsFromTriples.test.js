@@ -2,7 +2,7 @@ const _ = require('lodash');
 const async = require('async');
 const should = require('should');
 
-const log = require('../sro_utils/logger');
+const log = require('../sro_utils/logger')('NEO4J_UTILS:CREATE_NODES_AND_RELATIONS_FROM_TRIPLES_TEST');
 const queryExecutor = require('../queryExecutor');
 const dropAllConstraints = require('../dropAllConstraints');
 const createNodesAndRelationsFromTriples = require('./createNodesAndRelationsFromTriples');

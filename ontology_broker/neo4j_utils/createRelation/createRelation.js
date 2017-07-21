@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const queryExecutor = require('../queryExecutor');
-const log = require('../sro_utils/logger');
+const log = require('../sro_utils/logger')('NEO4J_UTILS:CREATE_RELATION');
 
 
 const createRelation = (properties, callback) => {

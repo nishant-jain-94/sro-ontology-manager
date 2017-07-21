@@ -16,6 +16,7 @@
     "nyc": "^11.0.3"
   },
   "devDependencies": {
+    "docco": "^0.7.0",
     "forever": "^0.15.3",
     "mocha": "^3.4.2",
     "mongodb": "^2.2.30",

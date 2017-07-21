@@ -12,6 +12,7 @@
     "highland": "^2.11.0"
   },
   "devDependencies": {
+    "docco": "^0.7.0",
     "forever": "^0.15.3",
     "mocha": "^3.4.2",
     "nyc": "^11.0.3",
