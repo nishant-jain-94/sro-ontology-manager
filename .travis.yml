@@ -14,7 +14,7 @@ install:
   - yarn run install
 script:
   - yarn test
-  - zip -r sro-ontology-manager.zip .
+  - zip -qr sro-ontology-manager.zip -x *.git* node_modules/\*
 after_success:
   - yarn run coverage
 deploy:
