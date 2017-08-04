@@ -6,7 +6,7 @@ node_js:
 services:
   - docker
 before_script:
-  - apt-get install zip
+  - sudo apt-get install zip
   - docker-compose -f docker-compose.test.yml up --build -d
   - docker-compose logs mongosetup
   - sh scripts/createSymlinks.sh
