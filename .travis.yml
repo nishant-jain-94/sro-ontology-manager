@@ -6,6 +6,7 @@ node_js:
 services:
   - docker
 before_script:
+  - apt-get install zip
   - docker-compose -f docker-compose.test.yml up --build -d
   - docker-compose logs mongosetup
   - sh scripts/createSymlinks.sh
@@ -13,5 +14,11 @@ install:
   - yarn run install
 script:
   - yarn test
+  - zip -r sro-ontology-manager.zip .
 after_success:
   - yarn run coverage
+deploy:
+  provider: releases
+  api_key: "d25d090673072e52ead9aa66ebff62cbe292db3f"
+  file: 'sro-ontology-manager.zip'
+  skip_cleanup: true
