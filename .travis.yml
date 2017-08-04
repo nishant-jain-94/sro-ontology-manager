@@ -19,6 +19,6 @@ after_success:
   - yarn run coverage
 deploy:
   provider: releases
-  api_key: "d25d090673072e52ead9aa66ebff62cbe292db3f"
+  api_key: ${GITHUB_OAUTH_TOKEN}
   file: 'sro-ontology-manager.zip'
   skip_cleanup: true
