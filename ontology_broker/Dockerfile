@@ -1,4 +1,4 @@
-FROM yarnpkg/node-yarn
+FROM node:alpine
 
 # Create app directory
 RUN mkdir -p /usr/src/app
