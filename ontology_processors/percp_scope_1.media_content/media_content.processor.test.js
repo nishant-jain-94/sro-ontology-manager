@@ -7,7 +7,7 @@ const mediaProcessor = require('./media_content.processor');
 const {deleteAllNodes, dropAllConstraints} = require('./neo4j_utils');
 const log  = require('./sro_utils/logger')('MEDIA_CONTENT_PROCESSOR');
 
-describe('Create mediaNodes from Stream', (done) => {
+describe('Create Media Content Nodes from Stream', (done) => {
     before((done) => {
         async.series([
             deleteAllNodes,
@@ -15,7 +15,7 @@ describe('Create mediaNodes from Stream', (done) => {
         ], done);
     });
     
-    it('Should create Media Content nodes from the Stream', (done) => {
+    it('Should Create Media Content Nodes from the Stream', (done) => {
         const media = [
             {
                 "_id" : new mongodb.ObjectId("58e62ec370528b2f6c86b728"),
@@ -189,7 +189,8 @@ describe('Create mediaNodes from Stream', (done) => {
         highland(media).map(messageWrapper).pipe(mediaProcessor).collect().toArray((s) => {
             s.length.should.be.exactly(1);
             should.exist(s[0][0].triples);
-            let {source, target, relation} = s[0][0].triples[0];
+            log.debug({triples: s[0][0].triples});
+            var {source, target, relation} = s[0][0].triples[0];
             source.properties.label.should.be.exactly("content");
             source.properties.name.should.be.exactly("Deleting_Attributes");
             source.properties.contentType.should.be.exactly("lecture");
@@ -198,9 +199,22 @@ describe('Create mediaNodes from Stream', (done) => {
             source.options.uniqueConstraintsOn[0].should.be.exactly("mediaContentId");
             target.properties.label.should.be.exactly("concept");
             target.properties.name.should.be.exactly("Properties in Javascript");
-            target.properties.conceptIdentifier.should.be.exactly("info:fedora/learning:7177");
+            target.properties.conceptId.should.be.exactly("info:fedora/learning:7177");
             target.options.uniqueConstraintsOn[0].should.be.exactly("name");
             relation.properties.relation.should.be.exactly("explains");
+            relation.options.uniqueConstraintsOn[0].should.be.exactly('relation');
+            
+            var {source, target, relation} = s[0][0].triples[1];
+            source.properties.label.should.be.exactly("content");
+            source.properties.name.should.be.exactly("Deleting_Attributes");
+            source.properties.contentType.should.be.exactly("lecture");
+            source.properties.contentSubType.should.be.exactly("None");
+            source.properties.mongoId.should.be.exactly("58e62ec370528b2f6c86b728");
+            source.options.uniqueConstraintsOn[0].should.be.exactly("mediaContentId");
+            target.properties.label.should.be.exactly("course");
+            target.properties.courseId.should.be.exactly("info:fedora/learning:4693");
+            target.options.uniqueConstraintsOn[0].should.be.exactly("identifier");
+            relation.properties.relation.should.be.exactly("usedIn");
             relation.options.uniqueConstraintsOn[0].should.be.exactly('relation');
             done();
         });

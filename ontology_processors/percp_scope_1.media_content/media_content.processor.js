@@ -21,59 +21,92 @@ const toTriplesOfMedia = (message) =>  {
     const header = message;
     const percpMediaContent = JSON.parse(message.content.toString());
 
-    let triplesOfMediaContent = percpMediaContent.media.map((media) => {
-        let source = {
+    let source = {
+        properties: {
+            label: 'content',
+            mediaContentId: percpMediaContent.identifier,
+            contentType: percpMediaContent.contentType,
+            contentSubType: percpMediaContent.contentSubType?percpMediaContent.contentSubType:'None',
+            mongoId: percpMediaContent._id
+        },
+        options: {
+            uniqueConstraintsOn: [
+                'mediaContentId'
+            ]
+        }
+    };
+
+    percpMediaContent.media.map((media) => {
+        source.properties.displayName = media.title;
+        source.properties.url = media.url;
+    });
+        
+    let triplesOfConceptContent = percpMediaContent.concepts.map((concept) => {
+        let target = {
             properties: {
-                label: 'content',            
-                name: percpMediaContent.media[0].title.normalize(),
-                mediaContentId: percpMediaContent.identifier,
-                contentType: percpMediaContent.contentType,
-                contentSubType: percpMediaContent.contentSubType?percpMediaContent.contentSubType:'None',
-                url: percpMediaContent.media[0].mediaUrl,
-                mongoId: percpMediaContent._id
+                label: 'concept',
+                name: concept.conceptTitle ? concept.conceptTitle.normalize() : "",
+                conceptId: concept.conceptIdentifier
             },
             options: {
                 uniqueConstraintsOn: [
-                    'mediaContentId'
+                    'name'
                 ]
             }
         };
-        let triplesOfConceptContent = percpMediaContent.concepts.map((concept) => {
-            let target = {
-                properties: {
-                    label: 'concept',
-                    name: concept.conceptTitle,
-                    conceptIdentifier: concept.conceptIdentifier
-                },
-                options: {
-                    uniqueConstraintsOn: [
-                        'name'
-                    ]
-                }
-            };
 
-            let relation = {
-                properties: {
-                    relation: 'explains'
-                },
-                options: {
-                    uniqueConstraintsOn: [
-                        'relation'
-                    ]
-                }
-            };
+        let relation = {
+            properties: {
+                relation: 'explains'
+            },
+            options: {
+                uniqueConstraintsOn: [
+                    'relation'
+                ]
+            }
+        };
 
-            return {source, target, relation}
-        });
-
-        if(triplesOfConceptContent.length > 0) {
-            return triplesOfConceptContent
-        } else {
-            return [{source}]
-        }
+        return {source, target, relation}
     });
 
-    let triples = _.flatten(triplesOfMediaContent);
+
+    let linkedCourses = percpMediaContent.linkedCourses.filter((course) => course !== "");
+    let triplesOfCourseContent = linkedCourses.map((course) => {
+        let target = {
+            properties: {
+                label: 'course',
+                courseId: course
+            },
+            options: {
+                uniqueConstraintsOn: [
+                    'courseId'
+                ]
+            }
+        };
+
+        let relation = {
+            properties: {
+                relation: 'usedIn'
+            },
+            options: {
+                uniqueConstraintsOn: [
+                    'relation'
+                ]
+            }
+        };
+        
+        return {source, target, relation};
+    });
+
+
+    let triples = _.concat(triplesOfConceptContent, triplesOfCourseContent);
+
+    if(!triples.length) {
+        triples.push({source})
+    }
+
+    triples = _.flatten(triples);
+    log.debug(triples);
     return {header, triples};
 };
 

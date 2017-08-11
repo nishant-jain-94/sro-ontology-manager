@@ -1,18 +1,18 @@
-// # Concept Consumer
+// # Course Consumer
 
-// ## concept.consumer.js
+// ## course.consumer.js
 
 // Imports the required depenedencies.
 const async = require('async');
 const highland = require('highland');
 
-const log = require('./sro_utils/logger')('Concept_Consumer');
+const log = require('./sro_utils/logger')('Course_Consumer');
 const {getAMQPChannel} = require('./amqp_utils');
 
 // `queue` refers to the name of the queue.
-const queue = 'concept';
+const queue = 'course';
 
-// `consumeQueue` Consumes Message from `concepts` queue using the `channel` and then push into the stream using the `push` function.
+// `consumeQueue` Consumes Message from `course` queue using the `channel` and then push into the stream using the `push` function.
 const consumeQueue = (push, channel) => {
     log.debug(`Consuming from ${queue} queue`);
     channel.assertQueue(queue, {});
