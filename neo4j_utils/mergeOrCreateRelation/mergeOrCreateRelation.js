@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const async = require('async');
 const queryExecutor = require('../queryExecutor');
+const log = require('../sro_utils/logger')('MERGE_OR_CREATE_RELATION');
 
 const mergeOrCreateRelation = (properties, cb) => {
     const stringifyPropertiesOfRelationship = (properties, exclusionList=[]) => JSON.stringify(_.omit(properties, ...exclusionList)).replace(/\"(\w+)\":/g, "$1:");

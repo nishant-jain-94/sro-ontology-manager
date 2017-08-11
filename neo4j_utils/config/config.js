@@ -1,5 +1,5 @@
 const neo4j_config = {
-NEO4J_HOST: process.env.NEO4J_HOST || 'localhost',
+    NEO4J_HOST: process.env.NEO4J_HOST || 'localhost',
     NEO4J_PORT: process.env.NEO4J_PORT || 7474,
     NEO4J_BOLT_PORT: process.env.NEO4J_BOLT_PORT || 7687,
     NEO4J_PROTOCOL: process.env.NEO4J_PROTOCOL || 'bolt',

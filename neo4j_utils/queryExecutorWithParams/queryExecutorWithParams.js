@@ -5,12 +5,12 @@ const session = driver.session();
 const log = require('../sro_utils/logger')('Query_Executor');
 let queries = [];
 
-const queryExecutor = (query, callback) => {
+const queryExecutorWithParams = (query, params, callback) => {
 	log.debug(query);
 	return session
-			.run(query)
+			.run(query, params)
 			.then((result) => { return callback(null, result); })
 			.catch((error) => { log.error(error); return callback(error, null); });
 }
 
-module.exports = queryExecutor;
+module.exports = queryExecutorWithParams;

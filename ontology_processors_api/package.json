@@ -1,0 +1,27 @@
+{
+  "name": "ontology-processors-api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "./node_modules/.bin/nyc ./node_modules/.bin/mocha $(find . -type f -name '*.test.js' ! -path './node_modules*' ! -path './amqp_utils*' ! -path './mongo_utils*' ! -path './neo4j_utils*' ! -path './sro_utils*')"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "express": "~4.14.0",
+    "jade": "~1.11.0",
+    "lodash": "^4.17.4",
+    "mongodb": "^2.2.30",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.4.2",
+    "nyc": "^11.0.3",
+    "proxyquire": "^1.8.0",
+    "should": "^11.2.1",
+    "supertest": "^3.0.0"
+  }
+}
