@@ -72,6 +72,21 @@ describe('NEO4J UTILS', (done) => {
         done();
     });
 
+    it('Should have bulkQueryExecutor', (done) => {
+        should.exist(index.bulkQueryExecutor);
+        done();
+    });
+
+    it('Should have bulkMergeOrCreateNode', (done) => {
+        should.exist(index.bulkMergeOrCreateNode);
+        done();
+    });
+
+    it('Should have bulkMergeOrCreateRelation', (done) => {
+        should.exist(index.bulkMergeOrCreateRelation);
+        done();
+    });
+
     it('Should have config', (done) => {
         should.exist(index.config);
         done();
