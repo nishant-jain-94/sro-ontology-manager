@@ -11,10 +11,9 @@ const log = require('./sro_utils/logger')('Node_Factory_Acknowledger');
 // `ack` inputs the following parameters
 // 1. `message` - refers to the message dequeued.
 // 2. `channel` - refers to channel through which acknowledgement has to be made.
-const ack = (message, channel, cb) => {
-    channel.ack(message);
-    log.debug("Message Acknowledged");
-    cb();
+const ack = (message, channel) => {
+    channel.ack(message.headers[message.headers.length - 1], true);
+    log.debug("Nodes Acknowledged");
 };
 
 // Acknowledger does the following operations
@@ -23,6 +22,6 @@ const ack = (message, channel, cb) => {
 module.exports = (message) => {
     async.waterfall([
         getAMQPChannel.bind(null, 'AMQP_URL'),
-        ack.bind(null, message.header)
+        ack.bind(null, message)
     ]);
 };

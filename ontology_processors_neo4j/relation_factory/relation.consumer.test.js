@@ -16,7 +16,7 @@ const deleteQueue = (channel, callback) => {
 
 const assertQueue = (channel, callback) => channel.assertQueue(queue, {}, callback);
 
-describe('Concept Consumer', (done) => {
+describe('Relation Consumer', (done) => {
 
     before((done) => {
         async.waterfall([
