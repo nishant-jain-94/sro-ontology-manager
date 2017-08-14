@@ -4,7 +4,7 @@ const proxyquire = require('proxyquire');
 const log = require('../sro_utils/logger')('CONCEPT_ROUTES_TEST.JS');
 const mediaContent = require('./mediaContents.json');
 
-const conceptRoutes = proxyquire('./concept.routes.js', {
+const conceptRoutes = proxyquire('./concept.router.js', {
     './concept.controller.js': {
         'fetchAllTheContentsWhichExplainsThisConcept': function(concept, cb) {
             cb(null, mediaContent);
