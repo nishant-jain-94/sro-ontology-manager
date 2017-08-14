@@ -1,22 +1,9 @@
+<div class="mat-title header">Courses</div>
 <div class="courses-wrapper">
-  <!-- <md-card class="courses-card">
-    <md-card-header>
-      <md-card-title>Course Title</md-card-title>
-    </md-card-header>
+  <md-card routerLink='{{course.courseId | encodeUriComponent}}' class="courses-card" *ngFor="let course of coursesItems">
+    <md-card-title>{{course.displayName}}</md-card-title>
     <md-card-content>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non diam sed neque scelerisque porta vitae facilisis eros. Sed sed erat fringilla, dignissim velit quis, porttitor lacus. Morbi lacinia nisl ut tincidunt pharetra. Nam congue commodo neque, nec vulputate neque auctor eget. Sed ac erat ac velit rhoncus dictum.</p>
-    </md-card-content>
-  </md-card> -->
-  <md-card class="courses-card" *ngFor="let course of coursesItems">
-    <md-card-header>
-      <md-card-title>{{course.courseTitle}}</md-card-title>
-    </md-card-header>
-    <md-card-content>
-      <p>{{course.courseDescription}}</p>
-    </md-card-content>
-    <md-card-actions class="course-action-buttons">
-      <button md-button>Related Concepts</button>
-      <button md-button>Related Contents</button>
-  </md-card-actions>
+      <p>{{course.description | slice:0:300}}</p>
+    </md-card-content>  
   </md-card>
 </div>

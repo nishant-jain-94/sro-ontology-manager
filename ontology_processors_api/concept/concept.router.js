@@ -62,4 +62,20 @@ router.get('/:conceptId/subconcepts', (req, res, next) => {
     });
 });
 
+router.get('/:conceptId/details', (req, res, next) => {
+    let options = {
+        page: req.query.page ? req.query.page : 1,
+        limit: 1000
+    };
+    
+    conceptController.fetchAllRelatedItems(req.params.conceptId, options, (err, concepts) => {
+        if(!err) {
+            res.json(concepts)
+        } else {
+            log.error(err);
+            next(err);
+        }
+    });
+});
+
 module.exports = router;

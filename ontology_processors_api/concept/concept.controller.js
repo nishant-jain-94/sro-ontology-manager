@@ -87,11 +87,78 @@ const fetchAllTheSubConcepts = (conceptId, options, cb) => {
     });
 };
 
+const fetchConceptById = (conceptId, options, cb) => {
+    const skip = (options.page - 1) * options.limit;     
+    const query = `MATCH (n:concept {identifier: "${conceptId}"}) return n ORDER BY n.name SKIP ${skip} LIMIT ${options.limit}`;
+    queryExecutor(query, (err, data) => {
+        if(!err) {
+            const records = data.records.map((record) => {
+                return record._fields[0].properties;
+            });
+            cb(null, records)
+        } else {
+            cb(err, null)
+        }
+    });
+};
+
+const fetchAllRelatedItems = (conceptId, options, cb) => {
+    async.parallel([
+        fetchConceptById.bind(null, conceptId, options),
+        fetchAllTheAssociatedContents.bind(null, conceptId, options),
+        fetchAllTheSubConcepts.bind(null, conceptId, options)
+    ], (err, results) => {
+        if(!err) {
+
+        [concept, contents, subconcepts] = results;
+        
+        let relatedContents = contents.map((content) => {
+            return {
+                entityId: content.mediaContentId,
+                entityType: 'contents',
+                entityName: content.displayName?content.displayName:'Not Available'
+            }
+        });
+
+        let relatedSubConcepts = subconcepts.map((concept) => {
+            return {
+                entityId: concept.identifier,
+                entityType: 'concepts',
+                entityName: concept.displayName
+            };
+        });
+
+        let [conceptAndItsRelatedEntities] = concept.map((concept) => {
+            return {
+                entityId: concept.identifier,
+                entityType: 'concepts',
+                entityName: concept.displayName,
+                relatedGroups: [
+                    {
+                        name: 'subconcepts',
+                        entities: relatedSubConcepts
+                    },
+                    {
+                        name: 'contents',
+                        entities: relatedContents
+                    }
+                ]
+            };
+        });
+        
+        cb(null, conceptAndItsRelatedEntities);
+        } else {
+            cb(err, null);
+        }
+    });
+};
+
 module.exports = {
     fetchAllConcepts,
     fetchAllTheAssociatedContents,
     fetchAllTheSubConcepts,
     listAllTheContentIdsWhichExplainsThisConceptFromGraphDB,
     fetchAllTheContentsMatchingListOfContentIdsFromMongoDB,
-    fetchAllTheContentsWhichExplainsThisConcept
+    fetchAllTheContentsWhichExplainsThisConcept,
+    fetchAllRelatedItems
 };

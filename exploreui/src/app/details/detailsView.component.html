@@ -1,0 +1,13 @@
+<div class="mat-title">Entities Related to {{details?.entityName}}</div>
+<md-tab-group>
+  <md-tab *ngFor="let group of details?.groups" label="{{group.name | uppercase}}">
+    <div class="entities">
+      <md-card routerLink="/{{entity.entityType}}/{{entity.entityId | encodeUriComponent}}/details" *ngFor="let entity of group.entities">
+        <md-card-title>{{entity?.entityName | slice:0:20}}</md-card-title>
+        <md-card-content>
+          <p>{{entity?.entityId}}{{entity?.description}}</p>
+        </md-card-content>
+      </md-card>
+    </div>
+  </md-tab>
+</md-tab-group>
