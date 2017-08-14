@@ -50,7 +50,7 @@ describe('Node Factory', (done) => {
         highland([nodes]).map(messageWrapper).pipe(node_factory).each(({results}) => {
             log.debug({results: results})
             results.summary.counters._stats.nodesCreated.should.be.exactly(2);
-            results.summary.counters._stats.labesAdded.should.be.exactly(2);
+            results.summary.counters._stats.labelsAdded.should.be.exactly(2);
             done();
         });       
     });
