@@ -15,10 +15,10 @@ cd ../../ontology_processors_neo4j/relation_factory && npm install
 cd ../../ontology_processors/percp_scope_1.concepts && npm install
 cd ../../ontology_processors/percp_scope_1.learner_state && npm install
 cd ../../ontology_processors/percp_scope_1.learning_object_element && npm install
-cd ../../ontology_processors/percp_scope_1.media && npm install
 cd ../../ontology_processors/percp_scope_1.media_content && npm install
 cd ../../ontology_processors/percp_scope_1.user && npm install
 cd ../../ontology_processors/percp_scope_1.learning_resource && npm install
 cd ../../ontology_processors/percp_scope_1.questions && npm install
+cd ../../ontology_processors/percp_scope_1.course && npm install
 cd ../../ontology_processors_api/ && npm install
 cd ../sro_utils/ && npm install
