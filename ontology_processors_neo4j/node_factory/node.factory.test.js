@@ -49,8 +49,8 @@ describe('Node Factory', (done) => {
        const start = Date.now();
         highland([nodes]).map(messageWrapper).pipe(node_factory).each(({results}) => {
             log.debug({results: results})
-            results.counters._stats.nodesCreated.should.be.exactly(2);
-            results.counters._stats.labesAdded.should.be.exactly(2);
+            results.summary.counters._stats.nodesCreated.should.be.exactly(2);
+            results.summary.counters._stats.labesAdded.should.be.exactly(2);
             done();
         });       
     });
