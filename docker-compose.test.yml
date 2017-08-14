@@ -2,7 +2,8 @@ version: '2'
 services:
   ontology_processors_api:
     build:
-      context: ./ontology_processors_api/Dockerfile.test
+      context: ./ontology_processors_api
+      dockerfile: Dockerfile.test
     env_file:
       - ontology_manager.test.env
     volumes:
