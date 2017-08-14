@@ -7,8 +7,8 @@ services:
     volumes:
       - ./db/dbms:/data/dbms
     ports:
-      - "7475:7474"
-      - "7688:7687"
+      - "7474:7474"
+      - "7687:7687"
     restart: always
 
   mongodb:
@@ -16,8 +16,8 @@ services:
     hostname: mongodb
     entrypoint: ["/usr/bin/mongod", "--replSet", "rs"]
     ports:
-      - "27018:27017"
-      - "28018:28017"
+      - "27017:27017"
+      - "28017:28017"
     restart: always
       
   mongosetup:
@@ -32,5 +32,5 @@ services:
   rabbitmq:
     image: rabbitmq:management
     ports:
-      - "5673:5672"
-      - "15673:15672"
+      - "5672:5672"
+      - "15672:15672"
