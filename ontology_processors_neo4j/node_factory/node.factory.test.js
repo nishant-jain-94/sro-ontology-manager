@@ -45,18 +45,12 @@ describe('Node Factory', (done) => {
            return triples.map((triple) => {
                return { content: new Buffer(JSON.stringify(triple)) };
            });
-       };
+       };   
        const start = Date.now();
         highland([nodes]).map(messageWrapper).pipe(node_factory).each(({results}) => {
             log.debug({results: results})
-            const record = results[0].records[0];
-            record.length.should.be.exactly(1);
-            record._fields[0].properties.importance.should.be.exactly('high');
-            record._fields[0].properties.domain.should.be.exactly('frontend');
-            record._fields[0].properties.name.should.be.exactly('AngularJS');
-            record._fields[0].labels[0].should.be.exactly('concept');
-            const stop = Date.now();
-            log.debug("Total Time", stop - start);
+            results.counters._stats.nodesCreated.should.be.exactly(2);
+            results.counters._stats.labesAdded.should.be.exactly(2);
             done();
         });       
     });
