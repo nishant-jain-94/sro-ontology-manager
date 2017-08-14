@@ -23,7 +23,7 @@ app.use('/concepts', concepts);
 app.use('/contents', contents);
 app.use('/courses', courses);
 
-// app.use('/private/v1/concept', concepts);
+app.use('/private/v1/concept', concepts);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
