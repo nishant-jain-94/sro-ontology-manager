@@ -19,5 +19,6 @@ cd ../../ontology_processors/percp_scope_1.media && npm install
 cd ../../ontology_processors/percp_scope_1.media_content && npm install
 cd ../../ontology_processors/percp_scope_1.user && npm install
 cd ../../ontology_processors/percp_scope_1.learning_resource && npm install
+cd ../../ontology_processors/percp_scope_1.questions && npm install
 cd ../../ontology_processors_api/ && npm install
 cd ../sro_utils/ && npm install
