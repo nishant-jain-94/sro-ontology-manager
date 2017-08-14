@@ -49,4 +49,16 @@ router.get('/:contentId/courses', (req, res, next) => {
     });
 });
 
+router.get('/:contentId/details', (req, res, next) => {
+    let pageOptions = {
+        page: req.query.page ? req.query.page : 1,
+        limit: 1000
+    };
+
+    contentController.fetchAllRelatedItems(req.params.contentId, pageOptions, (err, data) => {
+        if(!err) res.json(data);
+        else next(err);
+    });
+});
+
 module.exports = router;

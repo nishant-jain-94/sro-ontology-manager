@@ -1,7 +1,9 @@
 import {
   MdButtonModule,
   MdToolbarModule,
-  MdCardModule
+  MdCardModule,
+  MdDialogModule,
+  MdTabsModule
 } from '@angular/material';
 
 import { NgModule } from '@angular/core';
@@ -12,12 +14,16 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     MdButtonModule,
     MdCardModule,
-    MdToolbarModule
+    MdToolbarModule,
+    MdTabsModule,
+    MdDialogModule
   ],
   exports: [
     MdButtonModule,
     MdCardModule,
-    MdToolbarModule
+    MdToolbarModule,
+    MdDialogModule,
+    MdTabsModule
   ]
 })
 export class MaterialModule { }

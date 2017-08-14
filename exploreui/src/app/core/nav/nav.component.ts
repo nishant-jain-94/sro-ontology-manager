@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-nav',
@@ -6,10 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
+  showShadow: boolean;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  @HostListener("window:scroll")
+  onScroll() {
+    if(window.scrollY)
+      this.showShadow = true;
+    else
+      this.showShadow = false;
   }
 
 }
