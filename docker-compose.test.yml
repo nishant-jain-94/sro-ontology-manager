@@ -1,21 +1,5 @@
 version: '2'
 services:
-  ontology_processors_api:
-    build:
-      context: ./ontology_processors_api
-      dockerfile: Dockerfile.test
-    env_file:
-      - ontology_manager.test.env
-    volumes:
-      - ./neo4j_utils:/usr/src/app/neo4j_utils
-      - ./sro_utils:/usr/src/app/sro_utils
-      - ./logs/ontology_broker:/usr/app/logs
-    links:
-      - graphdb
-      - mongodb
-      - rabbitmq
-      - mongosetup
-    
   graphdb:
     image: neo4j:latest
     environment:
