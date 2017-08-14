@@ -1,5 +1,17 @@
+header {
+  position: fixed;
+  z-index: 999999;
+  width: 100%;
+}
+
+.header-corner {
+  margin-left: 15px;
+  cursor: pointer;
+  color: rgba(0,0,0,0.54);
+}
+
 .explore-title, .other-links {
-  color: black;
+  color: rgba(0,0,0,0.54);
   text-decoration: none;
   cursor: pointer;
 }
@@ -20,6 +32,11 @@
 .explore-toolbar {
   justify-content: space-between;
   background-color: white;
+  border-bottom: 1px solid;
+  border-color: rgba(0,0,0,0.14);
+}
+
+.explore-navbar-shadow {
   box-shadow: 0 2px 4px -1px rgba(0,0,0,0.06), 0 4px 5px 0 rgba(0,0,0,0.06), 0 1px 10px 0 rgba(0,0,0,0.08);
 }
 

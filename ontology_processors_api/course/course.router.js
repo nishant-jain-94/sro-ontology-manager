@@ -3,7 +3,6 @@ const router = express.Router();
 const courseController = require('./course.controller.js');
 
 router.get('/', (req, res, next) => {
-    
     let pageOptions = {
         page: req.query.page ? req.query.page : 1,
         maxResults: 20
@@ -19,7 +18,6 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:courseId/concepts', (req, res, next) => {
-    
     let pageOptions = {
         page: req.query.page ? req.query.page : 1,
         maxResults: 20
@@ -32,13 +30,24 @@ router.get('/:courseId/concepts', (req, res, next) => {
 });
 
 router.get('/:courseId/contents', (req, res, next) => {
-    
     let pageOptions = {
         page: req.query.page ? req.query.page : 1,
         maxResults: 20
     };
 
     courseController.fetchAllContentsAssociatedWithCourse(req.params.courseId, pageOptions, (err, data) => {
+        if(!err) res.json(data);
+        else next(err);
+    });
+});
+
+router.get('/:courseId/details', (req, res, next) => {
+    let pageOptions = {
+        page: req.query.page ? req.query.page : 1,
+        maxResults: 1000
+    };
+
+    courseController.fetchAllRelatedItems(req.params.courseId, pageOptions, (err, data) => {
         if(!err) res.json(data);
         else next(err);
     });

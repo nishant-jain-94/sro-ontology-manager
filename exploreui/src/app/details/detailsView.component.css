@@ -1,0 +1,21 @@
+.primary-header {
+    height: 15%;
+    background: whitesmoke;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.56);
+}
+
+.entities {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.entities > md-card {
+    margin: 25px;
+    height: 110px;
+    width: 250px;
+}
+
+.action-buttons {
+    display: flex;
+    flex-flow: row-reverse;
+}

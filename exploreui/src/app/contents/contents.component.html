@@ -1,3 +1,9 @@
-<p>
-  contents works!
-</p>
+<div class="mat-title header">Contents</div>
+<div class="contents-wrapper">
+  <md-card routerLink='{{content.mediaContentId | encodeUriComponent}}' class="contents-card" *ngFor="let content of contents">
+    <md-card-title>{{content.displayName}}</md-card-title>
+    <md-card-content>
+      <p>{{content.description | slice:0:300}}</p>
+    </md-card-content>  
+  </md-card>
+</div>
