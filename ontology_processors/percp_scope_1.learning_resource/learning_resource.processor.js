@@ -20,17 +20,74 @@ const toTriplesOfLearningResources = (message) => {
     const percpLearningResource = JSON.parse(message.content.toString());
     const source = {
         properties: {
-            label: 'content',
-            resourceId: percpLearningResource.identifier,
-            mediaContentId: percpLearningResource.contentIdentifier
+            label: 'resource',
+            resourceId: percpLearningResource.identifier
         },
         options: {
             uniqueConstraintsOn: [
-                'mediaContentId'
+                'resourceId'
             ]
         }
     };
-    let triples = [{source}];
+    
+    const triplesOfLearningResourceAndConcepts = percpLearningResource.concepts.map((concept) => {
+        const target = {
+            properties: {
+                label: 'concept',
+                name: concept.conceptTitle.normalize() 
+            },
+            options: {
+                uniqueConstraintsOn: [
+                    'name'
+                ]
+            }
+        };
+
+        const relation = {
+            properties: {
+                relation: 'explains'
+            }
+        };
+        return {source, target, relation};
+    });
+
+    let triplesOfLearningResourceAndContent = [{source, target: {
+            properties: {
+                label: 'content',
+                mediaContentId: percpLearningResource.contentIdentifier
+            },
+            options: {
+                uniqueConstraintsOn: [
+                    'mediaContentId'
+                ]
+            }
+        },
+        relation: {
+            properties: {
+                relation: 'aggregates'
+            }
+        }
+    }];
+
+    let triplesOfLearningResourceAndCourse = [{source, target: {
+            properties: {
+                label: 'course',
+                courseId: percpLearningResource.courseId
+            },
+            options: {
+                uniqueConstraintsOn: [
+                    'courseId'
+                ]
+            }
+        },
+        relation: {
+            properties: {
+                relation: 'usedIn'
+            }
+        }
+    }];
+
+    let triples = _.concat(triplesOfLearningResourceAndConcepts, triplesOfLearningResourceAndContent, triplesOfLearningResourceAndCourse);
 
     return {header, triples};
 };

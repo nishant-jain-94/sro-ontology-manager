@@ -33,7 +33,7 @@ const routeConceptsToFactory = (data) => {
             };
             sendToQueue(data);
         }
-        
+
         if(doesPropertyExists(triple, 'target.properties.label') && doesPropertyExists(triple, 'target.properties.name')) {
             const data = {
                 message: triple.target,

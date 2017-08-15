@@ -10,6 +10,27 @@ const highland = require('highland');
 const {sendToQueue} = require('./amqp_utils');
 const doesPropertyExists = require('./sro_utils/doesPropertyExists');
 
+const createNodesAndRelationshipObjects = (triple) => {
+
+    if(doesPropertyExists(triple, 'source.properties.label') && doesPropertyExists(triple, 'source.properties.mediaContentId')) {
+        const data = {
+            message: triple.source,
+            queue: 'node_factory'
+        };
+        sendToQueue(data);
+    }
+    
+    if(doesPropertyExists(triple, 'relation.properties.relation')) {
+        const data = {
+            message: triple,
+            queue: 'relation_factory'
+        };
+        console.log("Sending to relation factory");
+        sendToQueue(data);
+    }
+    
+};
+
 // `routeMediaContentToFactory` routes the incoming media content to node_factory and relation_factory.
 // It inputs a `data` which has `triples` as an array.
 // It maps each `triple` in the `triples` to `createNodesAndRelationshipObjects` which tends to create a node and relations for every triple.
@@ -23,38 +44,9 @@ const doesPropertyExists = require('./sro_utils/doesPropertyExists');
 // If so it is send to the relation_factory with the object containing `source`. `target` and `relation`.
 const routeMediaContentToFactory = (data) => {
     const {triples} = data;
-
-    const createNodesAndRelationshipObjects = (triple) => {
-
-        if(doesPropertyExists(triple, 'source.properties.label') && doesPropertyExists(triple, 'source.properties.name')) {
-            const data = {
-                message: triple.source,
-                queue: 'node_factory'
-            };
-            sendToQueue(data);
-        }
-        
-        if(doesPropertyExists(triple, 'target.properties.label') && doesPropertyExists(triple, 'target.properties.name')) {
-            const data = {
-                message: triple.target,
-                queue: 'node_factory'
-            };
-            sendToQueue(data);
-        }
-        
-        if(doesPropertyExists(triple, 'relation.properties.relation')) {
-            const data = {
-                message: triple,
-                queue: 'relation_factory'
-            };
-            console.log("Sending to relation factory");
-            sendToQueue(data);
-        }
     
-    };
-
     triples.map(createNodesAndRelationshipObjects);
-
+    
     return data;
 };
 

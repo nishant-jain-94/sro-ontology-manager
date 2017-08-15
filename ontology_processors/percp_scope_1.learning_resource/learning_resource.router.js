@@ -16,12 +16,30 @@ const doesPropertyExists = require('./sro_utils/doesPropertyExists');
 const routeLearningResourceToFactory = (data) => {
     const {triples} = data;
     const createNodesAndRelationshipObjects = (triple) => {
-        if(doesPropertyExists(triple, 'source.properties.mediaContentId')) {
+        if(doesPropertyExists(triple, 'source.properties.resourceId')) {
             const data = {
                 message: triple.source,
                 queue: 'node_factory'
             };
             log.debug("Sending to node factory");
+            sendToQueue(data);
+        }
+
+        if(doesPropertyExists(triple, 'target.properties.name')) {
+            const data = {
+                message: triple.target,
+                queue: 'node_factory'
+            };
+            log.debug("Sending to node factory");
+            sendToQueue(data);
+        }
+
+        if(doesPropertyExists(triple, 'relation.properties.relation')) {
+            const data = {
+                message: triple,
+                queue: 'relation_factory'
+            };
+            log.debug("Sending to relation factory");
             sendToQueue(data);
         }
         else {

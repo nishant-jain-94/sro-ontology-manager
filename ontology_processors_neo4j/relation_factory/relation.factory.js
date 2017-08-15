@@ -22,23 +22,24 @@ const toObject = (message) => {
 };
 
 // `mergeOrCreateRelationWrapper` is a wrapper around mergeOrCreateRelation which makes it easier to use with highland pipeline.
-const mergeOrCreateRelationWrapper = highland.wrapCallback(({header, triple}, cb) => {
-    mergeOrCreateRelation(triple, (err, data) => {
-        if (data.records.length === 0) {
-            const messageData = {
-                message: triple,
-                queue: 'relation_factory'
-            };
-            sendToQueue(messageData);
-        };
-        cb(err, {header, data});
+const mergeOrCreateRelationWrapper = highland.wrapCallback(({triple, header}, cb) => {
+    mergeOrCreateRelation(triple, (err, results) => {
+        if(err) { log.error(err); return cb(err, null); }
+        else {
+            cb(null, {header, results});
+        }
     });
 });
 
 // `relation_factory` is a stream with following stages
 // 1. Converts the incoming message to the object using `toObject`
 // 2. Maps the message to the `mergeOrCreateRelationWrapper` which either merges or creates a relation based on it's availability. 
-const relation_factory = (s) => s.map(toObject).flatMap(mergeOrCreateRelationWrapper);
+// const relation_factory = (s) => s.map(toObject).flatMap(mergeOrCreateRelationWrapper);
+
+const relation_factory = highland.pipeline(
+    highland.map(toObject),
+    highland.flatMap(mergeOrCreateRelationWrapper)
+);
 
 // Exports the `relation_factory`
 module.exports = relation_factory;

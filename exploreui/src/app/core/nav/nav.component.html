@@ -1,0 +1,14 @@
+<header>
+  <md-toolbar class="explore-toolbar" [ngClass]="{'explore-navbar-shadow': showShadow}">
+    <div class="header-corner" ng-click="goToHome()" role="button">
+      <span class="mat-title">Stackroute</span>
+      <span class="mat-subheading-2">Explore</span>
+    </div>
+    <span class="explore-nav-spacer"></span>
+    <div>
+      <a class="other-links" routerLink="courses" routerLinkActive="active" >Courses</a>
+      <a class="other-links" routerLink="concepts" routerLinkActive="active">Concepts</a>
+      <a class="other-links" routerLink="contents" routerLinkActive="active">Contents</a>
+    </div>
+  </md-toolbar>
+</header>

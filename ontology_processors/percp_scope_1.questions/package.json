@@ -1,0 +1,27 @@
+{
+  "name": "percp_scope_1.questions",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Nishant Jain",
+  "license": "MIT",
+  "scripts": {
+    "start": "node_modules/forever/bin/forever --spinSleepTime 10000 -o logs/out.log -e logs/err.log index.js",
+    "test": "node_modules/.bin/nyc node_modules/.bin/mocha $(find . -path ./node_modules -prune -o -name '*.test.js' -print)"
+  },
+  "dependencies": {
+    "async": "^2.5.0",
+    "highland": "^2.11.1",
+    "lodash": "^4.17.4",
+    "mocha": "^3.4.2",
+    "nyc": "^11.0.3",
+    "should": "^11.2.1"
+  },
+  "devDependencies": {
+    "docco": "^0.7.0",
+    "forever": "^0.15.3",
+    "mocha": "^3.4.2",
+    "mongodb": "^2.2.30",
+    "nyc": "^11.0.3",
+    "should": "^11.2.1"
+  }
+}

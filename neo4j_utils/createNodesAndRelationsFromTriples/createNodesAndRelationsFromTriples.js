@@ -7,7 +7,6 @@ const findOrCreateNode = require('../findOrCreateNode');
 const createRelation = require('../createRelation');
 
 const createNodesAndRelationsFromTriples = (data, cb) => {
-    console.log(data.triples);
     const {triples} = data;
     const createPayload = (results, cb) => {
         const payload = {

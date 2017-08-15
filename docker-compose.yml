@@ -25,12 +25,30 @@ services:
       - ./neo4j_utils:/usr/src/app/neo4j_utils
       - ./sro_utils:/usr/src/app/sro_utils
       - ./logs/concept_processor:/usr/src/app/logs      
+      - ./ontology_processors/node_factory:/usr/src/app/node_factory
+      - ./ontology_processors/relation_factory:/usr/src/app/relation_factory
     depends_on:
       - ontology_broker
     links:
       - graphdb
       - mongodb
       - rabbitmq
+
+  questions_processor:
+    build: ./ontology_processors/percp_scope_1.questions
+    env_file:
+      - ontology_manager.env
+    volumes: 
+      - ./amqp_utils:/usr/src/app/amqp_utils
+      - ./neo4j_utils:/usr/src/app/neo4j_utils
+      - ./sro_utils:/usr/src/app/sro_utils
+      - ./logs/concept_processor:/usr/src/app/logs      
+    depends_on:
+      - ontology_broker
+    links:
+      - graphdb
+      - mongodb
+      - rabbitmq    
 
   content_processor:
     build: ./ontology_processors/percp_scope_1.media_content
@@ -95,6 +113,38 @@ services:
       - graphdb
       - mongodb
       - rabbitmq
+  
+  questions_processor:
+    build: ./ontology_processors/percp_scope_1.questions
+    env_file:
+      - ontology_manager.env
+    volumes: 
+      - ./amqp_utils:/usr/src/app/amqp_utils
+      - ./neo4j_utils:/usr/src/app/neo4j_utils
+      - ./sro_utils:/usr/src/app/sro_utils
+      - ./logs/concept_processor:/usr/src/app/logs      
+    depends_on:
+      - ontology_broker
+    links:
+      - graphdb
+      - mongodb
+      - rabbitmq
+  
+  course_processor:
+    build: ./ontology_processors/percp_scope_1.course
+    env_file:
+      - ontology_manager.env
+    volumes:
+      - ./amqp_utils:/usr/src/app/amqp_utils
+      - ./neo4j_utils:/usr/src/app/neo4j_utils
+      - ./sro_utils:/usr/src/app/sro_utils
+      - ./logs/concept_processor:/usr/src/app/logs
+    depends_on:
+      - ontology_broker
+    links:
+      - graphdb
+      - mongodb
+      - rabbitmq
 
   node_factory:
     build: ./ontology_processors_neo4j/node_factory
@@ -132,11 +182,20 @@ services:
     image: neo4j:latest
     environment:
      - NEO4J_AUTH=neo4j/password
+     - NEO4J_CACHE_MEMORY=1G
+     - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+     - NEO4J_dbms_memory_pagecache_size=4G
     volumes:
      - ./db/dbms:/data/dbms
+     - ./plugins:/plugins
+     - ./logs/graphdb:/logs
     ports:
      - "7474:7474"
      - "7687:7687"
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
     restart: always
 
   mongodb:
@@ -155,6 +214,7 @@ services:
     volumes:
      - ./scripts:/scripts
      - ./dump:/dump
+     - ./dump_backup_2:/dump_backup_2
     entrypoint: ["scripts/mongosetup.sh"]
 
   rabbitmq:

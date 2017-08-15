@@ -2,7 +2,8 @@ const _ = require('lodash');
 const async = require('async');
 const createUniqueConstraintOnNode = require('../createUniqueConstraintOnNode');
 const queryExecutor = require('../queryExecutor');
-const {doesPropertyExists} = require('../sro_utils')
+const {doesPropertyExists} = require('../sro_utils');
+const log = require('../sro_utils/logger')('MERGE_OR_CREATE_NODE');
 
 const mergeOrCreateNode = ({properties, options}, cb) => {
     const stringifyNodeProperties = (properties, exclusionList=[]) => JSON.stringify(_.omit(properties, ...exclusionList))
@@ -28,7 +29,6 @@ const mergeOrCreateNode = ({properties, options}, cb) => {
     const query = `MERGE (n:${label} ${stringifyNodeProperties(_.assign({}, uniqueProperties))}) 
     ${setStringifyNodeProperties('ON MATCH SET ', 'n', nodeProperties)} 
     ${setStringifyNodeProperties('ON CREATE SET ', 'n', nodeProperties)} RETURN n`;
-
     queryExecutor(query, cb);
 };
 

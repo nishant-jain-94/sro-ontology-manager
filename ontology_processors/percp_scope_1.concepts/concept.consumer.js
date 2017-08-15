@@ -1,6 +1,6 @@
-// # Learning Resource Consumer
+// # Concept Consumer
 
-// ## learning_resource.consumer.js
+// ## concept.consumer.js
 
 // Imports the required depenedencies.
 const async = require('async');
@@ -12,7 +12,7 @@ const {getAMQPChannel} = require('./amqp_utils');
 // `queue` refers to the name of the queue.
 const queue = 'concept';
 
-// `consumeQueue` Consumes Message from `learning_resource` queue using the `channel` and then push into the stream using the `push` function.
+// `consumeQueue` Consumes Message from `concepts` queue using the `channel` and then push into the stream using the `push` function.
 const consumeQueue = (push, channel) => {
     log.debug(`Consuming from ${queue} queue`);
     channel.assertQueue(queue, {});

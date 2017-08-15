@@ -35,10 +35,11 @@ const toTriplesOfLearnerState = (message) =>  {
         }
     };
     
-    const triplesOfLearnerState = percpLearnerState.elements.map((element) => {
+    const learningResources = percpLearnerState.elements.filter((element) => element.elementType === 'learningresource');
+    const triplesOfLearnerStateAndLearningResource = learningResources.map((element) => {
         const target = {
             properties: {
-                label: 'content',
+                label: 'resource',
                 resourceId: element.identifier
             },
             options: {
@@ -69,12 +70,27 @@ const toTriplesOfLearnerState = (message) =>  {
         return {source, target, relation};
     });
 
-    let triples;
-    if(triplesOfLearnerState.length > 0) {
-         triples = triplesOfLearnerState;
-    } else {
-        triples = [];
-    };
+    const triplesOfLearnerStateAndCourse = [{
+        source,
+        target: {
+            properties: {
+                label: 'course',
+                courseId: percpLearnerState.courseId
+            },
+            options: {
+                uniqueConstraintsOn: [
+                    'courseId'
+                ]
+            }
+        },
+        relation: {
+            properties: {
+                relation: 'subscribedTo'
+            }
+        }
+    }];
+
+    let triples = _.concat(triplesOfLearnerStateAndLearningResource, triplesOfLearnerStateAndCourse);
 
     return {header, triples};
 };

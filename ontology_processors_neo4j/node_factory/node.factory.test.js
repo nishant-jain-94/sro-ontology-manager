@@ -1,7 +1,7 @@
 const async = require('async');
 const should = require('should');
 const highland = require('highland');
-const log = require('./sro_utils/logger');
+const log = require('./sro_utils/logger')('Node_Factory_Test');
 const {queryExecutor, getConstraint, dropAllConstraints} = require('./neo4j_utils');
 const node_factory = require('./node.factory');
 
@@ -14,32 +14,43 @@ describe('Node Factory', (done) => {
     });
 
     it("Should Create Nodes if it doesn't exists", (done) => {
-        let node = {
-            properties: {
-                label: 'concept', 
-                name: 'AngularJS', 
-                domain: 'frontend', 
-                level: 10, 
-                importance: 'high'
+        let nodes = [
+            {
+                properties: {
+                    label: 'concept', 
+                    name: 'AngularJS', 
+                    domain: 'frontend', 
+                    level: 10, 
+                    importance: 'high'
+                },
+                options: {
+                    uniqueConstraintsOn: ['name']
+                }
             },
-            options: {
-                uniqueConstraintsOn: ['name']
+            {
+                properties: {
+                    label: 'concept', 
+                    name: 'AngularJS1', 
+                    domain: 'frontend', 
+                    level: 10, 
+                    importance: 'high'
+                },
+                options: {
+                    uniqueConstraintsOn: ['name']
+                }
             }
-        };
+        ];
 
-        const messageWrapper = (triple) => {
-           return {
-               content: new Buffer(JSON.stringify(triple))
-           };
-       };
-
-        highland([node]).map(messageWrapper).pipe(node_factory).each((result) => {
-            const record = result.results.records[0];
-            record.length.should.be.exactly(1);
-            record._fields[0].properties.importance.should.be.exactly('high');
-            record._fields[0].properties.domain.should.be.exactly('frontend');
-            record._fields[0].properties.name.should.be.exactly('AngularJS');
-            record._fields[0].labels[0].should.be.exactly('concept');
+        const messageWrapper = (triples) => {
+           return triples.map((triple) => {
+               return { content: new Buffer(JSON.stringify(triple)) };
+           });
+       };   
+       const start = Date.now();
+        highland([nodes]).map(messageWrapper).pipe(node_factory).each(({results}) => {
+            log.debug({results: results})
+            results.summary.counters._stats.nodesCreated.should.be.exactly(2);
+            results.summary.counters._stats.labelsAdded.should.be.exactly(2);
             done();
         });       
     });

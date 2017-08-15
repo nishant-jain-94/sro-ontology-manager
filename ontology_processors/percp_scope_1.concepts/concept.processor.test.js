@@ -4,7 +4,7 @@ const async = require('async');
 const highland = require('highland');
 const concepts = require('./concept.processor');
 const {deleteAllNodes, dropAllConstraints} = require('./neo4j_utils');
-const log  = require('./sro_utils/logger');
+const log  = require('./sro_utils/logger')('Concept_Processor_Test');
 
 describe('Create conceptNodes from Stream', (done) => {
     before((done) => {

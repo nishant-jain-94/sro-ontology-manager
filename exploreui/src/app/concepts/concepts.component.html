@@ -1,0 +1,9 @@
+<div class="mat-title header">Concepts</div>
+<div class="concepts-wrapper">
+  <md-card routerLink='{{concept.identifier | encodeUriComponent}}' class="concepts-card" *ngFor="let concept of concepts">
+    <md-card-title>{{concept.displayName}}</md-card-title>
+    <md-card-content>
+      <p>{{concept.description | slice:0:300}}</p>
+    </md-card-content>  
+  </md-card>
+</div>
