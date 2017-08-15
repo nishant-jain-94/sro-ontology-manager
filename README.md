@@ -1,5 +1,5 @@
 # Stackroute Online Ontology Manager - Worker Queue  
-[![Build Status](https://travis-ci.org/nishant-jain-94/sro-ontology-manager.svg?branch=dev-mq)](https://travis-ci.org/nishant-jain-94/sro-ontology-manager) [![Coverage Status](https://coveralls.io/repos/github/nishant-jain-94/sro-ontology-manager/badge.svg?branch=dev-mq)](https://coveralls.io/github/nishant-jain-94/sro-ontology-manager?branch=dev-mq)
+[![Build Status](https://travis-ci.org/nishant-jain-94/sro-ontology-manager.svg?branch=dev-mq-ui)](https://travis-ci.org/nishant-jain-94/sro-ontology-manager) [![Coverage Status](https://coveralls.io/repos/github/nishant-jain-94/sro-ontology-manager/badge.svg?branch=dev-mq-ui)](https://coveralls.io/github/nishant-jain-94/sro-ontology-manager?branch=dev-mq-ui)
 
 
 ### Approach
@@ -7,7 +7,7 @@
 
 ## Running Ontology Manager
 
-```s
+```
 docker-compose build --build -d
 ```
 
