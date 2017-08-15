@@ -11,4 +11,7 @@ nyc mocha $(find . -type f -name "*.test.js" \
           ! -path "./ontology*/amqp_utils*" \
           ! -path "./ontology*/sro_utils*" \
           ! -path "./integration-tests*" \
-          ! -path "./exploreui/node_modules*")
+          ! -path "./exploreui/node_modules*" \
+          ! -path "./ontology_processors_api/neo4j_utils*" \
+          ! -path "./ontology_processors_api/sro_utils*" \
+          ! -path "./ontology_processors_api/amqp_utils*")
