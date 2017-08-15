@@ -14,4 +14,4 @@ nyc mocha $(find . -type f -name "*.test.js" \
           ! -path "./exploreui/node_modules*" \
           ! -path "./ontology_processors_api/neo4j_utils*" \
           ! -path "./ontology_processors_api/sro_utils*" \
-          ! -path "./ontology_processors_api/amqp_utils*")
+          ! -path "./ontology_processors_api/amqp_utils*") --timeout 5000
