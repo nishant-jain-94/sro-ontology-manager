@@ -100,73 +100,6 @@ describe("Merge or Create Relations", (done) => {
            target: {
                properties: {
                 label: 'conceptTest',
-                name: 'Angula'
-            },
-            options: {
-                uniqueConstraintsOn: [
-                    'name'
-                ]
-            }
-           },
-           relation: {
-               properties: {
-                   relation: 'subConceptOf'
-                },
-                options: {
-                    uniqueConstraintsOn: [
-                        'relation'
-                    ]
-                }
-           }
-       }];
-       
-       const messageWrapper = (triples) => {
-        let count = 100;   
-        return triples.map((triple) => {
-               return {
-                   fields: {
-                    deliveryTag: count++ 
-                   },
-                   content: new Buffer(JSON.stringify(triple))
-            }
-        });
-       };
-
-       highland([triple]).map(messageWrapper).through(relationFactory).collect().toArray((results) => {
-            should.exist(results);
-            log.debug({resultsOfFirstTest: results});
-            const result = results[0][0].results[0];
-            results[0][0].results.length.should.be.exactly(2);
-            const record = result.records[0];
-            record.length.should.be.exactly(3);
-            const [fieldsOfSource, fieldsOfTarget, fieldsOfRelation, deliveryTag] = record._fields;
-            fieldsOfSource.labels[0].should.be.exactly('conceptTest');
-            fieldsOfTarget.labels[0].should.be.exactly('conceptTest');
-            fieldsOfRelation.type.should.be.exactly('subConceptOf');
-            fieldsOfSource.properties.name.should.be.exactly('Javascript');
-            fieldsOfTarget.properties.name.should.be.exactly('AngularJS');
-            done();
-       });
-       
-
-    });
-
-    it('Should merge the properties of a relation if it already exists', (done) => {
-        const triple = [{
-           source: {
-               properties: {
-                label: 'conceptTest',
-                name: 'Javascript'
-            },
-            options: {
-                uniqueConstraintsOn: [
-                    'name'
-                ]
-            }
-           },
-           target: {
-               properties: {
-                label: 'conceptTest',
                 name: 'AngularJS'
             },
             options: {
@@ -187,26 +120,36 @@ describe("Merge or Create Relations", (done) => {
                 }
            }
        }];
+       
+       const messageWrapper = (triple) => {
+            let count = 100;
+            return {
+                fields: {
+                deliveryTag: count++ 
+                },
+                content: new Buffer(JSON.stringify(triple))
+            }
+       };
 
-       const messageWrapper = (triples) => {
-           let count = 100;   
-            return triples.map((triple) => {
-                return {
-                    fields: {
-                        deliveryTag: count++ 
-                    },
-                    content: new Buffer(JSON.stringify(triple))
-                }
-            });
-        };
-
-       highland([triple]).map(messageWrapper).through(relationFactory).collect().toArray((results) => {
+       highland(triple).map(messageWrapper).through(relationFactory).collect().toArray((results) => {
             should.exist(results);
-            log.debug({resultsOfSecondTest: results});
-            const result = results[0][0].results[0];
-            const record = result.records[0];
+            log.debug({resultsOfFirstTest: results});
+            let result = results[0][0].results;
+            results[0][0].results.records.length.should.be.exactly(1);
+            let record = result.records[0];
             record.length.should.be.exactly(3);
-            const [fieldsOfSource, fieldsOfTarget, fieldsOfRelation, deliveryTag] = record._fields;
+            let [fieldsOfSource, fieldsOfTarget, fieldsOfRelation, deliveryTag] = record._fields;
+            fieldsOfSource.labels[0].should.be.exactly('conceptTest');
+            fieldsOfTarget.labels[0].should.be.exactly('conceptTest');
+            fieldsOfRelation.type.should.be.exactly('subConceptOf');
+            fieldsOfSource.properties.name.should.be.exactly('Javascript');
+            fieldsOfTarget.properties.name.should.be.exactly('AngularJS');
+            
+            // Should merge the properties of a relation if it already exists
+            result = results[0][1].results;
+            record = result.records[0];
+            record.length.should.be.exactly(3);
+            [fieldsOfSource, fieldsOfTarget, fieldsOfRelation, deliveryTag] = record._fields;
             fieldsOfSource.labels[0].should.be.exactly('conceptTest');
             fieldsOfTarget.labels[0].should.be.exactly('conceptTest');
             fieldsOfRelation.type.should.be.exactly('subConceptOf');

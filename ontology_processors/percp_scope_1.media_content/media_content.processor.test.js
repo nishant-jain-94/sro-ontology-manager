@@ -189,16 +189,16 @@ describe('Create Media Content Nodes from Stream', (done) => {
         highland(media).map(messageWrapper).pipe(mediaProcessor).collect().toArray((s) => {
             s.length.should.be.exactly(1);
             should.exist(s[0][0].triples);
-            log.debug({triples: s[0][0].triples});
+            log.debug({MediaContenttriples: s[0][0].triples});
             var {source, target, relation} = s[0][0].triples[0];
             source.properties.label.should.be.exactly("content");
-            source.properties.name.should.be.exactly("Deleting_Attributes");
+            source.properties.displayName.should.be.exactly("Deleting Attributes");
             source.properties.contentType.should.be.exactly("lecture");
             source.properties.contentSubType.should.be.exactly("None");
             source.properties.mongoId.should.be.exactly("58e62ec370528b2f6c86b728");
             source.options.uniqueConstraintsOn[0].should.be.exactly("mediaContentId");
             target.properties.label.should.be.exactly("concept");
-            target.properties.name.should.be.exactly("Properties in Javascript");
+            target.properties.name.should.be.exactly("Properties_in_Javascript");
             target.properties.conceptId.should.be.exactly("info:fedora/learning:7177");
             target.options.uniqueConstraintsOn[0].should.be.exactly("name");
             relation.properties.relation.should.be.exactly("explains");
@@ -206,14 +206,14 @@ describe('Create Media Content Nodes from Stream', (done) => {
             
             var {source, target, relation} = s[0][0].triples[1];
             source.properties.label.should.be.exactly("content");
-            source.properties.name.should.be.exactly("Deleting_Attributes");
+            source.properties.displayName.should.be.exactly("Deleting Attributes");
             source.properties.contentType.should.be.exactly("lecture");
             source.properties.contentSubType.should.be.exactly("None");
             source.properties.mongoId.should.be.exactly("58e62ec370528b2f6c86b728");
             source.options.uniqueConstraintsOn[0].should.be.exactly("mediaContentId");
             target.properties.label.should.be.exactly("course");
             target.properties.courseId.should.be.exactly("info:fedora/learning:4693");
-            target.options.uniqueConstraintsOn[0].should.be.exactly("identifier");
+            target.options.uniqueConstraintsOn[0].should.be.exactly("courseId");
             relation.properties.relation.should.be.exactly("usedIn");
             relation.options.uniqueConstraintsOn[0].should.be.exactly('relation');
             done();

@@ -69,6 +69,7 @@ const mediaContent = [
         "pedagogyId": "info:fedora/learning:240",
         "description": "Software engineers regard components as part of the starting platform for ... Reusability is an important characteristic of a high-quality software component. Programmers should design and implement software components in such a way that many .... Examples of component models are: Enterprise JavaBeans (EJB) model, ...",
         "name": "Component-based software engineering",
+        "displayName": "Component-based software engineering",
         "identifier": "info:fedora/learning:24966",
         "is_deleted": false,
         "interceptions": [],
@@ -135,6 +136,7 @@ const mediaContent = [
         "pedagogyId": "info:fedora/learning:240",
         "description": "It was first named and proposed as part of extreme programming (XP). ... Initially this was conceived of as running all unit tests and verifying they all passed ... of quality control aims to improve the quality of software, and to reduce the time taken to .... CruiseControl: Java-based framework for a continuous build process and .",
         "name": "Continuous integration",
+        "displayName": "Continuous integration",
         "identifier": "info:fedora/learning:25258",
         "is_deleted": false,
         "interceptions": [],
@@ -217,9 +219,63 @@ const listOfRelatedContents = [
         "contentSubType": "None"
     }];
 
+const relatedEntities = {
+    "entityId": "info:fedora/learning:24966",
+    "entityType": "concepts",
+    "entityName": "Component-based software engineering",
+    "relatedGroups": [
+      {
+        "name": "subconcepts",
+        "entities": [
+          {
+            "entityId": "info:fedora/learning:11280",
+            "entityType": "concepts",
+            "entityName": "Programming Language"
+          }
+        ]
+      },
+      {
+        "name": "contents",
+        "entities": [
+          {
+            "entityId": "info:fedora/learning:34062",
+            "entityType": "contents",
+            "entityName": "JUnit tutorial"
+          },
+          {
+            "entityId": "info:fedora/learning:39309",
+            "entityType": "contents",
+            "entityName": "Java Environment Setup"
+          },
+          {
+            "entityId": "info:fedora/learning:29306",
+            "entityType": "contents",
+            "entityName": "Java - Basic Syntax"
+          },
+          {
+            "entityId": "info:fedora/learning:26372",
+            "entityType": "contents",
+            "entityName": "Computer Programming Environment"
+          },
+          {
+            "entityId": "info:fedora/learning:22126",
+            "entityType": "contents",
+            "entityName": "RACI Chart Tool"
+          },
+          {
+            "entityId": "info:fedora/learning:27992",
+            "entityType": "contents",
+            "entityName": "  JUnit Tutorial (PDF Version)"
+          }
+        ]
+      }
+    ]
+  }
+
 module.exports = {
     listOfConcepts,
     listOfRelatedContents,
     listOfSubConcepts,
+    relatedEntities,
     mediaContent
 }
