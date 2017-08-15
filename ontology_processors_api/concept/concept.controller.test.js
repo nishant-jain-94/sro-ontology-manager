@@ -123,6 +123,33 @@ describe('Concept Controller', (done) => {
         });
     });
 
+    it('Should fetch all the relatedItems', (done) => {
+        let options = {
+            page: 1,
+            limit: 20
+        };
+        const stubbedExecuteQueryAndFetchResults = sinon.stub(conceptController, 'executeQueryAndFetchResults');
+        const queryToFetchConceptById = `MATCH (n:concept {identifier: "info:fedora/learning:12162"}) return n ORDER BY n.name SKIP 0 LIMIT 20`;
+        const queryToFetchAllSubConcepts = `MATCH (n:concept {identifier: "info:fedora/learning:12162"})<-[:subconcept]-(m:concept) return m ORDER BY m.name SKIP 0 LIMIT 20`;
+        const queryToFetchAllTheAssociatedContents = `MATCH (n:content)-[:explains]->(m:concept {identifier: "info:fedora/learning:12162"}) return n ORDER BY n.name SKIP 0 LIMIT 20`;
+        const resultToFetchConceptById = [mediaContent[0]];
+        stubbedExecuteQueryAndFetchResults.withArgs(queryToFetchConceptById).yields(null, resultToFetchConceptById);
+        stubbedExecuteQueryAndFetchResults.withArgs(queryToFetchAllSubConcepts).yields(null, listOfSubConcepts);
+        stubbedExecuteQueryAndFetchResults.withArgs(queryToFetchAllTheAssociatedContents).yields(null, listOfRelatedContents);
+        conceptController.fetchAllRelatedItems("info:fedora/learning:12162", options, (err, results) => {
+            should.not.exist(err);
+            log.debug({results: results});
+            results.entityId.should.be.exactly('info:fedora/learning:24966')
+            results.entityType.should.be.exactly('concepts');
+            results.entityName.should.be.exactly('Component-based software engineering');
+            results.relatedGroups.length.should.be.exactly(2);
+            results.relatedGroups[0].should.have.property('name').which.is.a.String();
+            results.relatedGroups[1].should.have.property('name').which.is.a.String();
+            results.relatedGroups[0].should.have.property('entities').which.is.a.Array();
+            done();
+        });
+    });
+
     after((done) => {
         async.series([
             dropAllConstraints,

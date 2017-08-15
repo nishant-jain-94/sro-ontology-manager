@@ -16,12 +16,6 @@ const mergeOrCreateRelation = require('./neo4j_utils/mergeOrCreateRelation');
 // 1. `header` - refers to the both data and the metadata of the Message fetched from the Queue.
 // 2. `triple` - refers to the triple to be used for Node Creation.
 const toObject = (message) => {
-    // const bulkMessages = messages.map((message) => {
-    //     const triple = JSON.parse(message.content.toString());
-    //     const header = message;
-    //     return {header, triple};
-    // });
-    // return bulkMessages;
     const triple = JSON.parse(message.content.toString());
     const header = message;
     return {header, triple};

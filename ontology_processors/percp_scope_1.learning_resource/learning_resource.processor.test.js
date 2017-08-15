@@ -173,11 +173,11 @@ describe('Create conceptNodes from Stream', (done) => {
 
         highland([learning_resource]).map(messageWrapper).pipe(learningResourceProcessor).collect().toArray((s) => {
             const results = _.flatten(s);
-            results[0].triples[0].source.properties.label.should.be.exactly('content');
+            log.debug({learningResourceResults: results});
+            results[0].triples[0].source.properties.label.should.be.exactly('resource');
             results[0].triples[0].source.properties.resourceId.should.be.exactly("info:fedora/learning:5194");
-            results[0].triples[0].source.properties.mediaContentId.should.be.exactly("info:fedora/learning:8732");
             results[0].triples[0].source.options.uniqueConstraintsOn.length.should.be.exactly(1);
-            results[0].triples[0].source.options.uniqueConstraintsOn[0].should.be.exactly('mediaContentId');
+            results[0].triples[0].source.options.uniqueConstraintsOn[0].should.be.exactly('resourceId');
             done();
         });
 
