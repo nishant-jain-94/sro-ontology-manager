@@ -34,7 +34,7 @@ const createMediaContentInMongoDB = (content, cb) => {
 
 const deleteMediaContentFromMongoDB = (content, cb) => {
     getMongoDBConnection('percp_scope_1', (err, db) => {
-        db.collection('media_content').remove(content, cb);
+        db.collection('media_content').remove({identifier: content.identifier}, cb);
     });
 };
 
@@ -77,7 +77,7 @@ describe('Concept Controller', (done) => {
         conceptController.fetchAllTheContentsMatchingListOfContentIdsFromMongoDB(["info:fedora/learning:24966"], (err, data) => {
             should.not.exist(err);
             should.exist(data);
-            data.length.should.be.exactly(2);
+            data.length.should.be.exactly(1);
             data[0].name.should.be.exactly('Component-based software engineering');
             data[0].identifier.should.be.exactly("info:fedora/learning:24966");
             done();
@@ -88,7 +88,7 @@ describe('Concept Controller', (done) => {
         conceptController.fetchAllTheContentsWhichExplainsThisConceptFromMongoDB(triple.propertiesOfObject.conceptId, (err, data) => {
             should.not.exist(err);
             should.exist(data);
-            data.length.should.be.exactly(2);
+            data.length.should.be.exactly(1);
             data[0].name.should.be.exactly('Component-based software engineering');
             data[0].identifier.should.be.exactly("info:fedora/learning:24966");
             done();
