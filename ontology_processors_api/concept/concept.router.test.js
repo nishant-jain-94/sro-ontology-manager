@@ -119,7 +119,7 @@ describe('GET /:conceptId/details', (done) => {
                 res.body.should.have.property('entityType').which.is.a.String();
                 res.body.should.have.property('entityName').which.is.a.String();
                 res.body.should.have.property('relatedGroups').which.is.a.instanceOf(Array);
-                res.body.relationGroups.forEach((group) => {
+                res.body.relatedGroups.forEach((group) => {
                     group.should.have.property('name').which.is.a.String();
                     group.should.have.property('entities').which.is.a.instanceOf(Array);
                     group.entities.forEach((entity) => {
