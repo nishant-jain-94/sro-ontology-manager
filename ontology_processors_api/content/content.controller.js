@@ -2,9 +2,7 @@ const log = require('../sro_utils/logger')('CONTENT_CONTROLLER_API');
 const {queryExecutor} = require('../neo4j_utils');
 const async = require('async');
 
-const fetchAllContents = (options, cb) => {
-    const skip = (options.page - 1) * options.limit;
-    const query = `MATCH (n:content) return n ORDER BY n.mediaContentId SKIP ${skip} LIMIT ${options.limit}`;
+const executeQueryAndFetchResults = (query, cb) => {
     queryExecutor(query, (err, result) => {
         if(!err) {
             const records = result.records.map((record) => record._fields[0].properties)
@@ -13,45 +11,30 @@ const fetchAllContents = (options, cb) => {
             cb(err, null);
         }
     });
+}
+
+const fetchAllContents = (options, cb) => {
+    const skip = (options.page - 1) * options.limit;
+    const query = `MATCH (n:content) return n ORDER BY n.mediaContentId SKIP ${skip} LIMIT ${options.limit}`;
+    contentController.executeQueryAndFetchResults(query, cb);
 };
 
 const fetchContentById = (contentId, options, cb) => {
     const skip = (options.page - 1) * options.limit;
     const query = `MATCH (n:content {mediaContentId: '${contentId}'}) return n ORDER BY n.name SKIP ${skip} LIMIT ${options.limit}`;
-    queryExecutor(query, (err, result) => {
-        if(!err) {
-            const records = result.records.map((record) => record._fields[0].properties)
-            cb(null, records);
-        } else {
-            cb(err, null);
-        }
-    });
+    contentController.executeQueryAndFetchResults(query, cb);
 };
 
 const fetchRelatedConcepts = (contentId, options, cb) => {
     const skip = (options.page - 1) * options.limit;
     const query = `MATCH (m:content {mediaContentId: '${contentId}'})-[:explains]->(n:concept) return n ORDER BY n.name SKIP ${skip} LIMIT ${options.limit}`;
-    queryExecutor(query, (err, result) => {
-        if(!err) {
-            const records = result.records.map((record) => record._fields[0].properties)
-            cb(null, records);
-        } else {
-            cb(err, null);
-        }
-    });
+    contentController.executeQueryAndFetchResults(query, cb);
 };
 
 const fetchRelatedCourses = (contentId, options, cb) => {
     const skip = (options.page - 1) * options.limit;
     const query = `MATCH (m:content {mediaContentId: '${contentId}'})-[:usedIn]->(n:course) return n ORDER BY n.courseId SKIP ${skip} LIMIT ${options.limit}`;
-    queryExecutor(query, (err, result) => {
-        if(!err) {
-            const records = result.records.map((record) => record._fields[0].properties)
-            cb(null, records);
-        } else {
-            cb(err, null);
-        }
-    });
+    contentController.executeQueryAndFetchResults(query, cb);
 };
 
 const fetchAllRelatedItems = (contentId, options, cb) => {
@@ -104,9 +87,12 @@ const fetchAllRelatedItems = (contentId, options, cb) => {
     });
 };
 
-module.exports = {
+const contentController = {
+    executeQueryAndFetchResults,
     fetchAllContents,
     fetchRelatedConcepts,
     fetchRelatedCourses,
     fetchAllRelatedItems
 };
+
+module.exports = contentController;

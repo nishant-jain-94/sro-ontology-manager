@@ -4,6 +4,7 @@ const queryExecutor = require('../queryExecutor');
 const log = require('../sro_utils/logger')('MERGE_OR_CREATE_RELATION');
 
 const mergeOrCreateRelation = (properties, cb) => {
+    log.debug({properties: properties});
     const stringifyPropertiesOfRelationship = (properties, exclusionList=[]) => JSON.stringify(_.omit(properties, ...exclusionList)).replace(/\"(\w+)\":/g, "$1:");
     const setStringifyPropertiesOfRelationship = (stringPrefix, propertyPrefix, properties, exclusionList=[]) => {
         let stringifiedProperties = JSON.stringify(_.omit(properties, ...exclusionList))

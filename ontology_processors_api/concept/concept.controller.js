@@ -86,42 +86,42 @@ const fetchAllRelatedItems = (conceptId, options, cb) => {
     ], (err, results) => {
         if(!err) {
 
-        [concept, contents, subconcepts] = results;
-        
-        let relatedContents = contents.map((content) => {
-            return {
-                entityId: content.mediaContentId,
-                entityType: 'contents',
-                entityName: content.displayName?content.displayName:'Not Available'
-            }
-        });
+            [concept, contents, subconcepts] = results;
+            
+            let relatedContents = contents.map((content) => {
+                return {
+                    entityId: content.mediaContentId,
+                    entityType: 'contents',
+                    entityName: content.displayName?content.displayName:'Not Available'
+                }
+            });
 
-        let relatedSubConcepts = subconcepts.map((concept) => {
-            return {
-                entityId: concept.identifier,
-                entityType: 'concepts',
-                entityName: concept.displayName
-            };
-        });
+            let relatedSubConcepts = subconcepts.map((concept) => {
+                return {
+                    entityId: concept.identifier,
+                    entityType: 'concepts',
+                    entityName: concept.displayName
+                };
+            });
 
-        let [conceptAndItsRelatedEntities] = concept.map((concept) => {
-            return {
-                entityId: concept.identifier,
-                entityType: 'concepts',
-                entityName: concept.displayName,
-                relatedGroups: [
-                    {
-                        name: 'subconcepts',
-                        entities: relatedSubConcepts
-                    },
-                    {
-                        name: 'contents',
-                        entities: relatedContents
-                    }
-                ]
-            };
-        });
-        cb(null, conceptAndItsRelatedEntities);
+            let [conceptAndItsRelatedEntities] = concept.map((concept) => {
+                return {
+                    entityId: concept.identifier,
+                    entityType: 'concepts',
+                    entityName: concept.displayName,
+                    relatedGroups: [
+                        {
+                            name: 'subconcepts',
+                            entities: relatedSubConcepts
+                        },
+                        {
+                            name: 'contents',
+                            entities: relatedContents
+                        }
+                    ]
+                };
+            });
+            cb(null, conceptAndItsRelatedEntities);
         } else cb(err, null)
     });
 };
