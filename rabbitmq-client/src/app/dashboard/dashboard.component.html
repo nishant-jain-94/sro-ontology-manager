@@ -1,0 +1,46 @@
+<div class="dashboard-wrapper">
+  <div class="card-wrapper">
+    <md-card class="card-content">
+      <md-card-title>
+          <span class="mat-subheading-2">Node Health Status</span>
+      </md-card-title>
+      <md-card-content class="mat-title card-value">
+        {{ healthStatus | uppercase }}
+      </md-card-content>
+    </md-card>
+    <md-card class="card-content">
+        <md-card-title>
+            <span class="mat-subheading-2">Number of Queues</span>
+        </md-card-title>
+        <md-card-content class="mat-title card-value">
+          {{ queueCount }}
+        </md-card-content>
+    </md-card>
+    <md-card class="card-content">
+        <md-card-title>
+            <span class="mat-subheading-2">Number of Consumers</span>
+        </md-card-title>
+        <md-card-content class="mat-title card-value">
+          {{ consumerCount }}
+        </md-card-content>
+    </md-card>
+  </div>
+  <div class="separator"></div>
+  <div>
+    <header class="mat-title">
+      Consumer Utilization
+    </header>
+    <div class="consumer-card-wrapper">
+      <ng-container *ngFor="let consumer of consumerUtilizationCollection">
+        <md-card class="consumer-card-content">
+            <md-card-title>
+                <span class="mat-subheading-2">{{consumer?.name | uppercase}}</span>
+            </md-card-title>
+            <md-card-content class="mat-title card-value">
+                <div>{{ consumer?.consumer_utilisation | percent }}</div>
+            </md-card-content>
+        </md-card>
+      </ng-container>
+    </div>
+  </div>
+</div>
