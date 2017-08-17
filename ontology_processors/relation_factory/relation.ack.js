@@ -11,7 +11,7 @@ const log = require('./sro_utils/logger')('Relation_Factory_Acknowledger');
 // `ack` inputs the following parameters
 // 1. `message` - refers to the message dequeued.
 // 2. `channel` - refers to channel through which acknowledgement has to be made.
-const ack = (message, channel, cb) => {
+const ack = (message, channel) => {
     if(message.results.records.length === 0) {
         log.debug("Rejected");
         channel.nack(message.header);

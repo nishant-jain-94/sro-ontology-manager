@@ -3,7 +3,6 @@
 // ## index.js
 
 const bulkQueryExecutor = require('./neo4j_utils/bulkQueryExecutor');
-const async = require('async');
 
 const uniqueConstraints = [
     'CREATE CONSTRAINT ON (n:user) ASSERT n.uniqueId IS UNIQUE',
@@ -13,7 +12,7 @@ const uniqueConstraints = [
     'CREATE CONSTRAINT ON (n:resource) ASSERT n.resourceId IS UNIQUE'
 ];
 
-bulkQueryExecutor(uniqueConstraints, (err, results) => {
+bulkQueryExecutor(uniqueConstraints, (err) => {
     if(!err) {
         // The pipeline which orchestrates different stages in the Factory.
 

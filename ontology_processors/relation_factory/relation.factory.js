@@ -6,8 +6,6 @@
 
 // Imports the required dependencies.
 // `mergeOrCreateNode` Merges the properties of the old relationship with the properties of the new node. If the old relationship doesn't exist it creates a new relationship.
-const async = require('async');
-const {sendToQueue} = require('./amqp_utils');
 const highland = require('highland');
 const log = require('./sro_utils/logger')('Relation_Factory');
 const mergeOrCreateRelation = require('./neo4j_utils/mergeOrCreateRelation');

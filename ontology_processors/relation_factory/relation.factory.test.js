@@ -7,7 +7,6 @@ const relationFactory = require('./relation.factory');
 const {
     queryExecutor, 
     mergeOrCreateNode, 
-    mergeOrCreateRelation, 
     dropAllConstraints
 } = require('./neo4j_utils');
 
@@ -41,7 +40,7 @@ let target = {
     }
 };
 
-describe("Merge or Create Relations", (done) => {
+describe("Merge or Create Relations", () => {
     before((done) => {
         async.series([
 			dropAllConstraints,
@@ -122,11 +121,7 @@ describe("Merge or Create Relations", (done) => {
        }];
        
        const messageWrapper = (triple) => {
-            let count = 100;
             return {
-                fields: {
-                deliveryTag: count++ 
-                },
                 content: new Buffer(JSON.stringify(triple))
             }
        };
@@ -138,7 +133,7 @@ describe("Merge or Create Relations", (done) => {
             results[0][0].results.records.length.should.be.exactly(1);
             let record = result.records[0];
             record.length.should.be.exactly(3);
-            let [fieldsOfSource, fieldsOfTarget, fieldsOfRelation, deliveryTag] = record._fields;
+            let [fieldsOfSource, fieldsOfTarget, fieldsOfRelation] = record._fields;
             fieldsOfSource.labels[0].should.be.exactly('conceptTest');
             fieldsOfTarget.labels[0].should.be.exactly('conceptTest');
             fieldsOfRelation.type.should.be.exactly('subConceptOf');
@@ -149,7 +144,7 @@ describe("Merge or Create Relations", (done) => {
             result = results[0][1].results;
             record = result.records[0];
             record.length.should.be.exactly(3);
-            [fieldsOfSource, fieldsOfTarget, fieldsOfRelation, deliveryTag] = record._fields;
+            [fieldsOfSource, fieldsOfTarget, fieldsOfRelation] = record._fields;
             fieldsOfSource.labels[0].should.be.exactly('conceptTest');
             fieldsOfTarget.labels[0].should.be.exactly('conceptTest');
             fieldsOfRelation.type.should.be.exactly('subConceptOf');
