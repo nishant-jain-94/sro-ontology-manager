@@ -6,7 +6,6 @@
 
 // Imports the following dependencies.
 // `mergeOrCreateNode` Merges the properties of the old node with the properties of the new node. If the old node doesn't exist it creates a new Node.
-const async = require('async');
 const highland = require('highland');
 const _ = require('lodash');
 const {doesPropertyExists} = require('./sro_utils');
@@ -31,27 +30,14 @@ const bulkMergeOrCreateNode = (nodesToBeCreated, cb) => {
     // let queries = [];
     let batch = [];
     nodesToBeCreated.forEach(({properties, options}) => {
-        const stringifyNodeProperties = (properties, exclusionList=[]) => JSON.stringify(_.omit(properties, ...exclusionList))
-								 .replace(/\"(\w+)\":/g, "$1:");
-        const setStringifyNodeProperties = (stringPrefix, propertyPrefix, properties, exclusionList=[]) => {
-            let stringifiedProperties = JSON.stringify(_.omit(properties, ...exclusionList))
-                                    .replace(/\"(\w+)\":/g, `${propertyPrefix}.$1=`).slice(1, -1);
-            if(stringifiedProperties) {
-                stringifiedProperties = stringPrefix + stringifiedProperties;
-            };
-
-            return stringifiedProperties;
-        };
-
         let uniqueConstraintsOn = [];
-        options = options?options:{};
+        options = options ? options : {};
         if(doesPropertyExists(options, 'uniqueConstraintsOn')) {
             uniqueConstraintsOn = options.uniqueConstraintsOn;
         }
         const uniqueProperties = _.pick(properties, ...uniqueConstraintsOn);
         const nodeProperties = _.omit(properties, 'label', ...uniqueConstraintsOn);
         const {label} = properties;
-        const labels = label;
         const uniqueValue = uniqueProperties[uniqueConstraintsOn[0]];
         batch.push({label, uniqueValue, nodeProperties});
     });

@@ -27,7 +27,7 @@ const consumeQueue = (push, channel) => {
 // A `messageStream` has the following stages.
 // 1. Get's the channel from where the messages are to be consumed using `getAMQPChannel`
 // 2. Consumes Queue using `consumeQueue`.
-const messageStream = highland((push, next) => {
+const messageStream = highland((push) => {
     async.waterfall([
         getAMQPChannel.bind(null, 'AMQP_URL'),
         consumeQueue.bind(null, push)
