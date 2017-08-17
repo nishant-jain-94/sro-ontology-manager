@@ -3,12 +3,9 @@
 // ## course.processor.js
 
 //  Import required dependencies.
-const _ = require('lodash');
-const async = require('async');
+require('./sro_utils/normalize');
 const highland = require('highland');
-
 const log = require('./sro_utils/logger')('Concept_Processor');
-const normalize = require('./sro_utils/normalize');
 
 // `toCourse` converts a course document to a course node.
 // A triple is a combination of a source, target and relation. 
@@ -38,7 +35,7 @@ const toCourse = (message) =>  {
         }
     };
     
-    console.log("Inside Course Processor");
+    log.debug("Inside Course Processor");
     let triples = [{source}];
 
     return {header, triples};

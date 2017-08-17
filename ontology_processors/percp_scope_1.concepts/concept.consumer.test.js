@@ -1,6 +1,6 @@
+require('should');
 const async = require('async');
-const should = require('should');
-const {config, getAMQPChannel} = require('./amqp_utils');
+const {getAMQPChannel} = require('./amqp_utils');
 
 const log = require('./sro_utils/logger')('Concept_Consumer_Test');
 
@@ -16,7 +16,7 @@ const deleteQueue = (channel, callback) => {
 
 const assertQueue = (channel, callback) => channel.assertQueue(queue, {}, callback);
 
-describe('Concept Consumer', (done) => {
+describe('Concept Consumer', () => {
 
     before((done) => {
         async.waterfall([

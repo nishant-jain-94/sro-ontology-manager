@@ -1,5 +1,5 @@
+require('should');
 const _ = require('lodash');
-const should = require('should');
 const async = require('async');
 const highland = require('highland');
 const questionProcessor = require('./questions.processor');
@@ -7,7 +7,7 @@ const mongodb = require('mongodb');
 const {deleteAllNodes, dropAllConstraints} = require('./neo4j_utils');
 const log  = require('./sro_utils/logger')('Question_Processor_Test');
 
-describe('Create conceptNodes from Stream', (done) => {
+describe('Create conceptNodes from Stream', () => {
     before((done) => {
         async.series([
             deleteAllNodes,

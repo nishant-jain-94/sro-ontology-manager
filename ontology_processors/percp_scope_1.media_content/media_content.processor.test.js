@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const async = require('async');
 const should = require('should');
 const highland = require('highland');
@@ -7,7 +6,7 @@ const mediaProcessor = require('./media_content.processor');
 const {deleteAllNodes, dropAllConstraints} = require('./neo4j_utils');
 const log  = require('./sro_utils/logger')('MEDIA_CONTENT_PROCESSOR');
 
-describe('Create Media Content Nodes from Stream', (done) => {
+describe('Create Media Content Nodes from Stream', () => {
     before((done) => {
         async.series([
             deleteAllNodes,
@@ -190,7 +189,7 @@ describe('Create Media Content Nodes from Stream', (done) => {
             s.length.should.be.exactly(1);
             should.exist(s[0][0].triples);
             log.debug({MediaContenttriples: s[0][0].triples});
-            var {source, target, relation} = s[0][0].triples[0];
+            let {source, target, relation} = s[0][0].triples[0];
             source.properties.label.should.be.exactly("content");
             source.properties.displayName.should.be.exactly("Deleting Attributes");
             source.properties.contentType.should.be.exactly("lecture");
@@ -204,7 +203,10 @@ describe('Create Media Content Nodes from Stream', (done) => {
             relation.properties.relation.should.be.exactly("explains");
             relation.options.uniqueConstraintsOn[0].should.be.exactly('relation');
             
-            var {source, target, relation} = s[0][0].triples[1];
+            source = s[0][0].triples[1].source;
+            target = s[0][0].triples[1].target;
+            relation = s[0][0].triples[1].relation;
+            
             source.properties.label.should.be.exactly("content");
             source.properties.displayName.should.be.exactly("Deleting Attributes");
             source.properties.contentType.should.be.exactly("lecture");

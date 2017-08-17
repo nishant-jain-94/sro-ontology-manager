@@ -18,4 +18,26 @@
 
 Ontology Broker tails MongoDB's Oplog. Anything which is present in Oplog gets streamed into Ontology Broker. So the only thing which might hinder the creation of queues would probably be ***queueMapper.js***. 
 
-A ***queueMapper.js*** is a very simple mapper which describes what kind of message is to be routed to a particular queue. 
+A ***queueMapper.js*** is a very simple mapper between namespace of the message and a queue in RabbitMQ.
+
+## Commands ## 
+
+```
+// Runs Ontology Broker
+npm start
+
+// Run Ontology Broker Forever
+npm run start-forever
+
+// Test Ontology Broker
+npm test
+
+// Lint
+npm run lint
+
+// Test and Run Code Coverage
+npm run coverage
+
+// Generate Docs
+npm run generate-docs
+```

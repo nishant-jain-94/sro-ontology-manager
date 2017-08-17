@@ -3,12 +3,10 @@
 // ## concept.processor.js
 
 //  Import required dependencies.
-const _ = require('lodash');
-const async = require('async');
+require('./sro_utils/normalize');
 const highland = require('highland');
 
-const log = require('./sro_utils/logger')('Concept_Processor');
-const normalize = require('./sro_utils/normalize');
+// const log = require('./sro_utils/logger')('Concept_Processor');
 
 // `toTriplesOfConcepts` converts a concept document to a collection of triples.
 // A triple is a combination of a source, target and relation. 
@@ -65,7 +63,7 @@ const toTriplesOfConcepts = (message) =>  {
          triples = triplesOfConcepts
     } else {
         triples = [source]
-    };
+    }
 
     return {header, triples};
 };

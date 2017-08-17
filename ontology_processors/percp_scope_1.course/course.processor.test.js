@@ -9,7 +9,7 @@ const {
 } = require('./neo4j_utils');
 const log = require('./sro_utils/logger')('Course_Processor_Test');
 
-describe('Create courseNodes from Stream', (done) => {
+describe('Create courseNodes from Stream', () => {
     before((done) => {
         async.series([
             deleteAllNodes,
@@ -18,6 +18,7 @@ describe('Create courseNodes from Stream', (done) => {
     });
 
     it('Should create course nodes from the stream', (done) => {
+        log.debug("Inside Course Processor Test JS");
         const courses = [{
                 "_id": "58e62ec470528b2f6c86b9ba",
                 "status": "draft",

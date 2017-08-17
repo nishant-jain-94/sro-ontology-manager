@@ -3,12 +3,11 @@
 // ## mediaContent.processor.js
 
 // Imports the required dependencies.
+require('./sro_utils/normalize');
 const _ = require('lodash');
-const async = require('async');
 const highland = require('highland');
 
 const log = require('./sro_utils/logger')('Media_Content_Processor');
-const normalize = require('./sro_utils/normalize');
 
 // `toTriplesOfMedia` converts a Media Content Document to a Triple.
 // `toTriplesOfMedia` inputs a message and then creates a source node following the steps below.

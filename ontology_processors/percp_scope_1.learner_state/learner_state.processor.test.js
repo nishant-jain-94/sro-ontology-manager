@@ -1,13 +1,13 @@
 const _ = require('lodash');
-const should = require('should');
+require('should');
 const async = require('async');
 const highland = require('highland');
 const learnerStateProcessor = require('./learner_state.processor');
 const mongodb = require('mongodb');
 const {deleteAllNodes, dropAllConstraints} = require('./neo4j_utils');
-const log  = require('./sro_utils/logger');
+const log  = require('./sro_utils/logger')('LEARNER_STATE_PROCESSOR_TEST');
 
-describe('Create Learner State from Stream', (done) => {
+describe('Create Learner State from Stream', () => {
     before((done) => {
         async.series([
             deleteAllNodes,
@@ -16,6 +16,7 @@ describe('Create Learner State from Stream', (done) => {
     });
     
     it('Should create Learner State from the stream', (done) => {
+        log.debug("Inside Learner State Processor");
         const learner_state = {
             "student_id" : "amishag",
             "elements" : [

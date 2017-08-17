@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Ontology Broker</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="gulpfile.html">
+                  gulpfile.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="config.html">
+                  config.js
+                </a>
+              
+                
+                <a class="source" href="config.test.html">
+                  config.test.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="getMongoDBConnection.html">
+                  getMongoDBConnection.js
+                </a>
+              
+                
+                <a class="source" href="getMongoDBConnection.test.html">
+                  getMongoDBConnection.test.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="oplog.insert.html">
+                  oplog.insert.js
+                </a>
+              
+                
+                <a class="source" href="oplog.insert.test.html">
+                  oplog.insert.test.js
+                </a>
+              
+                
+                <a class="source" href="index.html">
+                  index.js
+                </a>
+              
+                
+                <a class="source" href="oplog.update.html">
+                  oplog.update.js
+                </a>
+              
+                
+                <a class="source" href="oplog.update.test.html">
+                  oplog.update.test.js
+                </a>
+              
+                
+                <a class="source" href="queueMapper.html">
+                  queueMapper.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="ontology-broker">Ontology Broker</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h2 id="ontology_broker-oplog_handler-updatehandler-oplog-update-js">ontology_broker/oplog_handler/updateHandler/oplog.update.js</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Imports required dependencies.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> <span class="hljs-keyword">async</span> = <span class="hljs-built_in">require</span>(<span class="hljs-string">'async'</span>);
+<span class="hljs-keyword">const</span> mongodb = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mongodb'</span>);
+<span class="hljs-keyword">const</span> highland = <span class="hljs-built_in">require</span>(<span class="hljs-string">'highland'</span>);
+<span class="hljs-keyword">const</span> {getMongoDBConnection} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../../mongo_utils'</span>);
+<span class="hljs-keyword">const</span> log = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../../sro_utils/logger'</span>)(<span class="hljs-string">'OPLOG_UPDATE_JS'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p><code>byUpdateOperation</code> - a filter function which filters the oplogs based on the kind of the operation.
+<code>op</code> in <code>oplog.op</code> refers to the operation in oplog. <code>u</code> refers to the update operation.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> byUpdateOperation = <span class="hljs-function">(<span class="hljs-params">oplog</span>) =&gt;</span> oplog.op == <span class="hljs-string">'u'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p><code>findDocumentById</code> inputs the following parameter and finds a document from the MongoDB</p>
+<ol>
+<li><code>collection</code> - refers to the name of collection in MongoDB.</li>
+<li><code>id</code> - refers to the id of the document to be found.</li>
+<li><code>db</code> - refers to the db connection object.</li>
+<li><code>cb</code> - refers to the cb object.</li>
+</ol>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> findDocumentById = <span class="hljs-function">(<span class="hljs-params">collection, id, db, cb</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> _id = mongodb.ObjectID.isValid(id) ? <span class="hljs-keyword">new</span> mongodb.ObjectID(id): id  
+    db.collection(collection).findOne({<span class="hljs-attr">_id</span>: _id}, cb);   
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p><code>updateOplog</code> transforms the oplog by replacing a update portion with the entire <code>document</code> fetched from MongoDB.</p>
+<ol>
+<li><code>oplog</code> - refers to the oplog streamed from MongoDB.</li>
+<li><code>document</code> - refers to the document fetched from MongoDB</li>
+<li><code>cb</code> - refers to the callback which has to be called once the oplog is updated.</li>
+</ol>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> updateOplog = <span class="hljs-function">(<span class="hljs-params">oplog, <span class="hljs-built_in">document</span>, cb</span>) =&gt;</span> {
+    oplog.o = <span class="hljs-built_in">document</span>;
+    cb(<span class="hljs-literal">null</span>, oplog);
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p><code>toCompleteDocument</code> - maps the oplog to the complete document using the following steps.</p>
+<ol>
+<li>Fetches the name of the db and collection from the Oplog’s namespace <code>oplog.ns</code>.</li>
+<li>Fetches the object Id present in <code>oplog.o2</code>  </li>
+<li>Get’s the MongoDB’s Connection Object using <code>getMongoDBConnection</code>.</li>
+<li>Finds the Document using the combination of databaseName, Collection and the objectId using <code>findDocumentsById</code></li>
+<li>Updates the Oplog with the new Document fetched from the MongoDB.</li>
+</ol>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> toCompleteDocument = highland.wrapCallback(<span class="hljs-function">(<span class="hljs-params">oplog, cb</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> [dbName, collectionName] = oplog.ns.split(<span class="hljs-string">'.'</span>);
+    <span class="hljs-keyword">const</span> {_id} = oplog.o2;
+    <span class="hljs-keyword">async</span>.waterfall([
+        getMongoDBConnection.bind(<span class="hljs-literal">null</span>, dbName),
+        findDocumentById.bind(<span class="hljs-literal">null</span>, collectionName, _id),
+        updateOplog.bind(<span class="hljs-literal">null</span>, oplog)
+    ], cb);
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p><code>toMessage</code> maps the oplog to a message.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> toMessage = <span class="hljs-function">(<span class="hljs-params">oplog</span>) =&gt;</span> {
+    <span class="hljs-keyword">return</span> {<span class="hljs-attr">queue</span>: oplog.ns, <span class="hljs-attr">message</span>: oplog.o};
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p><code>updateStream</code> pipes the input stream through the following stages.</p>
+<ol>
+<li><code>byUpdateOperation</code> - the stream initially get filtered by the type of their operation. 
+It passes only the update operations onto the next stage onto the next stage.</li>
+<li><code>toCompleteDocument</code> - maps the partial update document to the Complete MongoDB Document 
+which kinda of becomes helpful in decision making for other Ontology Processors.</li>
+<li><code>toMessage</code> - maps the oplog to a Message.</li>
+</ol>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">const</span> updateStream =  highland.pipeline(
+    highland.filter(byUpdateOperation),
+    highland.map(<span class="hljs-function">(<span class="hljs-params">message</span>) =&gt;</span> {log.debug(<span class="hljs-string">'update'</span>, message); <span class="hljs-keyword">return</span> message}),
+    highland.flatMap(toCompleteDocument),
+    highland.map(toMessage)
+);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Exports an updateStream                                </p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = updateStream;</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

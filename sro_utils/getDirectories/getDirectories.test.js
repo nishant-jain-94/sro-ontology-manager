@@ -1,4 +1,4 @@
-const should = require('should');
+require('should');
 const mkdirp = require('mkdirp');
 const rmdir = require('rmdir');
 const log = require('../logger');

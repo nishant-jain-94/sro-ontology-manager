@@ -3,12 +3,10 @@
 // ## question.processor.js
 
 // Imports the required dependencies.
-const _ = require('lodash');
-const async = require('async');
+require('./sro_utils/normalize');
 const highland = require('highland');
 
-const log = require('./sro_utils/logger')('Questions_Processor');
-const normalize = require('./sro_utils/normalize');
+// const log = require('./sro_utils/logger')('Questions_Processor');
 
 // `toQuestionNode` converts a question document to a source node.
 // `toQuestionNode` inputs a message and then creates a source node following the steps below.

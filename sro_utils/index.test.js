@@ -1,7 +1,7 @@
 const should = require('should');
 const sro_utils = require('./index');
 
-describe('SRO Utils', (done) => {
+describe('SRO Utils', () => {
     it('Should have doesPropertyExists', (done) => {
         should.exist(sro_utils.doesPropertyExists);
         done();

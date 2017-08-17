@@ -1,13 +1,13 @@
+require('should');
 const _ = require('lodash');
-const should = require('should');
 const async = require('async');
 const highland = require('highland');
 const learningResourceProcessor = require('./learning_resource.processor');
 const mongodb = require('mongodb');
 const {deleteAllNodes, dropAllConstraints} = require('./neo4j_utils');
-const log  = require('./sro_utils/logger')('Learning_Resource_Processor_Test');
+// const log  = require('./sro_utils/logger')('Learning_Resource_Processor_Test');
 
-describe('Create conceptNodes from Stream', (done) => {
+describe('Create conceptNodes from Stream', () => {
     before((done) => {
         async.series([
             deleteAllNodes,
@@ -165,7 +165,7 @@ describe('Create conceptNodes from Stream', (done) => {
         };
 
         
-        const messageWrapper = (learnerState) => {
+        const messageWrapper = (learning_resource) => {
             const message = {};
             message["content"] = new Buffer(JSON.stringify(learning_resource));
             return message;
@@ -173,7 +173,7 @@ describe('Create conceptNodes from Stream', (done) => {
 
         highland([learning_resource]).map(messageWrapper).pipe(learningResourceProcessor).collect().toArray((s) => {
             const results = _.flatten(s);
-            log.debug({learningResourceResults: results});
+            // log.debug({learningResourceResults: results});
             results[0].triples[0].source.properties.label.should.be.exactly('resource');
             results[0].triples[0].source.properties.resourceId.should.be.exactly("info:fedora/learning:5194");
             results[0].triples[0].source.options.uniqueConstraintsOn.length.should.be.exactly(1);
