@@ -1,7 +1,7 @@
 const should = require('should');
 const index = require('./index.js');
 
-describe('NEO4J UTILS', (done) => {
+describe('NEO4J UTILS', () => {
     it('Should have createNode', (done) => {
         should.exist(index.createNode);
         done();

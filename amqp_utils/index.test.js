@@ -1,7 +1,7 @@
 const should = require('should');
 const index = require('./index.js');
 
-describe('AMQP UTILS', (done) => {
+describe('AMQP UTILS', () => {
     it('Should have config', (done) => {
         should.exist(index.config);
         done();

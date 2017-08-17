@@ -54,7 +54,7 @@ const toQueue = ({message, queue, options={}}, cb) => {
                 log.debug('Status', status);
                 log.info(`Message sent to ${mappedQueue}`);
             });
-        };
+        }
         cb();
 };
 
@@ -87,6 +87,7 @@ const printForDebug = (data) => {
 // 3. Then maps it to the `toQueueStream`.
 const streamOplogToOplogHandler = (oplogStream) => {
     oplogStream.on('error', (err) => {
+        log.error(err);
         process.exit(1);
     });
 
@@ -103,10 +104,16 @@ const streamOplogToOplogHandler = (oplogStream) => {
 // 1. `getMongoDBConnection` - Get's the MongoDB connection using mongo_utils
 // 2. `streamOplog` - Using the MongoDB connection object call the `streamOplog` to stream Oplog from MongoDB
 // 3. `streamOplogToOplogHandler` - Maps the stream to OplogHandler, which in return add's it to the queue
-async.waterfall([
-    getMongoDBConnection.bind(null, 'local'), 
-    streamOplog,
-    streamOplogToOplogHandler
+
+async.series([
+    createChannels,
+    async.waterfall.bind(null,  [
+        getMongoDBConnection.bind(null, 'local'), 
+        streamOplog,
+        streamOplogToOplogHandler
+    ])
 ]);
+
+// async.waterfall();
 
 log.info("Tailing MongoDB Oplog");  

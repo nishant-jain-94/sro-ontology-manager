@@ -3,14 +3,10 @@
 // ## user.processor.js
 
 // Imports the required dependencies.
-const _ = require('lodash');
-const async = require('async');
+require('./sro_utils/normalize');
 const highland = require('highland');
 
-const log = require('./sro_utils/logger')('User_Processor');
-const normalize = require('./sro_utils/normalize');
-
-const createNodesAndRelationsFromTriples = highland.wrapCallback(require('./neo4j_utils/createNodesAndRelationsFromTriples'));
+// const log = require('./sro_utils/logger')('User_Processor');
 
 // `toUserNodes` converts a User Document to a user node. 
 const toUserNodes = (message) => {

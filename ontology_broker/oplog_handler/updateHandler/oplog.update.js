@@ -7,6 +7,7 @@ const async = require('async');
 const mongodb = require('mongodb');
 const highland = require('highland');
 const {getMongoDBConnection} = require('../../mongo_utils');
+const log = require('../../sro_utils/logger')('OPLOG_UPDATE_JS');
 
 // `byUpdateOperation` - a filter function which filters the oplogs based on the kind of the operation.
 // `op` in `oplog.op` refers to the operation in oplog. `u` refers to the update operation.
@@ -61,7 +62,7 @@ const toMessage = (oplog) => {
 // 3. `toMessage` - maps the oplog to a Message.
 const updateStream =  highland.pipeline(
     highland.filter(byUpdateOperation),
-    highland.map((message) => {console.log('update', message); return message}),
+    highland.map((message) => {log.debug('update', message); return message}),
     highland.flatMap(toCompleteDocument),
     highland.map(toMessage)
 );

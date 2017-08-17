@@ -1,7 +1,7 @@
-const should = require('should');
+require('should');
 const doesPropertyExists = require('./doesPropertyExists');
 
-describe('Does Property Exists', (done) => {
+describe('Does Property Exists', () => {
     const testObj = {
         subObj: {
             a: '',

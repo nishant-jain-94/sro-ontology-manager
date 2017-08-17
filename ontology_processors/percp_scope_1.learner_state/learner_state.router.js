@@ -4,10 +4,9 @@
 
 // Imports the required dependencies.
 // `doesPropertyExists` method determines if a property exists in an Object. Returns true if the property exists else returns false.
-const _ = require('lodash');
-const async = require('async');
 const highland = require('highland');
 const {sendToQueue} = require('./amqp_utils');
+const log = require('./sro_utils/logger')('LEARNER_STATE_ROUTER');
 const doesPropertyExists = require('./sro_utils/doesPropertyExists');
 
 // `routeLearnerStateToFactory` routes the incoming concepts to the concept queue.
@@ -30,7 +29,7 @@ const routeLearnerStateToFactory = (data) => {
             message: triple,
             queue: 'relation_factory'
         };
-        console.log("Sending to relation factory");
+        log.debug("Sending to relation factory");
         sendToQueue(data);
     }
   };

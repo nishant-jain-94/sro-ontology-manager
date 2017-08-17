@@ -4,8 +4,6 @@
 
 // Imports the required dependencies.
 // `doesPropertyExists` method determines if a property exists in an Object. Returns true if the property exists else returns false.
-const _  = require('lodash');
-const async = require('async');
 const highland = require('highland');
 const {sendToQueue} = require('./amqp_utils');
 const log = require('./sro_utils/logger')('User_Router');

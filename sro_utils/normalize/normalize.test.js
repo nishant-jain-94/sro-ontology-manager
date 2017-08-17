@@ -1,7 +1,7 @@
-const should = require('should');
-const replaceWhiteSpaceByUnderscore = require('./normalize');
+require('should');
+require('./normalize');
 
-describe('String Utility', (done) => {
+describe('String Utility', () => {
     it('Should Replace WhiteSpace in string with Underscore', (done) => {
         const s = "App Engine Support";
         const modifiedString = s.normalize();

@@ -3,12 +3,11 @@
 // ## learner_state.processor.js
 
 // Imports the required dependencies.
+require('./sro_utils/normalize');
 const _ = require('lodash');
-const async = require('async');
 const highland = require('highland');
 
 const log = require('./sro_utils/logger')('Learning_Resource_Processor');
-const normalize = require('./sro_utils/normalize');
 
 // `toTriplesOfLearnerState` converts a Learner State document to a collection of triples.
 // A triple is a combination of a source, target and relation.
@@ -21,6 +20,7 @@ const normalize = require('./sro_utils/normalize');
 // 6. And by this it generates a triple for each `element`.
 // 7. And then returns an object containing `header` and `triples`.
 const toTriplesOfLearnerState = (message) =>  {
+    log.debug("To Triples Of Learner State");
     const header = message;
     const percpLearnerState = JSON.parse(message.content.toString());
     const source = {

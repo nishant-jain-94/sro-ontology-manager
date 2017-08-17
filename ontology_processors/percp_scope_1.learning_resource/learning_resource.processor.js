@@ -3,12 +3,11 @@
 // ## learning_resource.processor.js
 
 // Imports the required dependencies.
+require('./sro_utils/normalize');
 const _ = require('lodash');
-const async = require('async');
 const highland = require('highland');
 
-const log = require('./sro_utils/logger')('Learning_Resource_Processor');
-const normalize = require('./sro_utils/normalize');
+// const log = require('./sro_utils/logger')('Learning_Resource_Processor');
 
 // `toLearningResource` converts a Learner State document to a source node.
 // `toLearningResource` inputs a message and then creates a source node following the steps below.

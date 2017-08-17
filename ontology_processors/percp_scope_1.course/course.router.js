@@ -3,8 +3,6 @@
 // ## course.router.js
 
 // Imports the required dependencies.
-const _ = require('lodash');
-const async = require('async');
 const highland = require('highland');
 const {sendToQueue} = require('./amqp_utils');
 const log = require('./sro_utils/logger')('Course_Router');
