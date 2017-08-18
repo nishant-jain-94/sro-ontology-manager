@@ -1,12 +1,10 @@
-const express = require('express');
 const path = require('path');
+const express = require('express');
 const bodyParser = require('body-parser');
-
-const log = require('./sro_utils/logger')('ONTOLOGY_PROCESSOR_API:APP.JS');
-
-const concepts = require('./concept/concept.router');
 const courses = require('./course/course.router');
+const concepts = require('./concept/concept.router');
 const contents = require('./content/content.router');
+const log = require('./sro_utils/logger')('ONTOLOGY_PROCESSOR_API:APP.JS');
 
 const app = express();
 

@@ -11,9 +11,17 @@
 
 .concepts-wrapper > .concepts-card {
   flex-grow: 0;
-  flex-basis: 26%;
+  flex-basis: 20%;
 }
 
 .concepts-card {
   margin-top: 20px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 100%;
+  padding-top: 20%;
+  padding-left: 30%;
+  padding-right: 30%;
 }

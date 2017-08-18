@@ -23,7 +23,8 @@ export class DetailsViewComponent implements OnInit {
     this.details.entityId = entityId;
     this.detailService.getDetails(entityType, entityId).subscribe(data => {
         this.details.entityName = data.entityName;
-        this.details.groups = data.relatedGroups;        
+        this.details.groups = data.relatedGroups;
+        console.log(this.details.groups);   
     });
   }
 

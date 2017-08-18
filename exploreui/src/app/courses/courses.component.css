@@ -17,3 +17,11 @@
 .courses-card {
   margin-top: 20px;
 }
+
+.progress-bar {
+  width: 100%;
+  height: 100%;
+  padding-top: 20%;
+  padding-left: 30%;
+  padding-right: 30%;
+}

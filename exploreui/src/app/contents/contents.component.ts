@@ -9,12 +9,15 @@ import { ContentsService } from './contents.service';
 })
 export class ContentsComponent implements OnInit {
   contents: any;
+  showProgress: boolean = true;
 
   constructor(private contentService: ContentsService) { }
 
   ngOnInit() {
+    this.showProgress = true;
     this.contentService.getContents().subscribe(contents => {
       this.contents = contents;
+      this.showProgress = false;
     });
   }
 

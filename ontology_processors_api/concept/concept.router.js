@@ -4,7 +4,7 @@ const conceptController = require('./concept.controller.js');
 const log = require('../sro_utils/logger')('CONCEPT.ROUTES.JS');
 
 const PAGE_NUMBER = 1;
-const LIMIT_RESULTS = 20;
+const LIMIT_RESULTS = 1000;
 
 router.post('/content', (req, res, next) => {
     conceptController.fetchAllTheContentsWhichExplainsThisConcept(req.body, (err, data) => {
@@ -65,7 +65,7 @@ router.get('/:conceptId/subconcepts', (req, res, next) => {
 router.get('/:conceptId/details', (req, res, next) => {
     let options = {
         page: req.query.page ? req.query.page : 1,
-        limit: 1000
+        limit: req.query.limit ? req.query.limit: LIMIT_RESULTS
     };
     
     conceptController.fetchAllRelatedItems(req.params.conceptId, options, (err, concepts) => {

@@ -3,7 +3,8 @@ import {
   MdToolbarModule,
   MdCardModule,
   MdDialogModule,
-  MdTabsModule
+  MdTabsModule,
+  MdProgressBarModule
 } from '@angular/material';
 
 import { NgModule } from '@angular/core';
@@ -16,6 +17,7 @@ import { CommonModule } from '@angular/common';
     MdCardModule,
     MdToolbarModule,
     MdTabsModule,
+    MdProgressBarModule,
     MdDialogModule
   ],
   exports: [
@@ -23,7 +25,8 @@ import { CommonModule } from '@angular/common';
     MdCardModule,
     MdToolbarModule,
     MdDialogModule,
-    MdTabsModule
+    MdTabsModule,
+    MdProgressBarModule
   ]
 })
 export class MaterialModule { }
