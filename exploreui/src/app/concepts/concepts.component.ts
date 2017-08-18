@@ -9,12 +9,14 @@ import { ConceptsService } from './concepts.service';
 })
 export class ConceptsComponent implements OnInit {
   concepts: any;
+  showProgress: boolean = true;
 
   constructor(private conceptService: ConceptsService) { }
 
   ngOnInit() {
     this.conceptService.getConcepts().subscribe(concepts => {
       this.concepts = concepts
+      this.showProgress = false;
     });
   }
 

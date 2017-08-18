@@ -19,3 +19,14 @@
     display: flex;
     flex-flow: row-reverse;
 }
+
+.progress-bar {
+    height: 100%;
+    padding-top: 20%;
+    padding-left: 30%;
+    padding-right: 30%;
+}
+
+.noentities {
+    padding-top: 20px;
+}

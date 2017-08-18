@@ -1,9 +1,17 @@
 <div class="mat-title header">Courses</div>
 <div class="courses-wrapper">
-  <md-card routerLink='{{course.courseId | encodeUriComponent}}' class="courses-card" *ngFor="let course of coursesItems">
-    <md-card-title>{{course.displayName}}</md-card-title>
-    <md-card-content>
-      <p>{{course.description | slice:0:300}}</p>
-    </md-card-content>  
-  </md-card>
+  <div *ngIf="showProgress == true; then showProgress else showCourses"></div>
+  <ng-template #showCourses>
+    <md-card routerLink='{{course.courseId | encodeUriComponent}}' class="courses-card" *ngFor="let course of coursesItems">
+      <md-card-title>{{course.displayName}}</md-card-title>
+      <md-card-content>
+        <p>{{course.description | slice:0:300}}</p>
+      </md-card-content>  
+    </md-card>
+  </ng-template>
+  <ng-template #showProgress>
+      <div class="progress-bar">
+        <md-progress-bar mode="indeterminate"></md-progress-bar>
+      </div>
+  </ng-template>
 </div>

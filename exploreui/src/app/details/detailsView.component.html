@@ -1,15 +1,29 @@
-<div class="mat-title">Entities Related to {{details?.entityName}}</div>
-<md-tab-group>
-  <div *ngFor="let group of details?.groups">
-  <md-tab *ngIf="group.entities.length" label="{{group.name | uppercase}}">
-    <div class="entities">
-      <md-card routerLink="/{{entity.entityType}}/{{entity.entityId | encodeUriComponent}}/details" *ngFor="let entity of group.entities">
-        <md-card-title>{{entity?.entityName | slice:0:20}}</md-card-title>
-        <md-card-content>
-          <p>{{entity?.entityId}}{{entity?.description}}</p>
-        </md-card-content>
-      </md-card>
+<div *ngIf="details.entityName; then showTabs else showProgress"></div>
+<ng-template #showTabs>
+  <div class="mat-title">Entities Related to {{details?.entityName}}</div>
+  <md-tab-group>
+    <div *ngFor="let group of details?.groups">
+    <md-tab label="{{group.name | uppercase}}">
+      <div *ngIf="group.entities.length > 0; then showEntities else showNoEntitiesFound"></div>
+      <ng-template #showEntities>
+        <div class="entities">
+          <md-card routerLink="/{{entity.entityType}}/{{entity.entityId | encodeUriComponent}}/details" *ngFor="let entity of group.entities">
+            <md-card-title>{{entity?.entityName | slice:0:20}}</md-card-title>
+            <md-card-content>
+              <p>{{entity?.entityId}}{{entity?.description}}</p>
+            </md-card-content>
+          </md-card>
+        </div>
+      </ng-template>
+      <ng-template #showNoEntitiesFound>
+        <div class="noentities mat-subheading-2">No {{group.name}} found.</div>
+      </ng-template>
+    </md-tab>
     </div>
-  </md-tab>
+  </md-tab-group>
+</ng-template>
+<ng-template #showProgress>
+  <div class="progress-bar">
+    <md-progress-bar mode="indeterminate"></md-progress-bar>
   </div>
-</md-tab-group>
+</ng-template>

@@ -10,6 +10,7 @@ import { CoursesService } from './courses.service';
 })
 export class CoursesComponent implements OnInit {
   coursesItems: Array<CoursesViewModel>;
+  showProgress: boolean = true;
 
   constructor(private courseService:CoursesService) {
   }
@@ -17,6 +18,7 @@ export class CoursesComponent implements OnInit {
   ngOnInit() {
     this.courseService.getCourses().subscribe(courses => {
       this.coursesItems = courses;
+      this.showProgress = false;
     });
   }
 

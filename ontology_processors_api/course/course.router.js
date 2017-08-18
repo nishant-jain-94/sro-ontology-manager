@@ -20,7 +20,7 @@ router.get('/', (req, res, next) => {
 router.get('/:courseId/concepts', (req, res, next) => {
     let pageOptions = {
         page: req.query.page ? req.query.page : 1,
-        maxResults: 20
+        maxResults: 1000
     };
 
     courseController.fetchAllConceptsAssociatedWithCourse(req.params.courseId, pageOptions, (err, data) => {
@@ -32,7 +32,7 @@ router.get('/:courseId/concepts', (req, res, next) => {
 router.get('/:courseId/contents', (req, res, next) => {
     let pageOptions = {
         page: req.query.page ? req.query.page : 1,
-        maxResults: 20
+        maxResults: 1000
     };
 
     courseController.fetchAllContentsAssociatedWithCourse(req.params.courseId, pageOptions, (err, data) => {

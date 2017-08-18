@@ -1,9 +1,17 @@
 <div class="mat-title header">Contents</div>
 <div class="contents-wrapper">
-  <md-card routerLink='{{content.mediaContentId | encodeUriComponent}}' class="contents-card" *ngFor="let content of contents">
-    <md-card-title>{{content.displayName}}</md-card-title>
-    <md-card-content>
-      <p>{{content.description | slice:0:300}}</p>
-    </md-card-content>  
-  </md-card>
+  <div *ngIf="showProgress == true; then showProgressBar else showContents"></div>    
+  <ng-template #showProgressBar>
+    <div class="progress-bar">
+      <md-progress-bar mode="indeterminate"></md-progress-bar>
+    </div>
+  </ng-template>
+  <ng-template #showContents>
+    <md-card routerLink='{{content.mediaContentId | encodeUriComponent}}' class="contents-card" *ngFor="let content of contents">
+      <md-card-title>{{content.displayName}}</md-card-title>
+      <md-card-content>
+        <p>{{content.description | slice:0:300}}</p>
+      </md-card-content>
+    </md-card>
+  </ng-template>
 </div>

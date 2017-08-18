@@ -3,7 +3,7 @@ const router = express.Router();
 const contentController = require('./content.controller');
 
 const PAGE_NUMBER = 1;
-const LIMIT_RESULTS = 20;
+const LIMIT_RESULTS = 1000;
 
 router.get('/', (req, res, next) => {    
     let options = {
