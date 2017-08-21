@@ -1,15 +1,13 @@
-
 var express = require('express');
 var router = express.Router();
 var controller = require('../controller');
 
-/* GET home page. */
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-// });
 
 router.get('/noOfQueues', function (req, res, next) {
-  controller.getNoOfQueues(res);
+  controller.getNoOfQueues((err, data) => {
+    if(!err) res.json(data);
+    else next(err);
+  });
 })
 
 router.get('/healthStatus', function (req, res, next) {
@@ -21,7 +19,10 @@ router.get('/noOfConsumers', function (req, res, next) {
 });
 
 router.get('/consumerUtilisation', function (req, res, next) {
-  controller.getConsumerUtilisation(res);
+  controller.getConsumerUtilisation((err, data) => {
+    if(!err) res.json(data);
+    else next(err);
+  });
 });
 
 
