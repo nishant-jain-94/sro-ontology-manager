@@ -2,14 +2,15 @@ var request = require('request');
 
 var controller = {};
 
-controller.getNoOfQueues = (res) => {
-
-   request.get('http://localhost:15672/api/queues', function(err, response, body) {
+controller.getNoOfQueues = (cb) => {
+   request.get('http://localhost:15672/api/queues', (err, response, body) => {
        if(!err && response.statusCode == 200) {
-        res.json({count: JSON.parse(body).length});
+        const data = {count: JSON.parse(body).length};
+        cb(null,  data);
+       } else {
+           cb(err, null);
        }
    }).auth('guest', 'guest', false);
-
 };
 
 controller.getHealthStatus = (res) => {
@@ -33,11 +34,14 @@ controller.getNoOfConsumers = (res) => {
 
 };
 
-controller.getConsumerUtilisation = (res) => {
+controller.getConsumerUtilisation = (cb) => {
 
-    request.get('http://localhost:15672/api/queues', function (err, response, body) {
+    request.get('http://localhost:15672/api/queues', (err, response, body) => {
         if(!err && response.statusCode == 200) {
-            res.json(JSON.parse(body));
+         const data = JSON.parse(body);
+         cb(null,  data);
+        } else {
+            cb(err, null);
         }
         
     }).auth('guest', 'guest', false);
