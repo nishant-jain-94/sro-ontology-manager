@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
+import * as io from 'socket.io-client';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,6 +11,7 @@ import { DashboardService } from './dashboard.service';
 })
 export class DashboardComponent implements OnInit {
 
+  public socket;
   public healthStatus: string;
   public queueCount: number;
   public consumerCount: number;
@@ -17,6 +20,7 @@ export class DashboardComponent implements OnInit {
   constructor(public dashboardService: DashboardService) {}
 
   ngOnInit() {
+    this.socket = io.connect('http://localhost:3000');
     this.getNodeHealthStatus();
     this.getNoOfQueues();
     this.getNoOfConsumers();
@@ -31,8 +35,14 @@ export class DashboardComponent implements OnInit {
   }
 
   getNoOfQueues() {
-    this.dashboardService.getNoOfQueues().subscribe(result => {
-      this.queueCount = result.json().count;
+   // const socket = io('http://localhost:3000');
+    // this.dashboardService.getNoOfQueues().subscribe(result => {
+    //   this.queueCount = result.json().count;
+    // });
+    const eventSource = Observable.fromEvent(this.socket, 'queues');
+    eventSource.subscribe((data: any) => {
+      this.queueCount = data.count;
+      console.log('The socket is calling', this.queueCount);
     });
   }
 
@@ -43,9 +53,15 @@ export class DashboardComponent implements OnInit {
   }
 
   getConsumerUtilization() {
-    this.dashboardService.getConsumerUtilization().subscribe(result => {
-      this.consumerUtilizationCollection = result.json();
-      console.log(this.consumerUtilizationCollection);
+    // this.dashboardService.getConsumerUtilization().subscribe(result => {
+    //   this.consumerUtilizationCollection = result.json();
+    //   console.log(this.consumerUtilizationCollection);
+    // });
+
+    const eventSource = Observable.fromEvent(this.socket, 'consumerUtilization');
+    eventSource.subscribe((data: any) => {
+      console.log('Hello' + data);
+      this.consumerUtilizationCollection = data;
     });
   }
 }

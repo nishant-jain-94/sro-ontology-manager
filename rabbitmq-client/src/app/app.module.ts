@@ -9,11 +9,14 @@ import { AppComponent } from './app.component';
 import { NavComponent } from './core/nav/nav.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
+import { ConvertToIntegerPipe } from './core/convert-to-integer.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
-    DashboardComponent
+    DashboardComponent,
+    ConvertToIntegerPipe
   ],
   imports: [
     BrowserModule,
