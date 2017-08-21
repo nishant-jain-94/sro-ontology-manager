@@ -30,14 +30,20 @@
     <header class="mat-title">
       Consumer Utilization
     </header>
-    <div class="consumer-card-wrapper">
+    <div *ngIf="consumerUtilizationCollection" class="consumer-card-wrapper">
       <ng-container *ngFor="let consumer of consumerUtilizationCollection">
         <md-card class="consumer-card-content">
             <md-card-title>
                 <span class="mat-subheading-2">{{consumer?.name | uppercase}}</span>
             </md-card-title>
-            <md-card-content class="mat-title card-value">
-                <div>{{ consumer?.consumer_utilisation | percent }}</div>
+            <md-card-content class="card-value">
+                <div class="consumer-utilisation mat-title">{{ consumer?.consumer_utilisation | convertToInteger | percent }}</div>
+                <div *ngIf="consumer?.state==='running'; else statusRed" class="status-green">{{ consumer?.state }}</div>
+                <ng-template #statusRed><div class="status-red">{{ consumer?.state }}</div></ng-template>
+                <div class="extra-details"><span>Message Rate : </span><span>{{ consumer?.messages_details?.rate }}</span></div>
+                <div class="extra-details"><span>Messages Ready : </span><span>{{ consumer?.messages_ready }}</span></div>
+                <div class="extra-details"><span>Messages Unacknowledged : </span><span>{{ consumer?.messages_unacknowledged }}</span></div>
+                <div class="extra-details"><span>Total Messages : </span><span>{{ consumer?.messages }}</span></div>
             </md-card-content>
         </md-card>
       </ng-container>

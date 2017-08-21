@@ -1,9 +1,8 @@
 .dashboard-wrapper {
-  padding: 10px;
-  margin: 10px;
+  padding: 20px;
+  /* margin: 10px; */
+  background-color: #8C9EFF;
 }
-
-
 
 .card-wrapper, .consumer-card-wrapper {
   display: flex;
@@ -20,6 +19,7 @@
 .consumer-card-wrapper > .consumer-card-content {
   flex-grow: 0;
   flex-basis: 20%;
+  height: 300px;
 }
 
 .card-content, .consumer-card-content {
@@ -28,10 +28,6 @@
   text-align: center;
 }
 
-/* .consumer-card-content {
-  height
-} */
-
 .card-value {
   font-size: 20px;
 }
@@ -39,4 +35,21 @@
 .separator {
   margin-top: 40px;
   margin-bottom: 28px;
+}
+
+.status-green {
+  color: green;
+}
+
+.status-red {
+  color: red;
+}
+
+.consumer-utilisation {
+  margin-bottom: 15px;
+}
+
+.extra-details {
+  margin-top: 20px;
+  font-size: 16px;
 }
