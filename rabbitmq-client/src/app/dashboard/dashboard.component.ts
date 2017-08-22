@@ -17,7 +17,11 @@ export class DashboardComponent implements OnInit {
   public consumerCount: number;
   public consumerUtilizationCollection: Array<any>;
 
-  constructor(public dashboardService: DashboardService) {}
+  constructor(public dashboardService: DashboardService) {
+    this.queueCount = 0;
+    this.healthStatus = 'No Connection';
+    this.consumerCount = 0;
+  }
 
   ngOnInit() {
     this.socket = io.connect('http://localhost:3000');
@@ -29,39 +33,31 @@ export class DashboardComponent implements OnInit {
 
 
   getNodeHealthStatus() {
-    this.dashboardService.getNodeHealthStatus().subscribe(status => {
-      this.healthStatus = status.json().status;
+    const eventSource = Observable.fromEvent(this.socket, 'healthStatus');
+    eventSource.subscribe((data: any) => {
+      this.healthStatus = data.status;
     });
   }
 
   getNoOfQueues() {
-   // const socket = io('http://localhost:3000');
-    // this.dashboardService.getNoOfQueues().subscribe(result => {
-    //   this.queueCount = result.json().count;
-    // });
     const eventSource = Observable.fromEvent(this.socket, 'queues');
     eventSource.subscribe((data: any) => {
       this.queueCount = data.count;
-      console.log('The socket is calling', this.queueCount);
     });
   }
 
   getNoOfConsumers() {
-    this.dashboardService.getNoOfConsumers().subscribe(result => {
-      this.consumerCount = result.json().count;
+    const eventSource = Observable.fromEvent(this.socket, 'consumers');
+    eventSource.subscribe((data: any) => {
+      this.consumerCount = data.count;
     });
   }
 
   getConsumerUtilization() {
-    // this.dashboardService.getConsumerUtilization().subscribe(result => {
-    //   this.consumerUtilizationCollection = result.json();
-    //   console.log(this.consumerUtilizationCollection);
-    // });
-
     const eventSource = Observable.fromEvent(this.socket, 'consumerUtilization');
     eventSource.subscribe((data: any) => {
-      console.log('Hello' + data);
       this.consumerUtilizationCollection = data;
     });
   }
+
 }
