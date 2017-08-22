@@ -13,21 +13,27 @@ controller.getNoOfQueues = (cb) => {
    }).auth('guest', 'guest', false);
 };
 
-controller.getHealthStatus = (res) => {
+controller.getHealthStatus = (cb) => {
 
     request.get('http://localhost:15672/api/healthchecks/node', function(err, response, body) {
         if(!err && response.statusCode == 200) {
-            res.json(JSON.parse(body));
+            const data = JSON.parse(body);
+            cb(null, data);
+        } else {
+            cb(err, null);
         }
     }).auth('guest','guest',false);
 
 };
 
-controller.getNoOfConsumers = (res) => {
+controller.getNoOfConsumers = (cb) => {
 
     request.get('http://localhost:15672/api/consumers', function(err, response, body) {
         if(!err && response.statusCode == 200) {
-            res.json({ count: JSON.parse(body).length });
+            const data = { count: JSON.parse(body).length };
+            cb(null, data);
+        } else {
+            cb(err, null);
         }
 
     }).auth('guest','guest', false);
