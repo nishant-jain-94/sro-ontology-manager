@@ -1,3 +1,6 @@
+<header class="primary-header-container">
+  <span>RabbitMQ</span>
+</header>
 <div class="dashboard-wrapper">
   <div class="card-wrapper">
     <md-card class="card-content">
@@ -30,7 +33,7 @@
     <header class="mat-title">
       Consumer Utilization
     </header>
-    <div *ngIf="consumerUtilizationCollection" class="consumer-card-wrapper">
+    <div *ngIf="consumerUtilizationCollection; else loaderView" class="consumer-card-wrapper">
       <ng-container *ngFor="let consumer of consumerUtilizationCollection">
         <md-card class="consumer-card-content">
             <md-card-title>
@@ -48,5 +51,6 @@
         </md-card>
       </ng-container>
     </div>
+    <ng-template #loaderView><div class="consumer-utilisation-loader"><md-spinner mode="indeterminate"></md-spinner></div></ng-template>
   </div>
 </div>

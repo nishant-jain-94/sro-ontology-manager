@@ -3,20 +3,23 @@ import { CommonModule } from '@angular/common';
 import {
   MdToolbarModule,
   MdCardModule,
-  MdIconModule
+  MdIconModule,
+  MdProgressSpinnerModule
 } from '@angular/material';
 
 @NgModule({
   imports: [
     MdToolbarModule,
     MdCardModule,
-    MdIconModule
+    MdIconModule,
+    MdProgressSpinnerModule
   ],
   declarations: [],
   exports: [
     MdToolbarModule,
     MdIconModule,
-    MdCardModule
+    MdCardModule,
+    MdProgressSpinnerModule
    ]
 })
 export class MaterialModule { }

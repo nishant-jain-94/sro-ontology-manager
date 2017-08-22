@@ -1,7 +1,7 @@
 .dashboard-wrapper {
   padding: 20px;
   /* margin: 10px; */
-  background-color: #8C9EFF;
+  /* background-color: #8C9EFF; */
 }
 
 .card-wrapper, .consumer-card-wrapper {
@@ -52,4 +52,25 @@
 .extra-details {
   margin-top: 20px;
   font-size: 16px;
+}
+
+.consumer-utilisation-loader {
+  display: flex;
+  justify-content: space-around;
+  /* margin-top: 100px; */
+  height: 300px;
+  align-items: center;
+}
+
+.primary-header-container{
+  background: #3f51b5;
+  color: rgba(255,255,255,.87);
+  height: 120px;
+  padding-left: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.primary-header-container > span {
+  font-size: 30px;
 }
