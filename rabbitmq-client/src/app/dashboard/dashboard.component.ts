@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs/Rx';
+import { Config } from '../app.config';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,7 +25,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.socket = io.connect('http://localhost:3000');
+    this.socket = io.connect(`${Config.WSServer}`);
     this.getNodeHealthStatus();
     this.getNoOfQueues();
     this.getNoOfConsumers();
