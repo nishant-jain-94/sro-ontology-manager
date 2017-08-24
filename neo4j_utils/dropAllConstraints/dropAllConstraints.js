@@ -7,11 +7,11 @@ const getConstraints = require('../getConstraints');
 const dropAllConstraints = (callback) => {
 
 	function dropConstraints(constraints, callback) {
-		async.map(constraints, ({property_keys, label, type}, callback) => {
+		const queryExecutorToDropConstraints = async.map(constraints, ({property_keys, label, type}, callback) => {
 			const query = `DROP CONSTRAINT ON (label:${label}) ASSERT label.${property_keys[0]} IS UNIQUE`;
-			queryExecutor(query, callback);
-		
-		}, callback);
+			return queryExecutor.bind(null, query, callback);
+		});
+		async.series(queryExecutorToDropConstraints, callback);
 	};
 
 	async.waterfall([
