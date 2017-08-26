@@ -1,0 +1,76 @@
+.dashboard-wrapper {
+  padding: 20px;
+  /* margin: 10px; */
+  /* background-color: #8C9EFF; */
+}
+
+.card-wrapper, .consumer-card-wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.card-wrapper > .card-content {
+  flex-grow: 0;
+  flex-basis: 26%;
+}
+
+.consumer-card-wrapper > .consumer-card-content {
+  flex-grow: 0;
+  flex-basis: 20%;
+  height: 300px;
+}
+
+.card-content, .consumer-card-content {
+  margin-top: 20px;
+  height: 90px;
+  text-align: center;
+}
+
+.card-value {
+  font-size: 20px;
+}
+
+.separator {
+  margin-top: 40px;
+  margin-bottom: 28px;
+}
+
+.status-green {
+  color: green;
+}
+
+.status-red {
+  color: red;
+}
+
+.consumer-utilisation {
+  margin-bottom: 15px;
+}
+
+.extra-details {
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.consumer-utilisation-loader {
+  display: flex;
+  justify-content: space-around;
+  /* margin-top: 100px; */
+  height: 300px;
+  align-items: center;
+}
+
+.primary-header-container{
+  background: #3f51b5;
+  color: rgba(255,255,255,.87);
+  height: 120px;
+  padding-left: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.primary-header-container > span {
+  font-size: 30px;
+}

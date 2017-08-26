@@ -1,0 +1,42 @@
+<header class="primary-header-container">
+  <span>Neo4j</span>
+</header>
+<div class="dashboard-wrapper">
+  <div class="card-wrapper">
+    <md-card class="card-content">
+      <md-card-title>
+          <span class="mat-subheading-2">Neo4j Health Status</span>
+      </md-card-title>
+      <md-card-content class="mat-title card-value">
+        {{ neo4jHealthStatus | uppercase }}
+      </md-card-content>
+    </md-card>
+    <ng-container *ngFor="let neo4jData of neo4jDataCollection">
+      <md-card class="card-content">
+          <md-card-title>
+              <span class="mat-subheading-2">{{ neo4jData?.name }}</span>
+          </md-card-title>
+          <md-card-content class="mat-title card-value">
+            {{ neo4jData?.value }}
+          </md-card-content>
+      </md-card>
+    </ng-container>
+    <md-card class="card-content">
+      <md-card-title>
+          <span class="mat-subheading-2">Number of Nodes</span>
+      </md-card-title>
+      <md-card-content class="mat-title card-value">
+        {{ nodeData?.value }}
+      </md-card-content>
+    </md-card>
+    <md-card class="card-content">
+      <md-card-title>
+          <span class="mat-subheading-2">Number of Relationships</span>
+      </md-card-title>
+      <md-card-content class="mat-title card-value">
+        {{ relationshipData?.value }}
+      </md-card-content>
+    </md-card>
+  </div>
+  <div class="separator"></div>
+</div>
