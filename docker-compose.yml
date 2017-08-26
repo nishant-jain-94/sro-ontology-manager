@@ -1,5 +1,23 @@
 version: '2'
 services:
+  explore_ui:
+    build:
+      context: ./exploreui
+    env_file:
+      - ontology_manager.env
+    ports:
+      - "0.0.0.0:4200:4200"
+    restart: always
+
+  ontology_manager_api:
+    build:
+      context: ./ontology_processors_api
+    env_file:
+      - ontology_manager.env
+    ports:
+      - "0.0.0.0:3000:3000"
+    restart: always
+
   ontology_broker:
     build: 
       context: ./ontology_broker
