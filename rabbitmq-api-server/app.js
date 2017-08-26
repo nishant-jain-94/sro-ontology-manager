@@ -14,6 +14,7 @@ app.io = io;
 
 var index = require('./routes/index');
 var rabbitmqio = require('./io/rabbitmq.io')(io);
+var neo4jio = require('./io/neo4j.io')(io);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
