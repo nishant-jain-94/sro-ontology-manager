@@ -2,3 +2,20 @@
 box-shadow: 0 2px 4px -1px rgba(0,0,0,0.6), 0 4px 5px 0 rgba(0,0,0,0.1), 0 1px 10px 0 rgba(0,0,0,0.1);
 position: relative;
 }
+
+.dashboard-nav-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+  width: 15%;
+}
+
+.nav-links > span {
+  cursor: pointer;
+  outline: none;
+}
