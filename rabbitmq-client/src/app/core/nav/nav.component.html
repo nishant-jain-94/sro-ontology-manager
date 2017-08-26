@@ -1,7 +1,13 @@
 <md-toolbar class="header-toolbar" color="primary">
   <!-- <span class="example-spacer"></span>
   <span class="example-spacer"></span> -->
-  <div class="header-corner" (click)="goToHome()" role="button">
-    <span class="mat-title">Dashboard</span>
+  <div class="dashboard-nav-container">
+    <div class="header-corner" (click)="goToHome()" role="button">
+      <span class="mat-title">Dashboard</span>
+    </div>
+    <div class="nav-links">
+      <span routerLink="/dashboard/rabbitmq">RabbitMQ</span>
+      <span routerLink="/dashboard/neo4j">Neo4j</span>
+    </div>
   </div>
 </md-toolbar>
