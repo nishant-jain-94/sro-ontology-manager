@@ -11,7 +11,6 @@ RUN yarn install
 # Bundle app source
 COPY . /usr/src/app
 
-# Start serving files using yarn start
-CMD ["yarn", "start", "--host=0.0.0.0"]
+VOLUME /usr/src/app/neo4j_utils /usr/src/app/sro_utils
 
-
+CMD ["yarn", "start"]

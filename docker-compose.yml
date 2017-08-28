@@ -269,3 +269,19 @@ services:
       - graphdb
       - explore_ui
     restart: always
+
+  meta-api:
+    build: ./meta-api
+    env_file:
+      - ontology_manager.env
+    environment:
+      - PORT=3001
+    ports:
+      - "3001:3001"
+    restart: always
+  
+  meta-client:
+    build: ./meta-client
+    ports:
+      - "0.0.0.0:4201:4201"
+    restart: always
