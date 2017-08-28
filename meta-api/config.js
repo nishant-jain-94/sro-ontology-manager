@@ -7,7 +7,7 @@ config.rabbitMQconfig = {
             "pass": "guest"
         }
     },
-    url: 'http://localhost:15672/api/'
+    url: `${process.env.AMQP_HTTP_URL}/api/`
 };
 
 config.neo4jconfig = {
@@ -17,7 +17,7 @@ config.neo4jconfig = {
             "pass": "password"
         }
     },
-    url: 'http://localhost:7474/db/manage/'
+    url: `${process.env.NEO4J_HTTP_URL}/db/manage/`
 };
 
 module.exports = config;
