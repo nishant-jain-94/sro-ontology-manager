@@ -15,6 +15,6 @@ COPY . /usr/src/app
 EXPOSE 4200
 
 # Start serving files using yarn start
-CMD ["yarn", "start"]
+CMD ["yarn", "start", "--host=0.0.0.0"]
 
 

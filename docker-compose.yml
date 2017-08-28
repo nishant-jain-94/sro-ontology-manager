@@ -9,11 +9,16 @@ services:
       - "0.0.0.0:4200:4200"
     restart: always
 
-  ontology_manager_api:
+  ontology_processors_api:
     build:
       context: ./ontology_processors_api
     env_file:
       - ontology_manager.env
+    volumes:
+      - ./amqp_utils:/usr/src/app/amqp_utils
+      - ./neo4j_utils:/usr/src/app/neo4j_utils
+      - ./sro_utils:/usr/src/app/sro_utils
+      - ./logs/ontology_broker:/usr/src/app/logs
     ports:
       - "0.0.0.0:3000:3000"
     restart: always
@@ -249,4 +254,18 @@ services:
     ports:
      - "5672:5672"
      - "15672:15672"
+    restart: always
+
+  nginx:
+    image: nginx
+    network_mode: host
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - ontology_processors_api
+      - rabbitmq
+      - graphdb
+      - explore_ui
     restart: always
