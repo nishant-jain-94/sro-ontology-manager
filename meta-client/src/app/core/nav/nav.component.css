@@ -11,8 +11,10 @@ position: relative;
 
 .nav-links {
   display: flex;
-  justify-content: space-between;
-  width: 15%;
+}
+
+.nav-links > * {
+  padding-left: 15px;
 }
 
 .nav-links > span {
