@@ -285,3 +285,55 @@ services:
     ports:
       - "0.0.0.0:4201:4201"
     restart: always
+
+  elasticsearch:
+    image: elasticsearch
+    environment:
+      - LOGSPOUT=ignore
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+  logstash:
+    image: logstash:alpine
+    command: -f /etc/logstash.conf
+    volumes:
+      - ./logstash.conf:/etc/logstash.conf
+    ports:
+      - "5000:5000"
+      - "5000:5000/udp"
+      - "9600:9600"
+    environment:
+      - LOGSPOUT=ignore
+    links:
+      - elasticsearch
+
+  logspout:
+    build: ./logspout
+    environment:
+      - ROUTE_URIS=logstash+tcp://logstash:5000
+    ports:
+      - "127.0.0.1:9000:80"
+    links:
+      - logstash
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  kibana:
+    image: kibana
+    environment: 
+      - LOGSPOUT=ignore
+    links:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+
+  cadvisor:
+    image: google/cadvisor:latest
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - "9091:8080"
