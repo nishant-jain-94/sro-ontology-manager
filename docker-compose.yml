@@ -312,6 +312,7 @@ services:
     build: ./logspout
     environment:
       - ROUTE_URIS=logstash+tcp://logstash:5000
+      - RETRY_COUNT=20
     ports:
       - "127.0.0.1:9000:80"
     links:
