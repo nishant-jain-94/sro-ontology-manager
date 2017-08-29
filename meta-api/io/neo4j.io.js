@@ -1,4 +1,4 @@
-const neo4jController = require('../controller/index.js');
+const neo4jController = require('../controller/neo4j.controller');
 
 
 const neo4jio = (io) => {

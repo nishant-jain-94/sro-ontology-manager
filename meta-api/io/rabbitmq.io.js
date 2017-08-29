@@ -1,4 +1,4 @@
-const rabbitmqController = require('../controller/index.js');
+const rabbitmqController = require('../controller/rabbitmq.controller');
 
 
 const rabbitmqio = (io) => {
