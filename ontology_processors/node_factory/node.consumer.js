@@ -19,7 +19,6 @@ const consumeQueue = (push, channel) => {
     log.debug(`Consuming from ${queue} queue`);
     channel.assertQueue(queue, {});
     channel.consume(queue, function(message) {
-        // log.debug(`Received Message in ${queue}`);
         push(null, message);
     }, {noack: false});
 };

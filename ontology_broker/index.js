@@ -27,6 +27,7 @@ const createChannels = (cb) => {
             });
             const assertQueues = queues.map((queue) => { 
                 const assertQueue = (cb) => {
+                    log.debug(`Creating ${queue}`);
                     channel.assertQueue(queue, {durable: true}, cb);
                 };
                return assertQueue;
@@ -34,6 +35,7 @@ const createChannels = (cb) => {
             log.debug("Creating Channels");
             async.series(assertQueues, cb);
         } else {
+            log.error({error: err});
             cb(err, null);
         }
     }); 
@@ -113,7 +115,5 @@ async.series([
         streamOplogToOplogHandler
     ])
 ]);
-
-// async.waterfall();
 
 log.info("Tailing MongoDB Oplog");  
