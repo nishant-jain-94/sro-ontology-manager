@@ -88,9 +88,6 @@ describe('RabbitMQ Get Consumer Utilization Controller Method', function() {
         expect(controllerData).to.be.a('array');
     });
 
-    it('should not return an empty array', function() {
-        expect(controllerData).to.not.have.lengthOf(0);
-    });
 });
 
 describe('Neo4j Health Status Controller Method', function() {
