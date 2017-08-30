@@ -1,7 +1,5 @@
 var chai = require('chai');
 var expect = chai.expect;
-process.env.NEO4J_HTTP_URL = 'http://localhost:7474';
-process.env.AMQP_HTTP_URL = 'http://localhost:15672';
 var rabbitmqController = require('../controller/rabbitmq.controller');
 var neo4jController = require('../controller/neo4j.controller');
 
