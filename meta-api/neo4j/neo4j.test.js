@@ -3,6 +3,8 @@ var expect = chai.expect;
 var ioClient = require('socket.io-client');
 var ioServer = require('socket.io').listen(3002);
 var neo4jio = require('./neo4j.io')(ioServer);
+var app = require('../app');
+var request = require('supertest');
 
 var neo4jController = require('./neo4j.controller');
 
@@ -48,6 +50,30 @@ describe('Neo4j Data Controller Method', function() {
     it('should not return an empty array', function() {
         expect(controllerData).to.not.have.lengthOf(0);
     });
+});
+
+describe('Test for Neo4j routes', function() {
+
+    describe('GET /neo4jHealthStatus', function(){
+        it('should return status 200 and have json response', function(done) {
+            request(app)
+                .get('/neo4jHealthStatus')
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(200, done);
+        });
+    });
+
+    describe('GET /neo4jData', function(){
+        it('should return status 200 and have json response', function(done) {
+            request(app)
+                .get('/neo4jData')
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(200, done);
+        });
+    });
+
 });
 
 describe('Test for socket events for Neo4j', function() {

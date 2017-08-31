@@ -3,6 +3,8 @@ var expect = chai.expect;
 var ioClient = require('socket.io-client');
 var ioServer = require('socket.io').listen(3003);
 var rabbitmqio = require('./rabbitmq.io')(ioServer);
+var app = require('../app');
+var request = require('supertest');
 
 var rabbitmqController = require('./rabbitmq.controller');
 
@@ -87,6 +89,50 @@ describe('RabbitMQ Get Consumer Utilization Controller Method', function() {
 
     it('should return an array', function() {
         expect(controllerData).to.be.a('array');
+    });
+
+});
+
+describe('Test for RabbitMQ routes', function() {
+    
+    describe('GET /noOfQueues', function(){
+        it('should return status 200 and have json response', function(done) {
+            request(app)
+                .get('/noOfQueues')
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(200, done);
+        });
+    });
+
+    describe('GET /healthStatus', function(){
+        it('should return status 200 and have json response', function(done) {
+            request(app)
+                .get('/healthStatus')
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(200, done);
+        });
+    });
+
+    describe('GET /noOfConsumers', function(){
+        it('should return status 200 and have json response', function(done) {
+            request(app)
+                .get('/noOfConsumers')
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(200, done);
+        });
+    });
+
+    describe('GET /consumerUtilisation', function(){
+        it('should return status 200 and have json response', function(done) {
+            request(app)
+                .get('/consumerUtilisation')
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /json/)
+                .expect(200, done);
+        });
     });
 
 });
