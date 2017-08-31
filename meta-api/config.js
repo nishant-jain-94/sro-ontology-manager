@@ -1,5 +1,8 @@
 var config = {};
 
+const AMQP_HTTP_URL = process.env.AMQP_HTTP_URL || 'http://localhost:15672';
+const NEO4J_HTTP_URL = process.env.NEO4J_HTTP_URL || 'http://localhost:7474';
+
 config.rabbitMQconfig = {
     auth: {
         "auth": {
@@ -7,7 +10,7 @@ config.rabbitMQconfig = {
             "pass": "guest"
         }
     },
-    url: `${process.env.AMQP_HTTP_URL}/api/`
+    url: `${AMQP_HTTP_URL}/api/`
 };
 
 config.neo4jconfig = {
@@ -17,7 +20,7 @@ config.neo4jconfig = {
             "pass": "password"
         }
     },
-    url: `${process.env.NEO4J_HTTP_URL}/db/manage/`
+    url: `${NEO4J_HTTP_URL}/db/manage/`
 };
 
 module.exports = config;

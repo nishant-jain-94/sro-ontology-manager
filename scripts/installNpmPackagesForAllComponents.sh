@@ -21,3 +21,5 @@ cd ../../ontology_processors/node_factory && npm install
 cd ../../ontology_processors/relation_factory && npm install
 cd ../../ontology_processors_api/ && npm install
 cd ../sro_utils/ && npm install
+cd ../meta-client/ && npm install
+cd ../meta-api/ && npm install

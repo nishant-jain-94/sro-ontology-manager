@@ -2,7 +2,7 @@
 
 yarn add global nyc mocha
 export BUNYAN_OFF=true
-nyc mocha $(find . -type f -name "*.test.js" \
+./node_modules/.bin/nyc ./node_modules/.bin/mocha $(find . -type f -name "*.test.js" \
           ! -path "./neo4j_utils/node_modules*" \
           ! -path "./sro_utils/node_modules*" \
           ! -path "./amqp_utils/node_modules*" \
@@ -14,4 +14,6 @@ nyc mocha $(find . -type f -name "*.test.js" \
           ! -path "./exploreui/node_modules*" \
           ! -path "./ontology_processors_api/neo4j_utils*" \
           ! -path "./ontology_processors_api/sro_utils*" \
-          ! -path "./ontology_processors_api/amqp_utils*") --timeout 5000
+          ! -path "./ontology_processors_api/amqp_utils*" \
+          ! -path "./meta-api/node_modules*" \
+          ! -path "./meta-client/node_modules*") --timeout 10000
