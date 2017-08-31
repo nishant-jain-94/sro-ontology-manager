@@ -19,9 +19,9 @@ const queriesToCreateUniqueConstraints = [
 bulkQueryExecutor(queriesToCreateUniqueConstraints, (err) => {
     if(!err) {        
         // Imports the following dependencies.
-        const nodeAck = require('./node.ack');
-        const nodeStream = require('./node.consumer');
-        const nodeFactory = require('./node.factory');
+        const nodeAck = require('./ack');
+        const nodeStream = require('./consumer');
+        const nodeFactory = require('./factory');
 
         // Orchestrates different stages in pipeline.
         // 1. The `nodeStream` from the consumer is streamed to the `nodeFactory` where the nodes gets created.

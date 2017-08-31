@@ -8,10 +8,10 @@
 // `mergeOrCreateNode` Merges the properties of the old node with the properties of the new node. If the old node doesn't exist it creates a new Node.
 const highland = require('highland');
 const _ = require('lodash');
-const {doesPropertyExists} = require('./sro_utils');
-const queryExecutorWithParams = require('./neo4j_utils/queryExecutorWithParams');
+const {doesPropertyExists} = require('../sro_utils');
+const queryExecutorWithParams = require('../neo4j_utils/queryExecutorWithParams');
 // const bulkMergeOrCreateNode = require('./neo4j_utils/bulkMergeOrCreateNode');
-const log = require('./sro_utils/logger')('Node_Factory_Processor');
+const log = require('../sro_utils/logger')('Node_Factory_Processor');
 
 // `toObject` creates a new packet containing `header` and the `triple`
 // 1. `header` - refers to the both data and the metadata of the Message fetched from the Queue.

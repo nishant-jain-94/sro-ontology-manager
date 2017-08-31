@@ -1,8 +1,8 @@
 require('should');
 const async = require('async');
-const {getAMQPChannel} = require('./amqp_utils');
+const {getAMQPChannel} = require('../amqp_utils');
 
-const log = require('./sro_utils/logger')('Node_Consumer_Test');
+const log = require('../sro_utils/logger')('Node_Consumer_Test');
 
 const consumer = require('./node.consumer');
 

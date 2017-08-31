@@ -1,11 +1,11 @@
 require('should');
 const async = require('async');
 const highland = require('highland');
-const log = require('./sro_utils/logger')('Node_Factory_Test');
+const log = require('../sro_utils/logger')('Node_Factory_Test');
 const {
     queryExecutor,
     dropAllConstraints
-} = require('./neo4j_utils');
+} = require('../neo4j_utils');
 const node_factory = require('./node.factory');
 
 describe('Node Factory', () => {

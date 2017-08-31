@@ -8,8 +8,8 @@
 const async = require('async');
 const highland = require('highland');
 
-const log = require('./sro_utils/logger')('Node_Factory_Consumer');
-const {getAMQPChannel} = require('./amqp_utils');
+const log = require('../sro_utils/logger')('Node_Factory_Consumer');
+const {getAMQPChannel} = require('../amqp_utils');
 
 // `queue` refers to the name of the queue.
 const queue = 'node_factory';

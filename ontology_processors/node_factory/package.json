@@ -22,6 +22,7 @@
     "forever": "^0.15.3",
     "gulp-eslint": "^4.0.0",
     "gulp-mocha": "^4.3.1",
+    "highland": "^2.11.1",
     "mocha": "^3.4.2",
     "nyc": "^11.0.3",
     "should": "^11.2.1"
