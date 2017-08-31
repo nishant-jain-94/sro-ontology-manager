@@ -1,7 +1,10 @@
 var chai = require('chai');
 var expect = chai.expect;
-var rabbitmqController = require('../controller/rabbitmq.controller');
-var neo4jController = require('../controller/neo4j.controller');
+var ioClient = require('socket.io-client');
+var ioServer = require('socket.io').listen(3003);
+var rabbitmqio = require('./rabbitmq.io')(ioServer);
+
+var rabbitmqController = require('./rabbitmq.controller');
 
 describe('RabbitMQ Health Status Controller Method', function() {
     var controllerData;
@@ -88,46 +91,53 @@ describe('RabbitMQ Get Consumer Utilization Controller Method', function() {
 
 });
 
-describe('Neo4j Health Status Controller Method', function() {
-    var controllerData;
+describe('Test for rabbitmq sockets', function() {
+    var socket;
 
     beforeEach((done) => {
-        neo4jController.getNeo4jStatus((err, data) => {
-            if(!err){
-                controllerData = data;
-                done();
-            }
-            else done(err);
+        // Setup
+        clientSocket = ioClient.connect('http://localhost:3003', {
+            'reconnection delay': 0,
+            'reopen delay': 0,
+            'force new connection': true
+        });
+        
+        clientSocket.on('connect', () => {
+            done();
         });
     });
 
-    it('should return an object', function() {
-        expect(controllerData).to.be.a('object');
+    afterEach((done) => {
+        if(clientSocket.connected) {
+            clientSocket.disconnect();
+            done();
+        }
     });
 
-    it('should have property \'status\'', function() {
-        expect(controllerData).to.have.property('status');
-    });
-});
 
-describe('Neo4j Data Controller Method', function() {
-    var controllerData;
-
-    beforeEach((done) => {
-        neo4jController.getNeo4jData((err, data) => {
-            if(!err) {
-                controllerData = data[0].attributes;
-                done();
-            }
-            else done(err);
+    it('should emit queues event', function(done) {
+        clientSocket.on('queues', (message) => {
+            done();
         });
     });
 
-    it('should return an array', function() {
-        expect(controllerData).to.be.a('array');
+    it('should emit consumerUtilization event', function(done) {
+        clientSocket.on('consumerUtilization', (message) => {
+            done();
+        });
     });
 
-    it('should not return an empty array', function() {
-        expect(controllerData).to.not.have.lengthOf(0);
+    it('should emit healthStatus event', function(done) {
+        clientSocket.on('healthStatus', (message) => {
+            done();
+        });
     });
+
+    it('should emit consumers event', function(done) {
+        clientSocket.on('consumers', (message) => {
+            done();
+        });
+    });
+
+
 });
