@@ -1,6 +1,16 @@
+// # Neo4j Socket methods
+
+// ## neo4j.io.js
+
+// The socket methods that emit the data returned by the controller
+// at regular intervals (at an interval of 5 seconds).
+
+
+// Importing the Neo4j Controller methods
 const neo4jController = require('./neo4j.controller');
 
-
+// Listening for an incoming socket connection request upon which
+// the socket methods are called 
 const neo4jio = (io) => {
     io.on('connection', (socket) => {
         console.log('neo4j connected');
@@ -9,6 +19,8 @@ const neo4jio = (io) => {
     });
 };
 
+// `fetchNeo4jHealthStatus` Socket method that emits the Health Status of Neo4j
+// every five seconds. If Neo4j instance is not running it emits a default value.
 const fetchNeo4jHealthStatus = (socket) => {
     setInterval(() => {
         neo4jController.getNeo4jStatus((err, data) => {
@@ -19,6 +31,8 @@ const fetchNeo4jHealthStatus = (socket) => {
     }, 5000);
 };
 
+// `fetchNeo4jData` Socket method that emits Neo4j data
+// every five seconds
 const fetchNeo4jData = (socket) => {
     setInterval(() => {
         neo4jController.getNeo4jData((err, data) => {
@@ -27,4 +41,5 @@ const fetchNeo4jData = (socket) => {
     }, 5000);
 }
 
+// Exporting the neo4jio socket method
 module.exports = neo4jio;

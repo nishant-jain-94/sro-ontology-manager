@@ -1,9 +1,19 @@
+// # Neo4j Conttroller
+
+// ## neo4j.controller.js
+
+// The controller methods which are used by routes and sockets
+// to fetch data from Neo4j HTTP API endpoints
+
+// Imports the required dependencies
 var request = require('request');
-
-var controller = {};
-
 var config = require('../config');
 
+//Declaring a controller object
+var controller = {};
+
+// `getNeo4jStatus` Get the health status of Neo4j by making an API
+// call to the running instance of Neo4j
 controller.getNeo4jStatus = (cb) => {
     
     request.get( config.neo4jconfig.url, config.neo4jconfig.auth, (err, response) => {
@@ -16,7 +26,9 @@ controller.getNeo4jStatus = (cb) => {
     });
     
 }
-    
+ 
+// `getNeo4jData` Get the data about the number of nodes, relationships etc
+// by making an API call to the running instance of Neo4j
 controller.getNeo4jData = (cb) => {
     
     const urlString = 'server/jmx/domain/org.neo4j/instance%3Dkernel%230%2Cname%3DPrimitive%20count?_=1342719685294';
@@ -32,4 +44,5 @@ controller.getNeo4jData = (cb) => {
 
 }
 
+// Exports the Neo4j controller object containing the methods
 module.exports = controller;

@@ -21,8 +21,14 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
+/**
+ * Turning the http connection to a websocket connection
+ * by attaching the socket.io server to http server
+ */
+
 var io = app.io;
 io.attach(server);
+
 /**
  * Listen on provided port, on all network interfaces.
  */
