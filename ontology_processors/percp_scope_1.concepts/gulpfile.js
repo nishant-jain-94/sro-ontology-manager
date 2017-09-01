@@ -23,4 +23,12 @@ gulp.task('test', () => {
         });
 });
 
+gulp.task('test-debug', () => {
+    return gulp.src(['**/*.test.js', '!node_modules/**', '!amqp_utils/**', '!sro_utils/**', '!coverage/**', '!neo4j_utils/**'])
+      .pipe(mocha({reporter: 'nyan', debugBrk: true}))
+      .once('error', () => {
+        process.exit(1);
+      });
+  });
+
 gulp.task('default', ['lint', 'test']);
