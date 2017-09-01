@@ -17,7 +17,7 @@ gulp.task('lint', () => {
 
 gulp.task('test', () => {
   return gulp.src(['**/*.test.js', '!node_modules/**', '!amqp_utils/**', '!sro_utils/**', '!coverage/**', '!neo4j_utils/**'])
-    .pipe(mocha({reporter: 'nyan', timeout: 5000}))
+    .pipe(mocha({reporter: 'nyan'}))
     .once('error', () => {
       process.exit(1);
     });

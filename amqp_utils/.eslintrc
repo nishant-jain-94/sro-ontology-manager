@@ -1,5 +1,5 @@
 {
-    "extends": "eslint:recommended",
+    "extends": "eslint-config-airbnb-lite",
     "parserOptions": {
         "ecmaVersion": 6,
         "sourceType": "module"
@@ -8,5 +8,9 @@
         "node": true,
         "mocha": true,
         "es6": true
+    },
+    "rules": {
+        "space-after-keywords": "off",
+        "space-return-throw-case": "off"
     }
 }
