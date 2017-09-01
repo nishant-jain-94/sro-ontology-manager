@@ -1,9 +1,19 @@
+// # RabbitMQ Conttroller
+
+// ## rabbitmq.controller.js
+
+// The controller methods which are used by routes and sockets
+// to fetch data from RabbitMQ HTTP API endpoints
+
+// Imports the required dependencies
 var request = require('request');
-
-var controller = {};
-
 var config = require('../config');
 
+//Declaring a controller object
+var controller = {};
+
+// `getNoOfQueues` Get the number of queues by making an API call
+//  to the running instance of RabbitMQ
 controller.getNoOfQueues = (cb) => {
 
    request.get( config.rabbitMQconfig.url + 'queues', config.rabbitMQconfig.auth,(err, response, body) => {
@@ -17,6 +27,8 @@ controller.getNoOfQueues = (cb) => {
 
 };
 
+// `getHealthStatus` Get the health status of RabbitMQ by making an API
+// call to the running instance of RabbitMQ
 controller.getHealthStatus = (cb) => {
 
     request.get( config.rabbitMQconfig.url + 'healthchecks/node', config.rabbitMQconfig.auth,function(err, response, body) {
@@ -30,6 +42,8 @@ controller.getHealthStatus = (cb) => {
 
 };
 
+// `getNoOfConsumers` Get the number of consumers by making an API
+// call to the running instance of RabbitMQ
 controller.getNoOfConsumers = (cb) => {
 
     request.get( config.rabbitMQconfig.url + 'consumers', config.rabbitMQconfig.auth,function(err, response, body) {
@@ -43,6 +57,8 @@ controller.getNoOfConsumers = (cb) => {
 
 };
 
+// `getConsumerUtilisation` Get the consumerUtilisation of each queue and
+// other related data by making an API call to the running instance of RabbitMQ
 controller.getConsumerUtilisation = (cb) => {
 
     request.get( config.rabbitMQconfig.url + 'queues', config.rabbitMQconfig.auth,(err, response, body) => {
@@ -56,4 +72,5 @@ controller.getConsumerUtilisation = (cb) => {
 
 }
 
+// Exports the RabbitMQ controller object containing the methods
 module.exports = controller;
