@@ -17,10 +17,18 @@ gulp.task('lint', () => {
 
 gulp.task('test', () => {
     return gulp.src(['**/*.test.js', '!node_modules/**', '!amqp_utils/**', '!sro_utils/**', '!coverage/**', '!neo4j_utils/**'])
-        .pipe(mocha({reporter: 'nyan'}))
+        .pipe(mocha({reporter: 'nyan', timeout: 5000}))
         .once('error', () => {
             process.exit(1);
         });
 });
+
+gulp.task('test-debug', () => {
+    return gulp.src(['**/*.test.js', '!node_modules/**', '!amqp_utils/**', '!sro_utils/**', '!coverage/**', '!neo4j_utils/**'])
+      .pipe(mocha({reporter: 'nyan', debugBrk: true}))
+      .once('error', () => {
+        process.exit(1);
+      });
+  });
 
 gulp.task('default', ['lint', 'test']);

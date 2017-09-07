@@ -17,34 +17,34 @@ const log = require('../sro_utils/logger')('Node_Factory_Processor');
 // 1. `header` - refers to the both data and the metadata of the Message fetched from the Queue.
 // 2. `triple` - refers to the triple to be used for Node Creation.
 const toObject = (messages) => {
-    log.debug({count: messages.length});
-    const bulkMessages = messages.map((message) => {
-        const triple = JSON.parse(message.content.toString());
-        const header = message;
-        return {header, triple};
-    });
-    return bulkMessages;
+  log.debug({count: messages.length});
+  const bulkMessages = messages.map((message) => {
+    const triple = JSON.parse(message.content.toString());
+    const header = message;
+    return {header, triple};
+  });
+  return bulkMessages;
 };
 
 const bulkMergeOrCreateNode = (nodesToBeCreated, cb) => {
-    // let queries = [];
-    let batch = [];
-    nodesToBeCreated.forEach(({properties, options}) => {
-        let uniqueConstraintsOn = [];
-        options = options ? options : {};
-        if(doesPropertyExists(options, 'uniqueConstraintsOn')) {
-            uniqueConstraintsOn = options.uniqueConstraintsOn;
-        }
-        const uniqueProperties = _.pick(properties, ...uniqueConstraintsOn);
-        const nodeProperties = _.omit(properties, 'label', ...uniqueConstraintsOn);
-        const {label} = properties;
-        const uniqueValue = uniqueProperties[uniqueConstraintsOn[0]];
-        batch.push({label, uniqueValue, nodeProperties});
-    });
-    
-    log.debug({batch: batch});
-    
-    const query = `UNWIND {batch} as row
+  // let queries = [];
+  const batch = [];
+  nodesToBeCreated.forEach(({properties, option}) => {
+    let uniqueConstraintsOn = [];
+    const options = option ? option : {};
+    if(doesPropertyExists(options, 'uniqueConstraintsOn')) {
+      uniqueConstraintsOn = options.uniqueConstraintsOn;
+    }
+    const uniqueProperties = _.pick(properties, ...uniqueConstraintsOn);
+    const nodeProperties = _.omit(properties, 'label', ...uniqueConstraintsOn);
+    const {label} = properties;
+    const uniqueValue = uniqueProperties[uniqueConstraintsOn[0]];
+    batch.push({label, uniqueValue, nodeProperties});
+  });
+
+  log.debug({batch: batch});
+
+  const query = `UNWIND {batch} as row
     FOREACH (_ IN CASE when row.label='user' then [1] else [] end |
     MERGE (n:user {uniqueId: row.uniqueValue}) ON CREATE SET n+=row.nodeProperties ON MATCH SET n+=row.nodeProperties)
     FOREACH (_ IN CASE when row.label='concept' then [1] else [] end |
@@ -55,29 +55,28 @@ const bulkMergeOrCreateNode = (nodesToBeCreated, cb) => {
     MERGE (n:content {mediaContentId: row.uniqueValue}) ON CREATE SET n+=row.nodeProperties ON MATCH SET n+=row.nodeProperties)
     FOREACH (_ IN CASE when row.label='resource' then [1] else [] end |
     MERGE (n:resource {resourceId: row.uniqueValue}) ON CREATE SET n+=row.nodeProperties ON MATCH SET n+=row.nodeProperties)`;
-    
-    queryExecutorWithParams(query, {batch: batch}, cb);
+
+  queryExecutorWithParams(query, {batch: batch}, cb);
 };
 
 // `mergeOrCreateNodeWrapper` is a wrapper around mergeOrCreateNode which makes it easier to use with highland pipeline.
 const mergeOrCreateNodeWrapper = highland.wrapCallback((bulkMessages, cb) => {
-    const triples = bulkMessages.map((message) => message.triple);
-    const headers = bulkMessages.map((message) => message.header);
-    bulkMergeOrCreateNode(triples, (err, results) => {
-        if(err) { log.error(err); process.exit(0); }
-        else return cb(null, {headers, results});
-    });
-    // const results = [];
-    // cb(null, {headers, results});
+  const triples = bulkMessages.map((message) => message.triple);
+  const headers = bulkMessages.map((message) => message.header);
+  bulkMergeOrCreateNode(triples, (err, results) => {
+    if(err) { log.error(err); process.exit(0); } else cb(null, {headers, results}); return;
+  });
+  // const results = [];
+  // cb(null, {headers, results});
 });
 
 // `node_factory` is a stream with following stages
 // 1. Converts the incoming message to the object using `toObject`
 // 2. Maps the message to the `mergeOrCreateNodeWrapper` which either merges or creates a node based on it's availability. 
-const node_factory = highland.pipeline(
-    highland.map(toObject),
-    highland.flatMap(mergeOrCreateNodeWrapper)
+const nodeFactory = highland.pipeline(
+  highland.map(toObject),
+  highland.flatMap(mergeOrCreateNodeWrapper)
 );
 
 // Exports the `node_factory`
-module.exports = node_factory;
+module.exports = nodeFactory;

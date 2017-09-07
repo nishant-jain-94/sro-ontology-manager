@@ -24,7 +24,6 @@ const routeConceptsToFactory = (data) => {
     const {triples} = data;
 
     const createNodesAndRelationshipObjects = (triple) => {
-
         if(doesPropertyExists(triple, 'source.properties.label') && doesPropertyExists(triple, 'source.properties.name')) {
             const data = {
                 message: triple.source,
