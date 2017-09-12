@@ -45,7 +45,7 @@ const server = http.createServer(app);
  * by attaching the socket.io server to http server
  */
 
-const { io } = app.io;
+const { io } = app;
 io.attach(server);
 
 
