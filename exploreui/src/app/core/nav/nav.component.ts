@@ -13,12 +13,13 @@ export class NavComponent implements OnInit {
   ngOnInit() {
   }
 
-  @HostListener("window:scroll")
+  @HostListener('window:scroll')
   onScroll() {
-    if(window.scrollY)
+    if (window.scrollY) {
       this.showShadow = true;
-    else
+    } else {
       this.showShadow = false;
+    }
   }
 
 }

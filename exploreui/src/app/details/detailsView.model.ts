@@ -6,5 +6,5 @@ export class DetailsViewModel {
   entityId: string;
   entityName: string;
   entityDescription: string;
-  groups: {name: string, entities: Array<DetailsViewModel>}[]; 
+  groups: {name: string, entities: Array<DetailsViewModel>}[];
 }
