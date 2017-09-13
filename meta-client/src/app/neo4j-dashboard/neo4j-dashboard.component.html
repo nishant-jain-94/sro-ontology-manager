@@ -12,16 +12,6 @@
         {{ neo4jHealthStatus | uppercase }}
       </md-card-content>
     </md-card>
-    <ng-container *ngFor="let neo4jData of neo4jDataCollection">
-      <md-card class="card-content">
-          <md-card-title>
-              <span class="mat-subheading-2">{{ neo4jData?.name }}</span>
-          </md-card-title>
-          <md-card-content class="mat-title card-value">
-            {{ neo4jData?.value }}
-          </md-card-content>
-      </md-card>
-    </ng-container>
     <md-card class="card-content">
       <md-card-title>
           <span class="mat-subheading-2">Number of Nodes</span>
