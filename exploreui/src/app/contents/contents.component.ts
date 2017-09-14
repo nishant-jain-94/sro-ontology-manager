@@ -9,7 +9,7 @@ import { ContentsService } from './contents.service';
 })
 export class ContentsComponent implements OnInit {
   contents: any;
-  showProgress: boolean = true;
+  showProgress: Boolean = true;
 
   constructor(private contentService: ContentsService) { }
 
