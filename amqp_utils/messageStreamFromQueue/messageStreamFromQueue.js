@@ -8,6 +8,7 @@ const messageStreamFromQueue = (amqpConfigKey = 'AMQP_URL', queue) => {
     if(!err) {
       val.consume(queue, (message) => {
         push(null, message);
+        next();
       }, {noack: false});
     } else {
       log.error(err);

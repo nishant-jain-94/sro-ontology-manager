@@ -1,0 +1,21 @@
+{
+  "extends": "airbnb-base",
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module"
+  },
+  "env": {
+    "node": true,
+    "mocha": true,
+    "es6": true
+  },
+  "rules": {
+    "space-after-keywords": "off",
+    "space-return-throw-case": "off",
+    "comma-dangle": [
+      "error",
+      { "functions": "ignore" }
+    ],
+    "no-underscore-dangle": ["error", { "allow": ["_stats"] }]
+  }
+}

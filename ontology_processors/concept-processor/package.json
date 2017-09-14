@@ -1,0 +1,32 @@
+{
+  "name": "concept-processor",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "Processess all the concept-oplogs",
+  "devDependencies": {
+    "eslint": "^4.6.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-html-reporter": "^0.5.2",
+    "eslint-plugin-import": "^2.7.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^4.0.0",
+    "gulp-mocha": "^4.3.1",
+    "nyc": "^11.2.1",
+    "should": "^13.0.1"
+  },
+  "dependencies": {
+    "async": "^2.5.0",
+    "bunyan": "^1.8.12",
+    "bunyan-format": "^0.2.1",
+    "highland": "^2.11.1",
+    "lodash": "^4.17.4",
+    "simple-amqplib-wrapper": "^1.1.1"
+  },
+  "scripts": {
+    "test": "gulp test",
+    "test-debug": "gulp test-debug",
+    "lint": "gulp lint",
+    "start": "node index.js",
+    "coverage": "./node_modules/.bin/nyc gulp test"
+  }
+}

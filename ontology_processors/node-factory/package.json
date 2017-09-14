@@ -1,0 +1,41 @@
+{
+  "name": "node_factory",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "start-forever": "node_modules/forever/bin/forever --spinSleepTime 10000 -o logs/out.log -e logs/err.log index.js",
+    "lint": "gulp lint",
+    "test": "gulp test",
+    "test-debug": "gulp test-debug",
+    "coverage": "node_modules/.bin/nyc gulp test",
+    "generate-docs": "node_modules/docco/bin/docco $(find . -type f -name '*.js' ! -path './node_modules*' ! -path './neo4j_utils*' ! -path './amqp_utils*' ! -path './sro_utils*')"
+  },
+  "dependencies": {
+    "async": "^2.5.0",
+    "babel-eslint": "^7.2.3",
+    "bunyan": "^1.8.12",
+    "bunyan-format": "^0.2.1",
+    "eslint-config-airbnb-lite": "^1.0.4",
+    "highland": "^2.11.1",
+    "lodash": "^4.17.4",
+    "simple-amqplib-wrapper": "^1.0.1",
+    "simple-neo4j-wrapper": "^1.0.5"
+  },
+  "devDependencies": {
+    "docco": "^0.7.0",
+    "eslint": "^4.6.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-html-reporter": "^0.5.2",
+    "eslint-plugin-import": "^2.7.0",
+    "forever": "^0.15.3",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^4.0.0",
+    "gulp-mocha": "^4.3.1",
+    "highland": "^2.11.1",
+    "mocha": "^3.4.2",
+    "nyc": "^11.0.3",
+    "should": "^11.2.1"
+  }
+}
