@@ -55,7 +55,7 @@ services:
     restart: always
 
   questions_processor:
-    build: ./ontology_processors/questions
+    build: ./ontology_processors/question-processor
     env_file:
       - ontology_manager.env
     volumes: 

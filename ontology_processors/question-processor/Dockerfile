@@ -11,6 +11,4 @@ RUN yarn install
 # Bundle app source
 COPY . /usr/src/app
 
-VOLUME /usr/src/app/neo4j_utils /usr/src/app/amqp_utils /usr/src/app/sro_utils
-
 CMD ["yarn", "start"]
