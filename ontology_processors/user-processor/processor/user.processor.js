@@ -5,9 +5,11 @@
 // Imports the required dependencies.
 const _ = require('lodash');
 const highland = require('highland');
+const log = require('../commons/logger')('User_Processor');
 
 // `toUserNodes` converts a User Document to a user node.
 const toUserNodes = (message) => {
+  log.debug('Converting User Oplogs to User Nodes');
   const header = message;
   const percpUser = JSON.parse(message.content.toString());
   const source = {

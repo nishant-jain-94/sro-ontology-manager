@@ -27,7 +27,8 @@ const createChannels = (cb) => {
 };
 
 const toQueue = ({ message, queue }) => {
-  amqp.sendToQueue(queue, message);
+  const messageQueue = queueMapper[queue] || 'others';
+  amqp.sendToQueue(messageQueue, message);
 };
 
 // `StreamOplog` is used to stream data from MongoDb's Oplog.

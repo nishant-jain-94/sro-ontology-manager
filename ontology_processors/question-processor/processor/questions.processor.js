@@ -5,7 +5,7 @@
 // Imports the required dependencies.
 const highland = require('highland');
 
-// const log = require('./sro_utils/logger')('Questions_Processor');
+const log = require('../commons/logger')('Questions_Processor');
 
 // `toQuestionNode` converts a question document to a source node.
 // `toQuestionNode` inputs a message and then creates a source node following the steps below.
@@ -14,6 +14,7 @@ const highland = require('highland');
 // 3. Creates a `source` using the `label`, `identifier`. With `identifier`
 // being the property used to create Question Node.
 const toQuestionNode = (message) => {
+  log.debug('Converting Questions to Question Node');
   const header = message;
   const percpQuestion = JSON.parse(message.content.toString());
   const source = {

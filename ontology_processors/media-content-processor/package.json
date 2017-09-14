@@ -29,6 +29,6 @@
     "highland": "^2.11.1",
     "lodash": "^4.17.4",
     "mongodb": "^2.2.31",
-    "simple-amqplib-wrapper": "^1.1.1"
+    "simple-amqplib-wrapper": "^2.0.1"
   }
 }

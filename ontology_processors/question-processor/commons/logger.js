@@ -3,6 +3,6 @@ const bformat = require('bunyan-format');
 
 const formatOut = bformat({ outputMode: 'bunyan' });
 
-const log = name => bunyan.createLogger({ name, stream: formatOut });
+const log = name => bunyan.createLogger({ name, stream: formatOut, level: 'debug' });
 
 module.exports = log;

@@ -6,7 +6,7 @@
 const _ = require('lodash');
 const highland = require('highland');
 
-// const log = require('./sro_utils/logger')('Learning_Resource_Processor');
+const log = require('../commons/logger')('Learning_Resource_Processor');
 
 // `toLearningResource` converts a Learner State document to a source node.
 // `toLearningResource` inputs a message and then creates a source node following the steps below.
@@ -15,6 +15,7 @@ const highland = require('highland');
 // 3. Creates a `source` using the `label`, `resourceId` and `mediaContentId`.
 // With `mediaContentId` being the property used to create user Node.
 const toTriplesOfLearningResources = (message) => {
+  log.debug('Converting Resource Oplog to triples of Learning Resource');
   const header = message;
   const percpLearningResource = JSON.parse(message.content.toString());
   const source = {

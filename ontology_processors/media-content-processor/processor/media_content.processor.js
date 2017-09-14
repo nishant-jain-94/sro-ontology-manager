@@ -18,6 +18,7 @@ const log = require('../commons/logger')('MEDIA_CONTENT_PROCESSOR');
 // 5. Then using the concepts in the mediaContentNode,
 // triples of Concept and Content node is created.
 const toTriplesOfMedia = (message) => {
+  log.debug('Converting Content to Triples Of Media');
   const header = message;
   const percpMediaContent = JSON.parse(message.content.toString());
 

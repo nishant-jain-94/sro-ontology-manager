@@ -20,7 +20,7 @@
     "eslint-config-airbnb-lite": "^1.0.4",
     "highland": "^2.11.1",
     "lodash": "^4.17.4",
-    "simple-amqplib-wrapper": "^1.0.1",
+    "simple-amqplib-wrapper": "^2.0.1",
     "simple-neo4j-wrapper": "^1.0.5"
   },
   "devDependencies": {

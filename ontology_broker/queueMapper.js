@@ -10,7 +10,9 @@ const queueMapper = {
   'percp_scope_1.user': 'user',
   'percp_scope_1.learner_state': 'learner_state',
   'percp_scope_1.learning_resources': 'learning_resource',
-  'percp_scope_1.questions': 'questions'
+  'percp_scope_1.questions': 'questions',
+  node_factory: 'node_factory',
+  relation_factory: 'relation_factory'
 };
 
 // Exports the queueMapper Object.

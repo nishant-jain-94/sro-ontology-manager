@@ -868,16 +868,6 @@ error-ex@^1.2.0:
   dependencies:
     is-arrayish "^0.2.1"
 
-es6-promise@^4.0.3:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.1.1.tgz#8811e90915d9a0dba36274f0b242dbda78f9c92a"
-
-es6-promisify@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/es6-promisify/-/es6-promisify-5.0.0.tgz#5109d62f3e56ea967c4b63505aef08291c8a5203"
-  dependencies:
-    es6-promise "^4.0.3"
-
 escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5, escape-string-regexp@1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
@@ -1606,15 +1596,6 @@ gulp:
     tildify "^1.0.0"
     v8flags "^2.0.2"
     vinyl-fs "^0.3.0"
-
-gulp-babel@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/gulp-babel/-/gulp-babel-7.0.0.tgz#7b93c975159f7a0553e4263b4a55100ccc239b28"
-  dependencies:
-    gulp-util "^3.0.0"
-    replace-ext "0.0.1"
-    through2 "^2.0.0"
-    vinyl-sourcemaps-apply "^0.2.0"
 
 gulp-eslint, gulp-eslint@^4.0.0:
   version "4.0.0"
@@ -3294,16 +3275,14 @@ signal-exit@^3.0.0, signal-exit@^3.0.1, signal-exit@^3.0.2:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
 simple-amqplib-wrapper:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/simple-amqplib-wrapper/-/simple-amqplib-wrapper-1.0.1.tgz#13070ffc578477181a396a07718ab7212530606d"
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/simple-amqplib-wrapper/-/simple-amqplib-wrapper-2.0.1.tgz#91d90a8b826987ea2662a87817702ec42e3a2770"
   dependencies:
     amqplib "^0.5.1"
     async "^2.5.0"
     babel-eslint "^7.2.3"
-    es6-promisify "^5.0.0"
     eslint-config-airbnb-lite "^1.0.4"
     eslint-html-reporter "^0.5.2"
-    gulp-babel "^7.0.0"
     gulp-eslint "^4.0.0"
     gulp-mocha "^4.3.1"
     highland "^2.11.1"
@@ -3341,10 +3320,6 @@ source-map@^0.4.4:
 source-map@^0.5.0, source-map@^0.5.3, source-map@^0.5.6, source-map@~0.5.1:
   version "0.5.6"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.6.tgz#75ce38f52bf0733c5a7f0c118d81334a2bb5f412"
-
-source-map@^0.5.1:
-  version "0.5.7"
-  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
 
 sparkles@^1.0.0:
   version "1.0.0"
@@ -3726,12 +3701,6 @@ vinyl-fs@^0.3.0:
     strip-bom "^1.0.0"
     through2 "^0.6.1"
     vinyl "^0.4.0"
-
-vinyl-sourcemaps-apply@^0.2.0:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/vinyl-sourcemaps-apply/-/vinyl-sourcemaps-apply-0.2.1.tgz#ab6549d61d172c2b1b87be5c508d239c8ef87705"
-  dependencies:
-    source-map "^0.5.1"
 
 vinyl@^0.4.0:
   version "0.4.6"
