@@ -5,20 +5,33 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "./node_modules/.bin/nyc ./node_modules/.bin/mocha $(find . -type f -name '*.test.js' ! -path './node_modules*' ! -path './amqp_utils*' ! -path './mongo_utils*' ! -path './neo4j_utils*' ! -path './sro_utils*')"
+    "test": "gulp test",
+    "lint": "gulp lint",
+    "coverage": "node_modules/.bin/nyc gulp test"
   },
   "dependencies": {
+    "async": "^2.5.0",
     "body-parser": "^1.17.2",
+    "bunyan": "^1.8.12",
+    "bunyan-format": "^0.2.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "express": "~4.14.0",
     "jade": "~1.11.0",
     "lodash": "^4.17.4",
     "mongodb": "^2.2.30",
+    "mongoose": "^4.11.11",
     "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "simple-neo4j-wrapper": "^1.0.5"
   },
   "devDependencies": {
+    "eslint": "^4.6.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^4.0.0",
+    "gulp-mocha": "^4.3.1",
     "mocha": "^3.4.2",
     "nyc": "^11.0.3",
     "proxyquire": "^1.8.0",
