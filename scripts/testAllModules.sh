@@ -3,9 +3,9 @@
 yarn add global nyc mocha
 export BUNYAN_OFF=true
 ./node_modules/.bin/nyc ./node_modules/.bin/mocha $(find . -type f -name "*.test.js" \
-          ! -path "./neo4j_utils/node_modules*" \
-          ! -path "./sro_utils/node_modules*" \
-          ! -path "./amqp_utils/node_modules*" \
+          ! -path "./neo4j_utils*" \
+          ! -path "./sro_utils*" \
+          ! -path "./amqp_utils*" \
           ! -path "./ontology*/node_modules*" \
           ! -path "./ontology*/neo4j_utils*" \
           ! -path "./ontology*/amqp_utils*" \
