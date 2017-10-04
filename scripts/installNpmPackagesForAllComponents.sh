@@ -6,7 +6,7 @@ To install all node_modules in all the Components.
 Ideal when setting up projects or setting up CI
 
 '
-cd ../ontology_broker && yarn install
+cd ./ontology_broker && yarn install
 cd ../ontology_processors/concept-processor && yarn install
 cd ../../ontology_processors/learner-state-processor && yarn install
 cd ../../ontology_processors/media-content-processor && yarn install
