@@ -16,19 +16,19 @@ import { DetailsViewComponent } from './details/detailsView.component';
 import { EncodeUriComponentPipe } from './encode-uri-component.pipe';
 
 const routes: Routes = [
-   { path: 'courses', component: CoursesComponent, 
+   { path: 'courses', component: CoursesComponent,
      children: [
-      { path: ':courseTitle', redirectTo: '/courses/:courseTitle/details', pathMatch: "full" }
+      { path: ':courseTitle', redirectTo: '/courses/:courseTitle/details', pathMatch: 'full' }
      ]
    },
    { path: 'concepts', component: ConceptsComponent,
      children: [
-      { path: ':conceptId', redirectTo: '/concepts/:conceptId/details', pathMatch: "full" }
+      { path: ':conceptId', redirectTo: '/concepts/:conceptId/details', pathMatch: 'full' }
      ]
    },
-   { path: 'contents', component: ContentsComponent, 
+   { path: 'contents', component: ContentsComponent,
      children: [
-      { path: ':contentId', redirectTo: '/contents/:contentId/details', pathMatch: "full" }
+      { path: ':contentId', redirectTo: '/contents/:contentId/details', pathMatch: 'full' }
      ]
    },
    { path: ':type/:id/details', component: DetailsViewComponent },

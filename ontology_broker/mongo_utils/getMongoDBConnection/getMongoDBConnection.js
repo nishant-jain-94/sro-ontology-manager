@@ -1,23 +1,22 @@
-const MongoClient = require('mongodb').MongoClient;
-const {MONGODB_URL} = require('../config');
+const { MongoClient } = require('mongodb');
+const { MONGODB_URL } = require('../config');
+
 const dbs = {};
 
-const getConnection = (db, cb) => {
-    const mongodb_connection_url = `${MONGODB_URL}/${db}`;
-    if(dbs[mongodb_connection_url]) {
-        cb(null, dbs[mongodb_connection_url]);
-    } else {
-        MongoClient.connect(mongodb_connection_url, (err, db) => {
-            if(!err) {
-                dbs[mongodb_connection_url] = db;
-                cb(null, dbs[mongodb_connection_url]);
-                return;
-            } else {
-                cb(err, null);                
-                return;
-            }
-        });
-    }
+const getConnection = (dbName, cb) => {
+  const connectionUrl = `${MONGODB_URL}/${dbName}`;
+  if (dbs[connectionUrl]) {
+    cb(null, dbs[connectionUrl]);
+  } else {
+    MongoClient.connect(connectionUrl, (err, db) => {
+      if (!err) {
+        dbs[connectionUrl] = db;
+        cb(null, dbs[connectionUrl]);
+        return;
+      }
+      cb(err, null);
+    });
+  }
 };
 
 module.exports = getConnection;

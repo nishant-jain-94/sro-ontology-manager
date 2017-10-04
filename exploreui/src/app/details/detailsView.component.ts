@@ -12,7 +12,7 @@ import { DetailsViewService } from './detailsView.service';
 export class DetailsViewComponent implements OnInit {
   details: any;
 
-  constructor(private route:ActivatedRoute, public detailService:DetailsViewService) {
+  constructor(private route: ActivatedRoute, public detailService: DetailsViewService) {
     this.details = {};
     this.details.entityType = route.snapshot.params['type'];
     this.details.entityId = route.snapshot.params['id'];
@@ -24,7 +24,7 @@ export class DetailsViewComponent implements OnInit {
     this.detailService.getDetails(entityType, entityId).subscribe(data => {
         this.details.entityName = data.entityName;
         this.details.groups = data.relatedGroups;
-        console.log(this.details.groups);   
+        console.log(this.details.groups);
     });
   }
 

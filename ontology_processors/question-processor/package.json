@@ -1,0 +1,34 @@
+{
+  "name": "question-processor",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.6.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-html-reporter": "^0.5.2",
+    "eslint-plugin-import": "^2.7.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^4.0.0",
+    "gulp-mocha": "^4.3.1",
+    "nyc": "^11.2.1",
+    "should": "^13.0.1"
+  },
+  "dependencies": {
+    "async": "^2.5.0",
+    "bunyan": "^1.8.12",
+    "bunyan-format": "^0.2.1",
+    "highland": "^2.11.1",
+    "lodash": "^4.17.4",
+    "mongodb": "^2.2.31",
+    "simple-amqplib-wrapper": "^2.0.1"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "lint": "gulp lint",
+    "test": "gulp test",
+    "test-debug": "gulp test-debug",
+    "coverage": "node_modules/.bin/nyc gulp test",
+    "generate-docs": "node_modules/docco/bin/docco $(find . -type f -name '*.js' ! -path './node_modules*')"
+  }
+}

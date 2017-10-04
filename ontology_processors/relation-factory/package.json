@@ -1,0 +1,35 @@
+{
+  "devDependencies": {
+    "eslint": "^4.6.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-html-reporter": "^0.5.2",
+    "eslint-plugin-import": "^2.7.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^4.0.0",
+    "gulp-mocha": "^4.3.1",
+    "nyc": "^11.2.1",
+    "should": "^13.0.1"
+  },
+  "dependencies": {
+    "async": "^2.5.0",
+    "bunyan": "^1.8.12",
+    "bunyan-format": "^0.2.1",
+    "highland": "^2.11.1",
+    "lodash": "^4.17.4",
+    "simple-amqplib-wrapper": "^2.0.1",
+    "simple-neo4j-wrapper": "^1.0.3"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "start-forever": "node_modules/forever/bin/forever --spinSleepTime 10000 -o logs/out.log -e logs/err.log index.js",
+    "lint": "gulp lint",
+    "test": "gulp test",
+    "test-debug": "gulp test-debug",
+    "coverage": "node_modules/.bin/nyc gulp test"
+  },
+  "name": "relation-factory",
+  "version": "1.0.0",
+  "description": "A processor to create relations in neo4j.",
+  "main": "index.js",
+  "license": "MIT"
+}

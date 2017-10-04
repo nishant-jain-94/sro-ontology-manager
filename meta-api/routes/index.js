@@ -1,50 +1,16 @@
-var express = require('express');
-var router = express.Router();
-var rabbitmqController = require('../controller/rabbitmq.controller');
-var neo4jController = require('../controller/neo4j.controller');
+// # Main router object file
 
+// ## index.js
 
-router.get('/noOfQueues', function (req, res, next) {
-  rabbitmqController.getNoOfQueues((err, data) => {
-    if(!err) res.json(data);
-    else next(err);
-  });
-})
+// Aggregation of all routes
 
-router.get('/healthStatus', function (req, res, next) {
-  rabbitmqController.getHealthStatus((err, data) => {
-    if(!err) res.json(data);
-    else next(err);
-  });
-})
+// Assigning routes to constants
+const neo4jRoutes = require('../neo4j/neo4j.routes');
+const rabbitmqRoutes = require('../rabbitmq/rabbitmq.routes');
 
-router.get('/noOfConsumers', function (req, res, next) {
-  rabbitmqController.getNoOfConsumers((err, data) => {
-    if(!err) res.json(data);
-    else next(err);
-  });
-});
-
-router.get('/consumerUtilisation', function (req, res, next) {
-  rabbitmqController.getConsumerUtilisation((err, data) => {
-    if(!err) res.json(data);
-    else next(err);
-  });
-});
-
-router.get('/neo4jHealthStatus', function (req, res, next) {
-  neo4jController.getNeo4jStatus((err, data) => {
-    if(!err) res.json(data);
-    else next(err);
-  });
-});
-
-router.get('/neo4jData', function (req, res, next) {
-  neo4jController.getNeo4jData((err, data) => {
-    if(!err) res.json(data);
-    else next(err);
-  });
-});
-
-
-module.exports = router;
+// Exporting the routes as an object.
+// This is imported in app.js
+module.exports = {
+  neo4j: neo4jRoutes,
+  rabbitmq: rabbitmqRoutes,
+};

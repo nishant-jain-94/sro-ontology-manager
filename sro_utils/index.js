@@ -1,8 +1,13 @@
-const sro_utils = {
-    doesPropertyExists: require('./doesPropertyExists'),
-    getDirectories: require('./getDirectories'),
-    logger: require('./logger'),
-    normalize: require('./normalize')
+const requireDoesPropertyExists = require('./doesPropertyExists');
+const requireGetDirectories = require('./getDirectories');
+const requireLogger = require('./logger');
+const requireNormalize = require('./normalize');
+
+const sroUtils = {
+  doesPropertyExists: requireDoesPropertyExists,
+  getDirectories: requireGetDirectories,
+  logger: requireLogger,
+  normalize: requireNormalize,
 };
 
-module.exports = sro_utils;
+module.exports = sroUtils;

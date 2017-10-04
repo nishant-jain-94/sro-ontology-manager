@@ -1,36 +1,32 @@
 {
-  "dependencies": {
-    "amqplib": "^0.5.1",
-    "async": "^2.5.0",
-    "bunyan": "^1.8.10",
-    "bunyan-format": "^0.2.1",
-    "docco": "^0.7.0",
-    "eslint": "^4.4.1",
-    "eslint-html-reporter": "^0.5.2",
-    "fast-csv": "^2.4.0",
-    "gulp-eslint": "^4.0.0",
-    "highland": "^2.11.0",
-    "mkdirp": "^0.5.1",
-    "mongodb": "^2.2.30",
-    "mongoose": "^4.11.0",
-    "neo4j-driver": "^1.3.0",
-    "request": "^2.81.0",
-    "rmdir": "^1.2.0"
-  },
-  "scripts": {
-    "start": "node index.js",
-    "start-forever": "node_modules/forever/bin/forever --spinSleepTime 10000 -o logs/out.log -e logs/err.log index.js",
-    "lint": "gulp lint",
-    "test": "gulp test",
-    "coverage": "node_modules/.bin/nyc node_modules/.bin/gulp test",
-    "generate-docs": "node_modules/docco/bin/docco $(find . -type f -name '*.js' ! -path './node_modules*' ! -path './neo4j_utils*' ! -path './amqp_utils*' ! -path './sro_utils*')"
-  },
   "devDependencies": {
-    "forever": "^0.15.3",
-    "gulp-istanbul": "^1.1.2",
+    "eslint": "^4.6.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-html-reporter": "^0.5.2",
+    "eslint-plugin-import": "^2.7.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^4.0.0",
     "gulp-mocha": "^4.3.1",
-    "jsdoc": "^3.5.3",
-    "mocha": "^3.4.2",
-    "should": "^11.2.1"
+    "mongodb": "^2.2.31",
+    "should": "^13.0.1"
+  },
+  "dependencies": {
+    "async": "^2.5.0",
+    "bunyan": "^1.8.12",
+    "bunyan-format": "^0.2.1",
+    "highland": "^2.11.1",
+    "lodash": "^4.17.4",
+    "mongodb": "^2.2.31",
+    "simple-amqplib-wrapper": "^2.0.1"
+  },
+  "name": "ontology_broker",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "test": "gulp test",
+    "test-debug": "gulp test-debug",
+    "lint": "gulp lint",
+    "start": "node index.js",
+    "coverage": "./node_modules/.bin/nyc gulp test"
   }
 }

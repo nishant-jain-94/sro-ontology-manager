@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ConvertToIntegerPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-     if(value === null || value === undefined || value === '') {
+     if (value === null || value === undefined || value === '') {
        value = 0;
      }
 
