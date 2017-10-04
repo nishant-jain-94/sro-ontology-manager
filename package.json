@@ -16,20 +16,12 @@
   "devDependencies": {
     "coveralls": "^2.13.1",
     "glob-array": "^1.0.0",
-    "gulp": "^3.9.1",
-    "gulp-docco": "^0.0.4",
-    "gulp-livereload": "^3.8.1",
-    "gulp-print": "^2.0.1",
-    "gulp-util": "^3.0.8",
-    "mocha": "^3.4.2",
-    "nyc": "^11.0.3"
+    "gulp": "^3.9.1"
   },
   "dependencies": {
     "docco": "^0.7.0",
     "global": "^4.3.2",
-    "gulp-merge": "^0.1.1",
-    "mocha": "^3.4.2",
-    "nyc": "^11.0.3",
-    "tap": "^10.7.0"
+    "mocha": "^4.0.0",
+    "nyc": "^11.2.1"
   }
 }

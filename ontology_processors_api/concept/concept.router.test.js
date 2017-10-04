@@ -130,8 +130,8 @@ describe('GET /:conceptId/details', () => {
             entity.entityType.should.be.instanceOf(String);
             entity.entityName.should.be.instanceOf(String);
           });
-        });
+        }); 
       });
-    done();
+      done();
   });
 });

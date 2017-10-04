@@ -11,6 +11,9 @@ const getConnection = (dbName, cb) => {
     MongoClient.connect(mongodbConnectionUrl, (err, db) => {
       if (!err) {
         dbs[mongodbConnectionUrl] = db;
+        db.on('close', () => {
+          delete dbs[mongodbConnectionUrl];
+        });
         cb(null, dbs[mongodbConnectionUrl]);
         return;
       }
