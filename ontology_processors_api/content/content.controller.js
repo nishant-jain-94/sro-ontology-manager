@@ -31,8 +31,26 @@ ContentController.fetchContentById = (contentId, options, cb) => {
 
 ContentController.fetchRelatedConcepts = (contentId, options, cb) => {
   const skip = (options.page - 1) * options.limit;
-  const query = `MATCH (m:content {mediaContentId: '${contentId}'})-[:explains]->(n:concept) return DISTINCT n ORDER BY n.name SKIP ${skip} LIMIT ${options.limit}`;
-  ContentController.executeQueryAndFetchResults(query, cb);
+  const queryToFetchConceptsDirectly = `MATCH \
+  (m:content {mediaContentId: '${contentId}'})-[:explains]->(n:concept) \
+  return DISTINCT n ORDER BY n.name SKIP ${skip} LIMIT ${options.limit}`;
+  const queryToFetchConceptsThroughResource = `MATCH \
+  (m:content {mediaContentId: '${contentId}'})<-[:aggregates]-(:resource)-[:explains]->(n:concept) \
+  return DISTINCT n ORDER BY n.name SKIP ${skip} LIMIT ${options.limit}`;
+  async.parallel([
+    ContentController
+      .executeQueryAndFetchResults
+      .bind(null, queryToFetchConceptsDirectly),
+    ContentController
+      .executeQueryAndFetchResults
+      .bind(null, queryToFetchConceptsThroughResource),
+  ], (err, results) => {
+    let mergedResults;
+    if (!err) {
+      mergedResults = [].concat(...results);
+    }
+    cb(err, mergedResults);
+  });
 };
 
 ContentController.fetchRelatedCourses = (contentId, options, cb) => {

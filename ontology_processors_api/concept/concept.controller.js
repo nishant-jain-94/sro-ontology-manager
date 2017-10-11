@@ -64,8 +64,26 @@ ConceptController.fetchAllConcepts = (options, cb) => {
 ConceptController.fetchAllTheAssociatedContents = (conceptId, options, cb) => {
   const skip = (options.page - 1) * options.limit;
   log.debug(options);
-  const query = `MATCH (n:content)-[:explains]->(m:concept {identifier: "${conceptId}"}) return n ORDER BY n.name SKIP ${skip} LIMIT ${options.limit}`;
-  ConceptController.executeQueryAndFetchResults(query, cb);
+  const queryToFetchAssociatedContentsThroughResource = `MATCH \
+  (n:content)<-[:aggregates]-(:resource)-[:explains]->(m:concept {identifier: "${conceptId}"}) \
+  return n ORDER BY n.name SKIP ${skip} LIMIT ${options.limit}`;
+  const queryToFetchContentsDirectlyLinkedToConcepts = `MATCH \
+  (n:content)-[:explains]->(m:concept {identifier: "${conceptId}"}) \
+  return n ORDER BY n.name SKIP ${skip} LIMIT ${options.limit}`;
+  async.parallel([
+    ConceptController
+      .executeQueryAndFetchResults
+      .bind(null, queryToFetchAssociatedContentsThroughResource),
+    ConceptController
+      .executeQueryAndFetchResults
+      .bind(null, queryToFetchContentsDirectlyLinkedToConcepts),
+  ], (err, results) => {
+    let mergedResults;
+    if (!err) {
+      mergedResults = [].concat(...results);
+    }
+    cb(err, mergedResults);
+  });
 };
 
 ConceptController.fetchAllTheSubConcepts = (conceptId, options, cb) => {
