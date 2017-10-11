@@ -21,7 +21,7 @@
   "dependencies": {
     "docco": "^0.7.0",
     "global": "^4.3.2",
-    "mocha": "^4.0.0",
+    "mocha": "^4.0.1",
     "nyc": "^11.2.1"
   }
 }

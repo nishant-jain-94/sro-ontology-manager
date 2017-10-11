@@ -29,7 +29,6 @@ const triple = {
   },
 };
 
-
 const createMediaContentInMongoDB = (content, cb) => {
   getMongoDBConnection('percp_scope_1', (err, db) => {
     db.collection('media_content').insert(content, cb);
@@ -112,7 +111,8 @@ describe('Concept Controller', () => {
     const stubbedExecuteQueryAndFetchResults = sinon.stub(conceptController, 'executeQueryAndFetchResults').yields(null, listOfRelatedContents);
     conceptController.fetchAllTheAssociatedContents('', options, (err, data) => {
       should.not.exist(err);
-      data.should.be.exactly(listOfRelatedContents);
+      const listOfRelatedContentsDoubled = [].concat(listOfRelatedContents, listOfRelatedContents);
+      data.length.should.be.exactly(listOfRelatedContentsDoubled.length);
       stubbedExecuteQueryAndFetchResults.restore();
       done();
     });
@@ -137,10 +137,15 @@ describe('Concept Controller', () => {
       page: 1,
       limit: 20,
     };
+    
     const stubbedExecuteQueryAndFetchResults = sinon.stub(conceptController, 'executeQueryAndFetchResults');
     const queryToFetchConceptById = 'MATCH (n:concept {identifier: "info:fedora/learning:12162"}) return n ORDER BY n.name SKIP 0 LIMIT 20';
     const queryToFetchAllSubConcepts = 'MATCH (n:concept {identifier: "info:fedora/learning:12162"})<-[:subconcept]-(m:concept) return m ORDER BY m.name SKIP 0 LIMIT 20';
-    const queryToFetchAllTheAssociatedContents = 'MATCH (n:content)-[:explains]->(m:concept {identifier: "info:fedora/learning:12162"}) return n ORDER BY n.name SKIP 0 LIMIT 20';
+    
+    const queryToFetchAllTheAssociatedContents = 'MATCH   (n:content)-[:explains]->(m:concept {identifier: "info:fedora/learning:12162"})   return n ORDER BY n.name SKIP 0 LIMIT 20';
+
+    const fetchContentsThroughResources = 'MATCH   (n:content)<-[:aggregates]-(:resource)-[:explains]->(m:concept {identifier: "info:fedora/learning:12162"})   return n ORDER BY n.name SKIP 0 LIMIT 20';
+    
     const resultToFetchConceptById = [mediaContent[0]];
     stubbedExecuteQueryAndFetchResults
       .withArgs(queryToFetchConceptById)
@@ -151,9 +156,12 @@ describe('Concept Controller', () => {
     stubbedExecuteQueryAndFetchResults
       .withArgs(queryToFetchAllTheAssociatedContents)
       .yields(null, listOfRelatedContents);
+    stubbedExecuteQueryAndFetchResults
+      .withArgs(fetchContentsThroughResources)
+      .yields(null, listOfRelatedContents);
     conceptController.fetchAllRelatedItems('info:fedora/learning:12162', options, (err, results) => {
       should.not.exist(err);
-      log.debug({ results });
+      console.log({ results });
       results.entityId.should.be.exactly('info:fedora/learning:24966');
       results.entityType.should.be.exactly('concepts');
       results.entityName.should.be.exactly('Component-based software engineering');

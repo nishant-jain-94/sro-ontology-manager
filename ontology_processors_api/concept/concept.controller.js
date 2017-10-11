@@ -26,11 +26,13 @@ ConceptController.fetchConceptMapForTheCourse = (course, cb) => {
   collect(DISTINCT p) as concepts
   collect(DISTINCT q) as subconcepts
   return (x in concepts where not(x in subconcepts)) as delta`;
+  console.log(query);
   ConceptController.executeQueryAndFetchResults(query, cb);
 };
 
 ConceptController.listAllTheContentIdsWhichExplainsThisConceptFromGraphDB = (conceptId, cb) => {
   const query = `MATCH (n:content)-[:explains]->(m:concept {conceptId: "${conceptId}"}) return n`;
+  console.log(query);
   neo4j.queryExecutor(query, (err, data) => {
     if (!err) {
       const listOfContentIds = data.records.map(record => record._fields[0].properties.contentId);
@@ -58,6 +60,7 @@ ConceptController.fetchAllTheContentsWhichExplainsThisConceptFromMongoDB = (conc
 ConceptController.fetchAllConcepts = (options, cb) => {
   const skip = (options.page - 1) * options.limit;
   const query = `MATCH (n:concept) RETURN n ORDER BY n.name SKIP ${skip} LIMIT ${options.limit}`;
+  console.log(query);
   ConceptController.executeQueryAndFetchResults(query, cb);
 };
 
@@ -67,9 +70,11 @@ ConceptController.fetchAllTheAssociatedContents = (conceptId, options, cb) => {
   const queryToFetchAssociatedContentsThroughResource = `MATCH \
   (n:content)<-[:aggregates]-(:resource)-[:explains]->(m:concept {identifier: "${conceptId}"}) \
   return n ORDER BY n.name SKIP ${skip} LIMIT ${options.limit}`;
+  console.log(queryToFetchAssociatedContentsThroughResource);
   const queryToFetchContentsDirectlyLinkedToConcepts = `MATCH \
   (n:content)-[:explains]->(m:concept {identifier: "${conceptId}"}) \
   return n ORDER BY n.name SKIP ${skip} LIMIT ${options.limit}`;
+  console.log(queryToFetchContentsDirectlyLinkedToConcepts);
   async.parallel([
     ConceptController
       .executeQueryAndFetchResults
@@ -89,12 +94,14 @@ ConceptController.fetchAllTheAssociatedContents = (conceptId, options, cb) => {
 ConceptController.fetchAllTheSubConcepts = (conceptId, options, cb) => {
   const skip = (options.page - 1) * options.limit;
   const query = `MATCH (n:concept {identifier: "${conceptId}"})<-[:subconcept]-(m:concept) return m ORDER BY m.name SKIP ${skip} LIMIT ${options.limit}`;
+  console.log(query);
   ConceptController.executeQueryAndFetchResults(query, cb);
 };
 
 ConceptController.fetchConceptById = (conceptId, options, cb) => {
   const skip = (options.page - 1) * options.limit;
   const query = `MATCH (n:concept {identifier: "${conceptId}"}) return n ORDER BY n.name SKIP ${skip} LIMIT ${options.limit}`;
+  console.log(query);
   ConceptController.executeQueryAndFetchResults(query, cb);
 };
 
