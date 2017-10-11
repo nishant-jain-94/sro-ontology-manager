@@ -4,6 +4,7 @@
 
 //  Import required dependencies.
 const highland = require('highland');
+const _ = require('lodash');
 
 // const log = require('./sro_utils/logger')('Concept_Processor');
 
@@ -24,7 +25,7 @@ const toTriplesOfConcepts = (message) => {
   const source = {
     properties: {
       label: 'concept',
-      name: percpConcept.title.normalize(),
+      name: _.snakeCase(percpConcept.title),
       displayName: percpConcept.title,
       identifier: percpConcept.identifier
     },
@@ -39,7 +40,7 @@ const toTriplesOfConcepts = (message) => {
     const target = {
       properties: {
         label: 'concept',
-        name: association.conceptTitle.normalize(),
+        name: _.snakeCase(association.conceptTitle),
         displayName: association.conceptTitle,
         identifier: association.conceptId
       },
