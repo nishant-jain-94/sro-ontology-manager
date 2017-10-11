@@ -31,13 +31,13 @@ ContentController.fetchContentById = (contentId, options, cb) => {
 
 ContentController.fetchRelatedConcepts = (contentId, options, cb) => {
   const skip = (options.page - 1) * options.limit;
-  const query = `MATCH (m:content {mediaContentId: '${contentId}'})-[:explains]->(n:concept) return n ORDER BY n.name SKIP ${skip} LIMIT ${options.limit}`;
+  const query = `MATCH (m:content {mediaContentId: '${contentId}'})-[:explains]->(n:concept) return DISTINCT n ORDER BY n.name SKIP ${skip} LIMIT ${options.limit}`;
   ContentController.executeQueryAndFetchResults(query, cb);
 };
 
 ContentController.fetchRelatedCourses = (contentId, options, cb) => {
   const skip = (options.page - 1) * options.limit;
-  const query = `MATCH (m:content {mediaContentId: '${contentId}'})-[:usedIn]->(n:course) return n ORDER BY n.courseId SKIP ${skip} LIMIT ${options.limit}`;
+  const query = `MATCH (m:content {mediaContentId: '${contentId}'})<-[:aggregates]-(:resource)-[:usedIn]->(n:course) return DISTINCT n ORDER BY n.courseId SKIP ${skip} LIMIT ${options.limit}`;
   ContentController.executeQueryAndFetchResults(query, cb);
 };
 
