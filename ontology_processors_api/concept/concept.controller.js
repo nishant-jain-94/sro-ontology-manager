@@ -105,6 +105,12 @@ ConceptController.fetchConceptById = (conceptId, options, cb) => {
   ConceptController.executeQueryAndFetchResults(query, cb);
 };
 
+ConceptController.search = (searchTerm, options, cb) => {
+  const skip = (options.page - 1) * options.limit;
+  const query = `MATCH (m:concept) where m.name CONTAINS '${searchTerm}' OR m.displayName CONTAINS '${searchTerm}' or m.url CONTAINS '${searchTerm}' return DISTINCT m ORDER BY m.courseId SKIP ${skip} LIMIT ${options.limit}`;
+  ConceptController.executeQueryAndFetchResults(query, cb);
+};
+
 ConceptController.fetchAllRelatedItems = (conceptId, options, cb) => {
   async.parallel([
     ConceptController.fetchConceptById.bind(null, conceptId, options),

@@ -46,6 +46,16 @@ const fetchAllCourses = (options, cb) => {
   });
 };
 
+const search = (searchTerm, options, cb) => {
+  const skip = (options.page - 1) * options.limit;
+  const query = `MATCH (m:content) where m.name CONTAINS '${searchTerm}' OR m.displayName CONTAINS '${searchTerm}' or m.url CONTAINS '${searchTerm}' return DISTINCT m ORDER BY m.courseId SKIP ${skip} LIMIT ${options.limit}`;
+  neo4j.queryExecutor(query, (err, result) => {
+    if(err) return cb(err, null);
+    const courses = result.records.map(record => record._fields[0].properties);
+    return cb(null, courses);
+  });
+};
+
 const fetchAllConceptsAssociatedWithCourse = (courseId, options, cb) => {
   const skip = (options.page - 1) * options.maxResults;
   const query = `MATCH (m:course {courseId: '${courseId}'})<-[:usedIn]-(n:resource)-[:explains]->(p:concept) return DISTINCT p ORDER BY p.name SKIP ${skip} LIMIT ${options.maxResults}`;

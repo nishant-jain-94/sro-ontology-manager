@@ -1,18 +1,28 @@
-// const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const courses = require('./course/course.router');
 const concepts = require('./concept/concept.router');
 const contents = require('./content/content.router');
+
 const log = require('./commons/logger');
+const bunyanMiddleware = require('bunyan-middleware');
 
 const app = express();
 
+// Enabling CORS 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
+
+// bunyanMiddleware gives us request id and unique logger's for every incoming request.
+app.use(bunyanMiddleware({
+  requestStart: true,
+  logger: log
+}));
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

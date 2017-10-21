@@ -63,6 +63,18 @@ router.get('/:conceptId/subconcepts', (req, res, next) => {
   });
 });
 
+router.post('/search', (req, res, next) => {
+  const pageOptions = {
+    page: req.query.page ? req.query.page : 1,
+    limit: 30
+  };
+
+  conceptController.search(req.body.searchTerm, pageOptions, (err, data) => {
+    if(!err) res.json(data);
+    else next(err);
+  });
+});
+
 router.get('/:conceptId/details', (req, res, next) => {
   const options = {
     page: req.query.page ? req.query.page : 1,

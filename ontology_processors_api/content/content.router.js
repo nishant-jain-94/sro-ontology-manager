@@ -42,6 +42,7 @@ router.get('/:contentId/courses', (req, res, next) => {
     page: req.query.page ? req.query.page : PAGE_NUMBER,
     limit: req.query.limit ? req.query.limit : LIMIT_RESULTS,
   };
+  
   contentController.fetchRelatedCourses(req.params.contentId, options, (err, data) => {
     if (!err) res.json(data);
     else {
@@ -59,6 +60,18 @@ router.get('/:contentId/details', (req, res, next) => {
 
   contentController.fetchAllRelatedItems(req.params.contentId, pageOptions, (err, data) => {
     if (!err) res.json(data);
+    else next(err);
+  });
+});
+
+router.post('/search', (req, res, next) => {
+  const pageOptions = {
+    page: req.query.page ? req.query.page : 1,
+    limit: 30
+  };
+
+  contentController.search(req.body.searchTerm, pageOptions, (err, data) => {
+    if(!err) res.json(data);
     else next(err);
   });
 });

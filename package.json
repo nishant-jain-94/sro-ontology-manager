@@ -19,6 +19,7 @@
     "gulp": "^3.9.1"
   },
   "dependencies": {
+    "bunyan-middleware": "^0.8.0",
     "docco": "^0.7.0",
     "global": "^4.3.2",
     "mocha": "^4.0.1",

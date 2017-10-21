@@ -59,6 +59,12 @@ ContentController.fetchRelatedCourses = (contentId, options, cb) => {
   ContentController.executeQueryAndFetchResults(query, cb);
 };
 
+ContentController.search = (searchTerm, options, cb) => {
+  const skip = (options.page - 1) * options.limit;
+  const query = `MATCH (m:content) where m.name CONTAINS '${searchTerm}' OR m.displayName CONTAINS '${searchTerm}' or m.url CONTAINS '${searchTerm}' return DISTINCT m ORDER BY m.courseId SKIP ${skip} LIMIT ${options.limit}`;
+  ContentController.executeQueryAndFetchResults(query, cb);
+};
+
 ContentController.fetchAllRelatedItems = (contentId, options, cb) => {
   async.parallel([
     ContentController.fetchContentById.bind(null, contentId, options),

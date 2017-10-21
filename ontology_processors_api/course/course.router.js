@@ -45,6 +45,18 @@ router.get('/:courseId/contents', (req, res, next) => {
     });
 });
 
+router.post('/search', (req, res, next) => {
+  const pageOptions = {
+    page: req.query.page ? req.query.page : 1,
+    limit: 30
+  };
+
+  courseController.search(req.body.searchTerm, pageOptions, (err, data) => {
+    if(!err) res.json(data);
+    else next(err);
+  });
+});
+
 router.get('/:courseId/details', (req, res, next) => {
   const pageOptions = {
     page: req.query.page ? req.query.page : 1,
